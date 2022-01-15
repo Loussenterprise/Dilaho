@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="300.0" prefWidth="300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.LoginController">
+    <stylesheets>
+        <URL value="@login.css" />
+    </stylesheets>
+   <children>
+      <Label contentDisplay="CENTER" ellipsisString="Manage your scool" layoutX="109.0" layoutY="14.0" prefHeight="40.0" prefWidth="92.0" text="DILAHO" textAlignment="CENTER" textFill="#359090" textOverrun="CENTER_ELLIPSIS" underline="true">
+         <font>
+            <Font name="Monospaced Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="115.0" layoutY="54.0" prefHeight="15.0" prefWidth="92.0" text="Connection" textFill="#359090">
+         <font>
+            <Font name="Monospaced Regular" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="isConnected" layoutX="16.0" layoutY="271.0" prefHeight="15.0" prefWidth="270.0" wrapText="true">
+         <font>
+            <Font size="8.0" />
+         </font>
+      </Label>
+      <Button fx:id="connect" layoutX="178.0" layoutY="258.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #359090;" text="Connecter" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <PasswordField fx:id="passwd" alignment="CENTER" layoutX="25.0" layoutY="196.0" prefHeight="40.0" prefWidth="251.0" promptText="Your secure" style="-fx-border-radius: 50;" />
+      <TextField fx:id="email" alignment="CENTER" layoutX="25.0" layoutY="116.0" prefHeight="40.0" prefWidth="251.0" promptText="exemple@mail.com" />
+      <Label fx:id="message" alignment="CENTER" layoutX="14.0" layoutY="70.0" prefHeight="15.0" prefWidth="270.0" textFill="#dd0a0a" />
+      <Label layoutX="16.0" layoutY="93.0" prefHeight="15.0" prefWidth="262.0" text="Identifiant(email)" textFill="#359090" />
+      <Label layoutX="16.0" layoutY="171.0" prefHeight="15.0" prefWidth="262.0" text="Mot de passe" textFill="#359090" />
+   </children>
+</AnchorPane>
