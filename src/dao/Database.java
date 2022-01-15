@@ -234,7 +234,7 @@ public class Database {
     
     public static void createNoteBookTable() throws SQLException{
         statement.executeUpdate(""+
-                "CREATE TABLE 'notebook' (\n" +
+                "CREATE TABLEIF NOT EXISTS 'notebook' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'studentId'	INTEGER,\n" +
                 "	'classroomIs'	INTEGER,\n" +
@@ -244,6 +244,68 @@ public class Database {
                 "	FOREIGN KEY('studentId') REFERENCES 'student'('id') ON DELETE SET NULL,\n" +
                 "	FOREIGN KEY('classroomIs') REFERENCES 'classroom'('id') ON DELETE SET NULL,\n" +
                 "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
+                ");"
+        );
+    }
+    
+    public static void createAddTable() throws SQLException{
+        statement.executeUpdate(""+
+                "CREATE TABLEIF NOT EXISTS 'add' (\n" +
+                "	'id'	INTEGER NOT NULL UNIQUE,\n" +
+                "	'studentId'	INTEGER,\n" +
+                "	'title'	VARCHAR(255),\n" +
+                "	'content'	TEXT,\n" +
+                "	FOREIGN KEY('studentId') REFERENCES 'student'('id') ON DELETE SET NULL,\n" +
+                "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
+                ");"
+        );
+    }
+    
+    public static void createPayeTable() throws SQLException{
+        statement.executeUpdate(""+
+                "CREATE TABLE IF NOT EXISTS 'paye' (\n" +
+                "	'id'	INTEGER NOT NULL UNIQUE,\n" +
+                "	'scoolyear'	VARCHAR(255),\n" +
+                "	'montant'	REAL,\n" +
+                "	'montantrst'	REAL,\n" +
+                "	'montantenltr'	TEXT,\n" +
+                "	'solded'	INTEGER,\n" +
+                "	'studentId'	INTEGER,\n" +
+                "	'classroomId'	INTEGER,\n" +
+                "	FOREIGN KEY('studentId') REFERENCES 'student'('id') on delete set null,\n" +
+                "	FOREIGN KEY('classroomId') REFERENCES 'classroom'('id') on delete set null,\n" +
+                "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
+                ");"
+        );
+    }
+    
+    public static void createSessionTable() throws SQLException{
+        statement.executeUpdate(""+
+                "CREATE TABLE 'session' (\n" +
+                "	'id'	INTEGER NOT NULL UNIQUE,\n" +
+                "	'profappreciation'	TEXT,\n" +
+                "	'dgappreciation'	TEXT,\n" +
+                "	'hightmoyenne'	REAL,\n" +
+                "	'lowmoyenne'	REAL,\n" +
+                "	'moyenne'	REAL,\n" +
+                "	'range'	INTEGER,\n" +
+                "	'isfinal'	INTEGER,\n" +
+                "	'notebookId'	INTEGER,\n" +
+                "	FOREIGN KEY('notebookId') REFERENCES 'notebook'('id') on delete set null,\n" +
+                "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
+                ");"
+        );
+    }
+    
+    public static void createNoteTable() throws SQLException{
+        statement.executeUpdate(""+
+                "CREATE TABLE 'note' (\n" +
+                "	'id'	INTEGER NOT NULL UNIQUE,\n" +
+                "	'valeur'	REAL,\n" +
+                "	'isdevoir'	INTEGER,\n" +
+                "	'sessionId'	INTEGER,\n" +
+                "	PRIMARY KEY('id' AUTOINCREMENT),\n" +
+                "	FOREIGN KEY('sessionId') REFERENCES 'session'('id') on delete set null\n" +
                 ");"
         );
     }

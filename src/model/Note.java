@@ -8,15 +8,9 @@ package model;
  *
  * @author loussin
  */
-class Paye {
+class Note {
     private Integer id;
-    private String scoolYear;
-    private Double montant;
-    private Double montantRst;
-    private String montantEnLtr;
-    private Boolean solded;
-    
-    private Student student;
-    private Classroom classroom;
-    
+    private Session session;
+    private Double valeur;
+    private Boolean isDevoir;
 }

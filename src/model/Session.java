@@ -11,13 +11,17 @@ import java.util.ArrayList;
  * @author loussin
  */
 class Session {
+    private Integer id;
     private String profAppreciation;
     private String dgAppreciation;
     private Double hightMoyenne;
     private Double lowMoyenne;
     private Double moyenne;
-    private ArrayList<Double> interros;
-    private ArrayList<Double> devoirs;
     private Integer range;
-    private boolean isFinal;
+    private Boolean isFinal;
+    
+    private NoteBook noteBook;
+    
+    private ArrayList<Note> interros;
+    private ArrayList<Note> devoirs;
 }
