@@ -4,14 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/NoteBook.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Student.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Scolarite.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Classlevel.java</file>
+            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/LoginController.java</file>
             <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Session.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Classroom.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Course.java</file>
+            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/login.fxml</file>
+            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Note.java</file>
             <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Paye.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/User.java</file>
+            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/dao/Database.java</file>
         </group>
     </open-files>
 </project-private>
