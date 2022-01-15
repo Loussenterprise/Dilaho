@@ -23,7 +23,7 @@ import org.sqlite.mc.SQLiteMCConfig;
  * @author loussin
  */
 public class Database {
-    private static final String DBNAME="meta/data_free.sqlite";
+    private static final String DBNAME="meta/data.sqlite";
     private static Connection connection;
     private static Statement statement;
     
@@ -32,8 +32,8 @@ public class Database {
             createDB();
             if( connection == null || connection.isClosed() ){
                 Class.forName("org.sqlite.JDBC");
-                //connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME, new  SQLiteMCConfig () . withKey( "A11e2 v0u5 f@174 v8!^" ) . toProperties());
-                connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME);
+                connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME, new  SQLiteMCConfig () . withKey( "A11e2 v0u5 f@174 v8!^" ) . toProperties());
+                //connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME);
                 if ( connection == null) {
                     System.exit(1);
                 }
@@ -97,9 +97,16 @@ public class Database {
             createUserTable();
             statement.executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','loussin.andre@gmail.com','lopplpop',1);");
             
-            createStudentTable();
-            
+            createAddTable();
+            createClassLevelTable();
             createCourseTable();
+            createNoteBookTable();
+            createNoteTable();
+            createPayeTable();
+            createScolariteTable();
+            createSessionTable();
+            createClassRoomTable();
+            createStudentTable();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -234,7 +241,7 @@ public class Database {
     
     public static void createNoteBookTable() throws SQLException{
         statement.executeUpdate(""+
-                "CREATE TABLEIF NOT EXISTS 'notebook' (\n" +
+                "CREATE TABLE IF NOT EXISTS 'notebook' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'studentId'	INTEGER,\n" +
                 "	'classroomIs'	INTEGER,\n" +
@@ -250,7 +257,7 @@ public class Database {
     
     public static void createAddTable() throws SQLException{
         statement.executeUpdate(""+
-                "CREATE TABLEIF NOT EXISTS 'add' (\n" +
+                "CREATE TABLE IF NOT EXISTS 'add' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'studentId'	INTEGER,\n" +
                 "	'title'	VARCHAR(255),\n" +
@@ -281,7 +288,7 @@ public class Database {
     
     public static void createSessionTable() throws SQLException{
         statement.executeUpdate(""+
-                "CREATE TABLE 'session' (\n" +
+                "CREATE TABLE IF NOT EXISTS 'session' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'profappreciation'	TEXT,\n" +
                 "	'dgappreciation'	TEXT,\n" +
@@ -299,7 +306,7 @@ public class Database {
     
     public static void createNoteTable() throws SQLException{
         statement.executeUpdate(""+
-                "CREATE TABLE 'note' (\n" +
+                "CREATE TABLE IF NOT EXISTS 'note' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'valeur'	REAL,\n" +
                 "	'isdevoir'	INTEGER,\n" +
