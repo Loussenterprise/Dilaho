@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author loussin
  */
-class Classlevel {
+public class Classlevel {
     private Integer id;
     private String name;
     private String n;
@@ -87,6 +87,7 @@ class Classlevel {
         this.name = classlevel.name;
         this.n = classlevel.n;
         this.niveau = classlevel.niveau;
+        this.contribution = classlevel.contribution;
         this.option = classlevel.option;
         this.op = classlevel.op;
     }

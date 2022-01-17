@@ -244,12 +244,12 @@ public class Database {
                 "CREATE TABLE IF NOT EXISTS 'notebook' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'studentId'	INTEGER,\n" +
-                "	'classroomIs'	INTEGER,\n" +
+                "	'classroomId'	INTEGER,\n" +
                 "	'courseId'	INTEGER,\n" +
                 "	'preferedsessionnumber'	INTEGER,\n" +
                 "	FOREIGN KEY('courseId') REFERENCES 'course'('id') ON DELETE SET NULL,\n" +
                 "	FOREIGN KEY('studentId') REFERENCES 'student'('id') ON DELETE SET NULL,\n" +
-                "	FOREIGN KEY('classroomIs') REFERENCES 'classroom'('id') ON DELETE SET NULL,\n" +
+                "	FOREIGN KEY('classroomId') REFERENCES 'classroom'('id') ON DELETE SET NULL,\n" +
                 "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
                 ");"
         );
@@ -257,7 +257,7 @@ public class Database {
     
     public static void createAddTable() throws SQLException{
         statement.executeUpdate(""+
-                "CREATE TABLE IF NOT EXISTS 'add' (\n" +
+                "CREATE TABLE IF NOT EXISTS 'adds' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'studentId'	INTEGER,\n" +
                 "	'title'	VARCHAR(255),\n" +

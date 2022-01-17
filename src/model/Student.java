@@ -191,6 +191,33 @@ public class Student {
     public static void main(String[] args) {
         System.out.println((new Student()).toString());
     }
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public Integer getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(Integer classroom) {
+        this.classroom = classroom;
+    }
+
+    public Integer getScolarite() {
+        return scolarite;
+    }
+
+    public void setScolarite(Integer scolarite) {
+        this.scolarite = scolarite;
+    }
+    
+    
+    
     
     
 }

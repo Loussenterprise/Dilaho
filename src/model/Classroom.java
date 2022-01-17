@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author loussin
  */
-class Classroom {
+public class Classroom {
     private Integer id;
     private String promotion;
     private String scoolYear;
@@ -18,7 +18,77 @@ class Classroom {
     private Double contribution;
     private Classlevel classlevel;
     
+    private Integer classlevelId;
+    
     private ArrayList<Scolarite> scolarites;
     private ArrayList<NoteBook> notebooks;
     private ArrayList<Course> courses;
+
+    public Classroom() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getClasslevelId() {
+        return classlevelId;
+    }
+
+    public void setClasslevelId(Integer classlevelId) {
+        this.classlevelId = classlevelId;
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" + "id=" + id + ", promotion=" + promotion + ", scoolYear=" + scoolYear + ", group=" + group + ", contribution=" + contribution + ", classlevelId=" + classlevelId + '}';
+    }
+    
+    
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
+    }
+
+    public String getScoolYear() {
+        return scoolYear;
+    }
+
+    public void setScoolYear(String scoolYear) {
+        this.scoolYear = scoolYear;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public Double getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(Double contribution) {
+        this.contribution = contribution;
+    }
+
+    public Classlevel getClasslevel() {
+        return classlevel;
+    }
+
+    public void setClasslevel(Classlevel classlevel) {
+        this.classlevel = classlevel;
+    }
+    
+    
 }
