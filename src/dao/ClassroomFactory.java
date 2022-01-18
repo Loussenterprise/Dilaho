@@ -34,7 +34,7 @@ public class ClassroomFactory {
         try {
             prepst=connection.prepareStatement(""
                     + "INSERT INTO 'classroom'('id','promotion','scoolyear',"
-                    + "'group','contribution','classlevelId') "
+                    + "'groupe','contribution','classlevelId') "
                     + "VALUES (NULL,?,?,?,?,?);");
             
             prepst.setString(1, c.getPromotion());
@@ -58,7 +58,7 @@ public class ClassroomFactory {
                 c.setId(rs.getInt("id"));
                 c.setPromotion(rs.getString("promotion"));
                 c.setScoolYear(rs.getString("scoolyear"));
-                c.setGroup(rs.getString("group"));
+                c.setGroup(rs.getString("groupe"));
                 c.setContribution(rs.getString("contribution")!=null?Double.parseDouble(rs.getString("contribution")):null);
                 c.setClasslevelId(rs.getString("classlevelId")!=null?Integer.parseInt(rs.getString("classlevelId")):null);
                 list.add(c);
@@ -78,7 +78,7 @@ public class ClassroomFactory {
                 c.setId(rs.getInt("id"));
                 c.setPromotion(rs.getString("promotion"));
                 c.setScoolYear(rs.getString("scoolyear"));
-                c.setGroup(rs.getString("group"));
+                c.setGroup(rs.getString("groupe"));
                 c.setContribution(rs.getString("contribution")!=null?Double.parseDouble(rs.getString("contribution")):null);
                 c.setClasslevelId(rs.getString("classlevelId")!=null?Integer.parseInt(rs.getString("classlevelId")):null);
             }
@@ -92,6 +92,9 @@ public class ClassroomFactory {
     public static void main(String[] args) {
         ClassroomFactory sf=new ClassroomFactory();
         sf.setClassroom(new Classroom());
+        Classroom c= new Classroom();
+        c.setGroup("C");
+        sf.setClassroom(c);
         System.out.println(sf.getClassrooms());
         System.out.println(sf.getClassroom(3));
         System.out.println(new Classroom());

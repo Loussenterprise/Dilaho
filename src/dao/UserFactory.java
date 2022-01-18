@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.User;
@@ -40,13 +41,40 @@ public class UserFactory {
                 user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
-                user.setPasswd(rs.getString("Passwd is private"));
+                user.setPasswd("Passwd is private");
                 user.setRole(rs.getInt("role"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
+    }
+    
+    public ArrayList<User> getUsers(){
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("select * from user ");
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPasswd("Passwd is private");
+                user.setRole(rs.getInt("role"));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<String> getUsersNames(){
+        ArrayList<String> l=new ArrayList<>();
+        for(User u: getUsers()){
+            l.add(u.getName());
+        }
+        return l;
     }
     
     public User connect(String email, String passwd){

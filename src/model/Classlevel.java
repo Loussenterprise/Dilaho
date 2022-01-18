@@ -156,7 +156,7 @@ public class Classlevel {
 
     @Override
     public String toString() {
-        return "Classlevel{" + "id=" + id + ", name=" + name + ", n=" + n + ", niveau=" + niveau + ", option=" + option + ", op=" + op + ", contribution=" + contribution + '}';
+        return n+" "+op;
     }
     
     public static ArrayList<Classlevel> getClasses() {

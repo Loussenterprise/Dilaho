@@ -39,7 +39,13 @@ public class StudentFactory {
                     + ",'fathername','fatherwork','fatheraddress','mothername'"
                     + ",'motherwork','motheraddress','birthday','inscriptiondate'"
                     + ",'classroomId','scolariteId') "
-                    + "VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    + "VALUES ("+s.getId()+",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
+                    + "ON CONFLICT(id) DO UPDATE SET "
+                    + "'matricule'= ?,'name'= ?,'firstnames'= ?,'passwd'= ? "
+                    + ",'address'=?,'sexe'=?,'extras'=?,'image'=?,'commingscool'= ?"
+                    + ",'fathername'=?,'fatherwork'=?,'fatheraddress'=?,'mothername'=?"
+                    + ",'motherwork'=?,'motheraddress'=?,'birthday'=?,'inscriptiondate'=?"
+                    + ",'classroomId'=?,'scolariteId'=?");
             prepst.setString(1, s.getMatricule());
             prepst.setString(2, s.getName());
             prepst.setString(3, s.getFirstnames());
@@ -59,6 +65,26 @@ public class StudentFactory {
             prepst.setDate(17, s.getInscriptionDate());
             prepst.setString(18, s.getClassroom()!=null?s.getClassroom().toString():null);
             prepst.setString(19, s.getScolarite()!=null?s.getScolarite().toString():null);
+            
+            prepst.setString(20, s.getMatricule());
+            prepst.setString(21, s.getName());
+            prepst.setString(22, s.getFirstnames());
+            prepst.setString(23, s.getPasswd());
+            prepst.setString(24, s.getAddress());
+            prepst.setString(25, s.getSexe());
+            prepst.setString(26, s.getExtras());
+            prepst.setString(27, s.getImage());
+            prepst.setString(28, s.getCommingScool());
+            prepst.setString(29, s.getFatherName());
+            prepst.setString(30, s.getFatherWork());
+            prepst.setString(31, s.getFatherAddress());
+            prepst.setString(32, s.getMotherName());
+            prepst.setString(33, s.getMotherWork());
+            prepst.setString(34, s.getMotherAddress());
+            prepst.setDate(35, s.getBirthday());
+            prepst.setDate(36, s.getInscriptionDate());
+            prepst.setString(37, s.getClassroom()!=null?s.getClassroom().toString():null);
+            prepst.setString(38, s.getScolarite()!=null?s.getScolarite().toString():null);
             prepst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,10 +157,14 @@ public class StudentFactory {
     
     public static void main(String[] args) {
         StudentFactory sf=new StudentFactory();
-        Student s= new Student();
-        s.setName("LOUSSIN");
-        s.setFirstnames("Andre Ange");
-        sf.setStudent(s);
+        for (int i = 0; i < 30; i++) {
+            Student s= new Student();
+            s.setName("LOUSSIN");
+            s.setFirstnames("Andre Ange");
+            s.setClassroom(12);
+            sf.setStudent(s);
+        }
+            
         System.out.println(sf.getStudents());
         System.out.println(sf.getStudent(3));
     }

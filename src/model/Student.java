@@ -185,7 +185,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" + "matricule=" + matricule + ", name=" + name + ", firstnames=" + firstnames + '}';
+        return name + " " + firstnames;
     }
     
     public static void main(String[] args) {

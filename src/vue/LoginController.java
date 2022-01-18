@@ -22,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.User;
+import vue.main.MainController;
+import vue.main.MainStage;
 
 /**
  * FXML Controller class
@@ -33,7 +35,7 @@ public class LoginController implements Initializable {
     
     
     
-    
+    MainStage ms;
     public UserFactory userfactory = new UserFactory();
     
     @FXML
@@ -92,6 +94,8 @@ public class LoginController implements Initializable {
                 message.setText(user.toString());
                 message.setTextFill(Color.GREEN);
                 connect.requestFocus();
+                ms=new MainStage();
+                ms.show();
             }
         } else {
             message.setText("Email not macthes");

@@ -7,6 +7,7 @@ package dilaho;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import vue.LoginStage;
+import vue.main.MainStage;
 
 /**
  *
@@ -17,8 +18,10 @@ public class Dilaho extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage = new LoginStage();
+        //stage = new LoginStage();
+        stage = new MainStage();
         stage.show();
+        
     }
     
     /**

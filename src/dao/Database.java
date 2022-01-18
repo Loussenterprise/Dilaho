@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.sqlite.mc.SQLiteMCConfig;
@@ -126,17 +127,6 @@ public class Database {
         }
     }
     
-    public static void main(String[] args) {
-        seed();
-        try {
-            getStatement().executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','h.andre@gmail.com','lopplpop',1);");
-            getStatement().executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','g.andre@gmail.com','lopplpop',1);");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        show();
-    }
-    
     public static void createUserTable() throws SQLException{
         statement.executeUpdate(""+
                     "CREATE TABLE IF NOT EXISTS user (" +
@@ -216,7 +206,7 @@ public class Database {
                 "	'id'	INTEGER NOT NULL UNIQUE," +
                 "	'promotion'	VARCHAR(100)," +
                 "	'scoolyear'	VARCHAR(100)," +
-                "	'group'	VARCHAR(100)," +
+                "	'groupe'	VARCHAR(100)," +
                 "	'contribution'	REAL," +
                 "	'classlevelId'	INTEGER," +
                 "	PRIMARY KEY('id' AUTOINCREMENT)," +
@@ -317,4 +307,47 @@ public class Database {
         );
     }
     
+    private static boolean ctn(ArrayList<String> l,String s){
+        boolean r=false;
+        for(String ss:l)
+        {
+            if(ss.equalsIgnoreCase(s)){
+                r=true;
+                break;
+            }
+        }
+        return r;
+    }
+    
+    public static ArrayList<String> getGroups(){
+        ArrayList<String> l = new ArrayList<>();
+        try {
+            ResultSet rs= getStatement().executeQuery("SELECT groupe FROM classroom DISTINCTS");
+            while (rs.next()) {
+                if(rs.getString("groupe")!=null && !ctn(l, rs.getString("groupe")))
+                    l.add(rs.getString("groupe"));                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(String s:l){
+            if(s==null)
+                l.remove(s);
+        }
+        return l;
+    }
+
+    
+    public static void main(String[] args) {
+                        seed();
+            try {
+                getStatement().executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','h.andre@gmail.com','lopplpop',1);");
+                getStatement().executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','g.andre@gmail.com','lopplpop',1);");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            show();
+        
+        System.out.println(getGroups());
+    }    
 }

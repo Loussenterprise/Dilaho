@@ -41,7 +41,7 @@ public class Classroom {
 
     @Override
     public String toString() {
-        return "Classroom{" + "id=" + id + ", promotion=" + promotion + ", scoolYear=" + scoolYear + ", group=" + group + ", contribution=" + contribution + ", classlevelId=" + classlevelId + '}';
+        return classlevel!=null? classlevel.toString()+" "+group:"(---) "+group;
     }
     
     
