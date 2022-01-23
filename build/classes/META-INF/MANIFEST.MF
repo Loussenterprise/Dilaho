@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.8
+Created-By: 11.0.13+8-post-Debian-1 (Debian)
+Class-Path: lib/sqlite-jdbc-3.36.0.jar
+X-COMMENT: Main-Class will be added automatically by build
+Main-Class: dilaho.Dilaho
+

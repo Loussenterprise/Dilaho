@@ -47,8 +47,16 @@ public class Student {
         this.id = id;
     }
 
-    public String getMatricule() {
-        return matricule;
+//    public String getMatricule() {
+//        return matricule;
+//    }
+    public Integer getMatricule() {
+        Integer i= null;
+        try {
+            i=Integer.parseInt(matricule);
+        } catch (Exception e) {
+        }
+        return i;
     }
 
     public void setMatricule(String matricule) {

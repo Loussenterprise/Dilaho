@@ -82,6 +82,8 @@ public class Database {
             }
             try {
                 targetFile.createNewFile();
+                seed();
+                System.out.println("DB created");
             } catch (IOException ex) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -108,6 +110,7 @@ public class Database {
             createSessionTable();
             createClassRoomTable();
             createStudentTable();
+            createScoolYearTable();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -307,6 +310,16 @@ public class Database {
         );
     }
     
+    public static void createScoolYearTable() throws SQLException{
+        statement.executeUpdate(""+
+                "CREATE TABLE IF NOT EXISTS 'scoolyear' (\n" +
+                "	'id'	INTEGER NOT NULL UNIQUE,\n" +
+                "	'year'	VARRCHAR(100) UNIQUE ,\n" +
+                "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
+                ");"
+        );
+    }
+    
     private static boolean ctn(ArrayList<String> l,String s){
         boolean r=false;
         for(String ss:l)
@@ -339,10 +352,10 @@ public class Database {
 
     
     public static void main(String[] args) {
-                        seed();
             try {
-                getStatement().executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','h.andre@gmail.com','lopplpop',1);");
-                getStatement().executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','g.andre@gmail.com','lopplpop',1);");
+                getStatement().executeUpdate("drop table if exists classroom");
+                seed();
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

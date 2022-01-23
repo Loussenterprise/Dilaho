@@ -5,9 +5,13 @@
 package dilaho;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import vue.LoginStage;
 import vue.main.MainStage;
+import vue.main.student.StudentG;
 
 /**
  *
@@ -20,6 +24,7 @@ public class Dilaho extends Application{
     public void start(Stage stage) throws Exception {
         //stage = new LoginStage();
         stage = new MainStage();
+        //stage.setScene(new Scene(new StudentG()));
         stage.show();
         
     }

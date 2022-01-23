@@ -4,46 +4,37 @@
  */
 package vue.main;
 
-import dao.ClassroomFactory;
 import dao.StudentFactory;
-import dao.UserFactory;
 import java.net.URL;
-import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ObservableValueBase;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Classroom;
 import model.Student;
-import model.User;
+import vue.LoginStage;
+import vue.main.butg.ButController;
+import vue.main.classes.ClassesController;
+import vue.main.classes.ClassesG;
+import vue.main.classes.cl.ClController;
+import vue.main.classes.cl.clshow.ClShowG;
+import vue.main.classes.cl.clshow.ClshowController;
+import vue.main.student.StudentController;
+import vue.main.student.StudentG;
 
 /**
  * FXML Controller class
@@ -51,325 +42,246 @@ import model.User;
  * @author loussin
  */
 public class MainController implements Initializable {
+    
+    static ArrayList<ButController> butcs = new ArrayList<>();
 
+    static StudentController sctl; 
+
+    static ClassesController clc; 
+    
+    @FXML
+    AnchorPane pane;
+    
     @FXML
     VBox opts;
     
-    @FXML
-    ScrollPane general_view;
     
     @FXML
     AnchorPane leftzone;
     
     @FXML
-    AnchorPane ap;
+    AnchorPane visibl;
+    
     
     @FXML
-    Label classroom;
+    Button expend;
     
     @FXML
-    Button all;
-    @FXML
-    Button addstu;
+    Button logout;
     
-    @FXML 
-    TableView<Student> student_list_view;
+    private static ClshowController showingClassroom;
     
-    StudentFactory stf=new StudentFactory();
-    ClassroomFactory crf= new ClassroomFactory();
+    static AnchorPane visible;
+    static StudentG studentg ;    
+    static ClassesG classesg ;
+    Timeline timelinemin;
+    Timeline timelinewipe;
     
-    ObservableList<Classroom> crl = FXCollections.observableList(crf.getClassrooms());
-    ObservableList<Student> stl = FXCollections.observableList(stf.getStudents());
-    ObservableList<Student> results = FXCollections.observableList(stl);
     
-    @FXML
-    ComboBox<Classroom> cls_select;
+    static StudentFactory stf=new StudentFactory();
+    static ArrayList<Student> students=stf.getStudents();
+    static ObservableList<Student> stl = FXCollections.observableList(students);
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        classroom.setText("Toutes les clases");
-        classroom.setMaxWidth(Double.MAX_VALUE);
-        ap.setLeftAnchor(classroom, 0.0);
-        ap.setRightAnchor(classroom, 0.0);
-        classroom.setAlignment(Pos.CENTER);
         
-        cls_select.setItems(crl);
-        initStudentTable();
-        // TODO
-    }   
-    
-    public void initStudentTable(){
+        System.out.println("vue.main.MainController.initialize()");
+        setVisible(visibl);
+        studentg = new StudentG();
+                classesg = new ClassesG();
         
-        student_list_view.setItems(stl);
-        TableColumn<Student,String> mtnoCol = new TableColumn("Matricule");
-        mtnoCol.setCellValueFactory((CellDataFeatures<Student, String> p) -> new ObservableValueBase<String>() {
+        stl.addListener(new ListChangeListener<Student>() {
             @Override
-            public String getValue() {
-                return p.getValue().getMatricule();
+            public void onChanged(ListChangeListener.Change<? extends Student> arg0) {
+                clc.initialize(url, rb);
             }
         });
-        TableColumn<Student,String> NameCol = new TableColumn("Nom");
-        NameCol.setCellValueFactory((CellDataFeatures<Student, String> p) -> new ObservableValueBase<String>() {
-            @Override
-            public String getValue() {
-                return p.getValue().getName();
-            }
-        });
-        TableColumn<Student,String> firstNameCol = new TableColumn("Prenoms");
-        firstNameCol.setCellValueFactory((CellDataFeatures<Student, String> p) -> new ObservableValueBase<String>() {
-            @Override
-            public String getValue() {
-                return p.getValue().getFirstnames();
-            }
-        });
-        //        firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Student, String>, ObservableValue<String>>() {
-        //            public ObservableValue<String> call(CellDataFeatures<Student, String> p) {
-        //                return new ObservableValueBase<String>() {
-        //                    @Override
-        //                    public String getValue() {
-        //                        return p.getValue().getFirstnames();
-        //                    }
-        //                };
-        //            }
-        //         });
-        
-        TableColumn<Student,Date> dobCol = new TableColumn("Date de naissance");
-        dobCol.setCellValueFactory((CellDataFeatures<Student, Date> p) -> new ObservableValueBase<Date>() {
-            @Override
-            public Date getValue() {
-                return p.getValue().getBirthday();
-            }
-        });
-        TableColumn<Student,Date> insdCol = new TableColumn("Date d'insscription");
-        insdCol.setCellValueFactory((CellDataFeatures<Student, Date> p) -> new ObservableValueBase<Date>() {
-            @Override
-            public Date getValue() {
-                return p.getValue().getInscriptionDate();
-            }
-        });
-        student_list_view.getColumns().addAll(mtnoCol,NameCol,firstNameCol,dobCol,insdCol);
-        blic(student_list_view);
-    }
-    
-    
-    public void loadData() {
-        System.out.println(cls_select.getValue());
-        if(cls_select.getValue()!=null){
-            Integer searchText = cls_select.getValue().getId();
-
-            classroom.setText(cls_select.getValue().toString());
-            Task<ObservableList<Student>> task = new Task() {
-                @Override
-                protected ObservableList<Student> call() throws Exception {
-                    updateMessage("Loading data");
-                    System.out.println(".call()");
-                    return FXCollections.observableArrayList(stl
-                            .stream()
-                            .filter(value -> searchText.equals(value.getClassroom()))
-                            .collect(Collectors.toList()));
-                }
-            };
-            task.setOnSucceeded(event -> {
-                System.out.println("succeeded");
-                results = task.getValue();
-                student_list_view.setItems(FXCollections.observableList(results));
-            });
-            task.setOnRunning((event) -> {
-                System.out.println("running");
-            });
-            task.setOnFailed((event) -> {
-                System.out.println("failed");
-            });
-            Thread th = new Thread(task);
-            th.setDaemon(true);
-            th.start();
+//        Thread t=new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        });
+//        t.start();
+        if(butcs.size()>4){
+            butcs.get(0).setText("Eleves");
+            butcs.get(0).setImage("./img/Student_2.png");
+            butcs.get(0).getPane().setOnMouseClicked(event -> showStudentG());
+            
+            butcs.get(1).setText("Classes");
+            butcs.get(1).setImage("img/Student.png");
+            butcs.get(1).getPane().setOnMouseClicked(event -> showClassesG());
+            butcs.get(2).setText("Salles");
+            butcs.get(3).setText("Scolarite");
+            butcs.get(4).setText("Notes");
         }
+        setVisible(visibl);
+        showStudentG();
+        
+        Duration cycleDuration = Duration.millis(250);
+        timelinemin = new Timeline(
+                new KeyFrame(cycleDuration,
+                        new KeyValue(leftzone.prefWidthProperty(),50.0,Interpolator.EASE_BOTH))
+                );
+        timelinewipe = new Timeline(
+                new KeyFrame(cycleDuration,
+                        new KeyValue(leftzone.prefWidthProperty(),200.0,Interpolator.EASE_BOTH))
+                );
+        
+        pane.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                logout();
+            }
+        });
+    }   
 
+    public static void setVisible(AnchorPane visible) {
+        System.out.println("vue.main.MainController.setVisible() ###"+visible);
+        MainController.visible = visible;
+    }
+
+    public static ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public static ObservableList<Student> getStl() {
+        return stl;
     }
     
-    public void tim(){
-        classroom.setText("Toutes les clases");
-        student_list_view.setItems(stl);
-        cls_select.setValue(null);
-        cls_select.setOnAction(event -> loadData());
+    
+    
+    public void expend(){
+        if(leftzone.getWidth()>60){
+            minOptions();
+            expend.setText(">");
+        }else{
+            expend.setText("<");
+            wipeOptions();
+        }
     }
+    
+    public void logout(){
+        LoginStage ls=new LoginStage();
+        ls.show();
+        ((Stage)pane.getScene().getWindow()).close();
+    }
+    
+    public static void injectButController(ButController ctl){
+        if(ctl!=null)
+            butcs.add(ctl);
+    }
+    public static void injectStudentController(StudentController ctl){
+        if(ctl!=null)
+            sctl = ctl;
+    }
+    public static void injectClassesController(ClassesController ctl){
+        if(ctl!=null)
+            clc = ctl;
+    }
+    
     
     public void minOptions(){
-        leftzone.setMaxWidth(50);
-        System.out.println("vue.main.MainController.minOptions()");
+        timelinemin.play();
+        //leftzone.setPrefWidth(50);
     }
     
     public void wipeOptions(){
-        leftzone.setMaxWidth(200);
-        System.out.println("vue.main.MainController.wipeOptions() to "+leftzone.getWidth());
+        timelinewipe.play();
+        //leftzone.setPrefWidth(200);
     }
     
-    public void addStudent(){
-        Student s = new Student();
-        s.setClassroom(cls_select.getValue()!=null?cls_select.getValue().getId():null);
-        s.setInscriptionDate(new Date(new java.util.Date().getTime()));
-        System.out.println(s.getInscriptionDate());
-        stl.add(s);
-        loadData();
-        student_list_view.requestFocus();
-        student_list_view.getFocusModel().focus(stl.size()-1);
-        student_list_view.getSelectionModel().clearAndSelect(stl.size()-1);
-        student_list_view.scrollTo(s);
+    public void showStudentG(){
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(studentg);
+        studentg.requestFocus();
+        if(butcs.size()>4){
+            butcs.get(0).grisec();
+            butcs.get(1).degrisec();
+            butcs.get(2).degrisec();
+            butcs.get(3).degrisec();
+            butcs.get(4).degrisec();
+        }
+    }  
+    
+    public static void showStudentG(Classroom classroom){
+        if(butcs.size()>4){
+            butcs.get(0).grisec();
+            butcs.get(1).degrisec();
+            butcs.get(2).degrisec();
+            butcs.get(3).degrisec();
+            butcs.get(4).degrisec();
+        }
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(studentg);
+        Classroom ccc = classroom;
+        for(Classroom c:sctl.cl_ls){
+            if(Objects.equals(c.getId(), classroom.getId())){
+                ccc=c;
+                break;
+            }
+        }
+        sctl.cls_select.setValue(ccc);
+        studentg.requestFocus();
+    }   
+    
+    public static void showClassesG(){
+        if(butcs.size()>4){
+            butcs.get(0).degrisec();
+            butcs.get(1).grisec();
+            butcs.get(2).degrisec();
+            butcs.get(3).degrisec();
+            butcs.get(4).degrisec();
+        }
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(classesg);
+        classesg.requestFocus();
     }
     
-    void blic(TableView<Student> table) {
-        System.out.println("ressources.SearchController.blic()");
-        table.setEditable(true);
+    public static void injectShowingClassroom(ClshowController clsc){
+        showingClassroom=clsc;
+    }
+    
+    public static void showClasse(ClController clsc){
+        ClShowG clShow=new ClShowG();
+        showingClassroom.setClassroom(clsc.getClassroom());
         
-        ((TableColumn) table.getColumns().get(0)).setCellFactory(TextFieldTableCell.forTableColumn());
-        ((TableColumn) table.getColumns().get(0)).setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Student, String>>() {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Student, String> t) {
-                    Student s = ((Student) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        );
-                        s.setMatricule(t.getNewValue());
-                        stf.setStudent(s);
-                    
-                }
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(clShow);
+        clShow.requestFocus();
+        clShow.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                showingClassroom.doReturn();
             }
-        );
-        ((TableColumn) table.getColumns().get(1)).setCellFactory(TextFieldTableCell.forTableColumn());
-        ((TableColumn) table.getColumns().get(1)).setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Student, String>>() {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Student, String> t) {
-                    Student s = ((Student) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        );
-                    s.setName(t.getNewValue());
-                        stf.setStudent(s);
-                }
-            }
-        );
-        ((TableColumn) table.getColumns().get(2)).setCellFactory(TextFieldTableCell.forTableColumn());
-        ((TableColumn) table.getColumns().get(2)).setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Student, String>>() {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Student, String> t) {
-                    Student s = ((Student) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        );
-                    s.setFirstnames(t.getNewValue());
-                        stf.setStudent(s);
-                }
-            }
-        );
+        });
+        if(butcs.size()>4){
+            butcs.get(0).degrisec();
+            butcs.get(1).degrisec();
+            butcs.get(2).degrisec();
+            butcs.get(3).degrisec();
+            butcs.get(4).degrisec();
+        }
+    }
+    
+    public static void showClasse(){
+        ClShowG clShow=new ClShowG();
         
-        Callback<TableColumn<Student, Date>, TableCell<Student, Date>> dateCellFactory
-                = (TableColumn<Student, Date> param) -> new DateEditingCell();
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(clShow);
+        clShow.requestFocus();
+        clShow.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                showClassesG();
+            }
+        });
         
-        ((TableColumn) table.getColumns().get(3)).setCellFactory(dateCellFactory);
-        ((TableColumn) table.getColumns().get(3)).setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Student, Date>>() {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Student, Date> t) {
-                    Student s = ((Student) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        );
-                    s.setBirthday(t.getNewValue());
-                        stf.setStudent(s);
-                }
-            }
-        );
-        ((TableColumn) table.getColumns().get(4)).setCellFactory(dateCellFactory);
-        ((TableColumn) table.getColumns().get(4)).setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Student, Date>>() {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Student, Date> t) {
-                    Student s = ((Student) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        );
-                    s.setInscriptionDate(t.getNewValue());
-                        stf.setStudent(s);
-                }
-            }
-        );
+        if(butcs.size()>4){
+            butcs.get(0).degrisec();
+            butcs.get(1).degrisec();
+            butcs.get(2).degrisec();
+            butcs.get(3).degrisec();
+            butcs.get(4).degrisec();
+        }
     }
 }
 
-
-
-    class DateEditingCell extends TableCell<Student, Date> {
-
-        private DatePicker datePicker;
-
-        DateEditingCell() {
-        }
-
-        @Override
-        public void startEdit() {
-            if (!isEmpty()) {
-                super.startEdit();
-                createDatePicker();
-                setText(null);
-                setGraphic(datePicker);
-            }
-        }
-
-        @Override
-        public void cancelEdit() {
-            super.cancelEdit();
-
-                    if (getDate()!=null) {
-                        setText(getDate().toString());
-                    } else {
-                        setText(null);
-                    }
-            setGraphic(null);
-        }
-
-        @Override
-        public void updateItem(Date item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                if (isEditing()) {
-                    if (datePicker != null) {
-                        datePicker.setValue(getDate());
-                    }
-                    setText(null);
-                    setGraphic(datePicker);
-                } else {
-                    if (getDate()!=null) {
-                        setText(getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
-                    } else {
-                        setText(null);
-                    }
-                    setGraphic(null);
-                }
-            }
-        }
-
-        private void createDatePicker() {
-            datePicker = new DatePicker(getDate());
-            datePicker.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            datePicker.setOnAction((e) -> {
-                System.out.println("Committed: " + datePicker.getValue().toString());
-                Instant t= datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant();
-                ZoneId zoneId = ZoneId.systemDefault();
-                ZonedDateTime zdt = ZonedDateTime.ofInstant ( t , zoneId );
-                commitEdit(Date.valueOf(zdt.toLocalDate()));
-            });
-//            datePicker.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-//                if (!newValue) {
-//                    commitEdit(Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-//                }
-//            });
-        }
-
-        private LocalDate getDate() {
-            return getItem() == null ? null : getItem().toLocalDate();
-        }
-    }

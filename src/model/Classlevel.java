@@ -16,55 +16,55 @@ public class Classlevel {
     private String n;
     private String niveau;
     private String option;
-    private String op;
+    private String op="";
     private Double contribution;
     
-    public final static Classlevel MATERNELLE_I = new Classlevel("Mle","Maternelle I","Maternelle",null);
-    public final static Classlevel MATERNELLE_II = new Classlevel("Mle","Maternelle II","Maternelle",null);
-    public final static Classlevel MATERNELLE_III = new Classlevel("Mle","Maternelle III","Maternelle",null);
+    public final static Classlevel MATERNELLE_I = new Classlevel("Mle I","Maternelle I","Maternelle",null).setId(1);
+    public final static Classlevel MATERNELLE_II = new Classlevel("Mle II","Maternelle II","Maternelle",null).setId(2);
+    public final static Classlevel MATERNELLE_III = new Classlevel("Mle III","Maternelle III","Maternelle",null).setId(3);
     
-    public final static Classlevel CI = new Classlevel("CI","Cour d'Initiation","I",null);
-    public final static Classlevel CP = new Classlevel("CP","Cour préparatoire","I",null);
-    public final static Classlevel CE1 = new Classlevel("CE1","Cour Elementaire Première Année","II",null);
-    public final static Classlevel CE2 = new Classlevel("CE2","Cour Elementaire Deuxième Année","II",null);
-    public final static Classlevel CM1 = new Classlevel("CM1","Cour Moyen Première Année","III",null);
-    public final static Classlevel CM2 = new Classlevel("CM2","Cour Moyen Deuxième Année","III",null);
+    public final static Classlevel CI = new Classlevel("CI","Cour d'Initiation","I",null).setId(4);
+    public final static Classlevel CP = new Classlevel("CP","Cour préparatoire","I",null).setId(5);
+    public final static Classlevel CE1 = new Classlevel("CE1","Cour Elementaire Première Année","II",null).setId(6);
+    public final static Classlevel CE2 = new Classlevel("CE2","Cour Elementaire Deuxième Année","II",null).setId(7);
+    public final static Classlevel CM1 = new Classlevel("CM1","Cour Moyen Première Année","III",null).setId(8);
+    public final static Classlevel CM2 = new Classlevel("CM2","Cour Moyen Deuxième Année","III",null).setId(9);
     
-    public final static Classlevel SEPTIEME = new Classlevel("7ème","Septième","---",null);
-    public final static Classlevel SIXIEME = new Classlevel("6ème","Sixième","Premier Cycle",null);
-    public final static Classlevel CINQUIEME = new Classlevel("5ème","Cinquième","Premier Cycle",null);
+    public final static Classlevel SEPTIEME = new Classlevel("7ème","Septième","---",null).setId(10);
+    public final static Classlevel SIXIEME = new Classlevel("6ème","Sixième","Premier Cycle",null).setId(11);
+    public final static Classlevel CINQUIEME = new Classlevel("5ème","Cinquième","Premier Cycle",null).setId(12);
     
-    public final static Classlevel QUATRIEME = new Classlevel("4ème","Quatrième","Premier Cycle",null);
-    public final static Classlevel QUATRIEME_MC = new Classlevel("4ème","Quatrième","Premier Cycle",null,"Moderne Court","MC");
-    public final static Classlevel QUATRIEME_ML = new Classlevel("4ème","Quatrième","Premier Cycle",null,"Moderne Long","ML");
+    public final static Classlevel QUATRIEME = new Classlevel("4ème","Quatrième","Premier Cycle",null).setId(13);
+    public final static Classlevel QUATRIEME_MC = new Classlevel("4ème","Quatrième","Premier Cycle",null,"Moderne Court","MC").setId(14);
+    public final static Classlevel QUATRIEME_ML = new Classlevel("4ème","Quatrième","Premier Cycle",null,"Moderne Long","ML").setId(15);
     
-    public final static Classlevel TROISIEME = new Classlevel("3ème","Troisième","Premier Cycle",null);
-    public final static Classlevel TROISIEME_MC = new Classlevel("3ème","Troisième","Premier Cycle",null,"Moderne Court","MC");
-    public final static Classlevel TROISIEME_ML = new Classlevel("3ème","Troisième","Premier Cycle",null,"Moderne Long","ML");
+    public final static Classlevel TROISIEME = new Classlevel("3ème","Troisième","Premier Cycle",null).setId(16);
+    public final static Classlevel TROISIEME_MC = new Classlevel("3ème","Troisième","Premier Cycle",null,"Moderne Court","MC").setId(17);
+    public final static Classlevel TROISIEME_ML = new Classlevel("3ème","Troisième","Premier Cycle",null,"Moderne Long","ML").setId(18);
     
-    public final static Classlevel SECONDE = new Classlevel("2nde","Seconde","Second Cycle",null);
-    public final static Classlevel SECONDE_A = new Classlevel("2nde","Seconde","Second Cycle",null,"Série A","A");
-    public final static Classlevel SECONDE_A1 = new Classlevel("2nde","Seconde","Second Cycle",null,"Série A1","A1");
-    public final static Classlevel SECONDE_A2 = new Classlevel("2nde","Seconde","Second Cycle",null,"Série A2","A2");
-    public final static Classlevel SECONDE_B = new Classlevel("2nde","Seconde","Second Cycle",null,"Série B","B");
-    public final static Classlevel SECONDE_C = new Classlevel("2nde","Seconde","Second Cycle",null,"Série C","C");
-    public final static Classlevel SECONDE_D = new Classlevel("2nde","Seconde","Second Cycle",null,"Série D","D");
+    public final static Classlevel SECONDE = new Classlevel("2nde","Seconde","Second Cycle",null).setId(1).setId(19);
+    public final static Classlevel SECONDE_A = new Classlevel("2nde","Seconde","Second Cycle",null,"Série A","A").setId(20);
+    public final static Classlevel SECONDE_A1 = new Classlevel("2nde","Seconde","Second Cycle",null,"Série A1","A1").setId(21);
+    public final static Classlevel SECONDE_A2 = new Classlevel("2nde","Seconde","Second Cycle",null,"Série A2","A2").setId(22);
+    public final static Classlevel SECONDE_B = new Classlevel("2nde","Seconde","Second Cycle",null,"Série B","B").setId(23);
+    public final static Classlevel SECONDE_C = new Classlevel("2nde","Seconde","Second Cycle",null,"Série C","C").setId(24);
+    public final static Classlevel SECONDE_D = new Classlevel("2nde","Seconde","Second Cycle",null,"Série D","D").setId(25);
     
-    public final static Classlevel PREMIERE = new Classlevel("1ère","Première","Second Cycle",null);
-    public final static Classlevel PREMIERE_A = new Classlevel("1ère","Première","Second Cycle",null,"Série A","A");
-    public final static Classlevel PREMIERE_A1 = new Classlevel("1ère","Première","Second Cycle",null,"Série A1","A1");
-    public final static Classlevel PREMIERE_A2 = new Classlevel("1ère","Première","Second Cycle",null,"Série A2","A2");
-    public final static Classlevel PREMIERE_B = new Classlevel("1ère","Première","Second Cycle",null,"Série B","B");
-    public final static Classlevel PREMIERE_C = new Classlevel("1ère","Première","Second Cycle",null,"Série C","C");
-    public final static Classlevel PREMIERE_D = new Classlevel("1ère","Première","Second Cycle",null,"Série D","D");
+    public final static Classlevel PREMIERE = new Classlevel("1ère","Première","Second Cycle",null).setId(26);
+    public final static Classlevel PREMIERE_A = new Classlevel("1ère","Première","Second Cycle",null,"Série A","A").setId(27);
+    public final static Classlevel PREMIERE_A1 = new Classlevel("1ère","Première","Second Cycle",null,"Série A1","A1").setId(28);
+    public final static Classlevel PREMIERE_A2 = new Classlevel("1ère","Première","Second Cycle",null,"Série A2","A2").setId(29);
+    public final static Classlevel PREMIERE_B = new Classlevel("1ère","Première","Second Cycle",null,"Série B","B").setId(30);
+    public final static Classlevel PREMIERE_C = new Classlevel("1ère","Première","Second Cycle",null,"Série C","C").setId(31);
+    public final static Classlevel PREMIERE_D = new Classlevel("1ère","Première","Second Cycle",null,"Série D","D").setId(32);
     
-    public final static Classlevel TERMINALE = new Classlevel("Tle","Terminale","Second Cycle",null);
-    public final static Classlevel TERMINALE_A = new Classlevel("Tle","Terminale","Second Cycle",null,"Série A","A");
-    public final static Classlevel TERMINALE_A1 = new Classlevel("Tle","Terminale","Second Cycle",null,"Série A1","A1");
-    public final static Classlevel TERMINALE_A2 = new Classlevel("Tle","Terminale","Second Cycle",null,"Série A2","A2");
-    public final static Classlevel TERMINALE_B = new Classlevel("Tle","Terminale","Second Cycle",null,"Série B","B");
-    public final static Classlevel TERMINALE_C = new Classlevel("Tle","Terminale","Second Cycle",null,"Série C","C");
-    public final static Classlevel TERMINALE_D = new Classlevel("Tle","Terminale","Second Cycle",null,"Série D","D");
+    public final static Classlevel TERMINALE = new Classlevel("Tle","Terminale","Second Cycle",null).setId(33);
+    public final static Classlevel TERMINALE_A = new Classlevel("Tle","Terminale","Second Cycle",null,"Série A","A").setId(34);
+    public final static Classlevel TERMINALE_A1 = new Classlevel("Tle","Terminale","Second Cycle",null,"Série A1","A1").setId(35);
+    public final static Classlevel TERMINALE_A2 = new Classlevel("Tle","Terminale","Second Cycle",null,"Série A2","A2").setId(36);
+    public final static Classlevel TERMINALE_B = new Classlevel("Tle","Terminale","Second Cycle",null,"Série B","B").setId(37);
+    public final static Classlevel TERMINALE_C = new Classlevel("Tle","Terminale","Second Cycle",null,"Série C","C").setId(38);
+    public final static Classlevel TERMINALE_D = new Classlevel("Tle","Terminale","Second Cycle",null,"Série D","D").setId(39);
     
     
     public Classlevel(String n, String name, String niveau, Double contribution) {
@@ -100,8 +100,9 @@ public class Classlevel {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Classlevel setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
@@ -158,6 +159,10 @@ public class Classlevel {
     public String toString() {
         return n+" "+op;
     }
+
+    public String desc() {
+        return name+" "+(option!=null?option:"")+" ("+niveau+")";
+    }
     
     public static ArrayList<Classlevel> getClasses() {
         ArrayList<Classlevel> list = new ArrayList();
@@ -205,9 +210,7 @@ public class Classlevel {
 
     
     public static void main(String[] args) {
-        Classlevel c = new Classlevel(TERMINALE_C);
-        c.setContribution(Double.NaN);
-        System.out.println(c);
+        System.out.println(TERMINALE_C.desc());
     }
     
 }

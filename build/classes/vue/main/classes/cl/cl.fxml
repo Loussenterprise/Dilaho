@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="clg" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.classes.cl.ClController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 65px;" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="tostr" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="2.0" onMouseClicked="#show" prefHeight="95.0" prefWidth="129.0" text="Label" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Monospaced Bold Italic" size="25.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="14.0" layoutY="97.0" opacity="0.4" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: #d6d5d5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <Label layoutX="125.0" layoutY="14.0" prefHeight="15.0" prefWidth="66.0" text="Fille" AnchorPane.bottomAnchor="91.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="14.0" />
+            <Label layoutX="125.0" layoutY="40.0" prefHeight="15.0" prefWidth="66.0" text="Garçon" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="40.0" />
+            <Label layoutX="125.0" layoutY="66.0" prefHeight="15.0" prefWidth="66.0" text="Total" AnchorPane.bottomAnchor="39.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="66.0" />
+            <Label layoutX="191.0" layoutY="14.0" text=":" AnchorPane.bottomAnchor="91.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="14.0" />
+            <Label layoutX="191.0" layoutY="40.0" text=":" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="40.0" />
+            <Label layoutX="191.0" layoutY="66.0" text=":" AnchorPane.bottomAnchor="39.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="66.0" />
+            <Label fx:id="fille" layoutX="200.0" layoutY="14.0" prefHeight="15.0" prefWidth="36.0" text="5" AnchorPane.bottomAnchor="91.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+            <Label fx:id="garcon" layoutX="200.0" layoutY="40.0" prefHeight="15.0" prefWidth="36.0" text="5" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="40.0" />
+            <Label fx:id="total" layoutX="200.0" layoutY="66.0" prefHeight="15.0" prefWidth="36.0" text="10" AnchorPane.bottomAnchor="39.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="66.0" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+         <opaqueInsets>
+            <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+         </opaqueInsets>
+         <stylesheets>
+            <URL value="@cl.css" />
+         </stylesheets>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>

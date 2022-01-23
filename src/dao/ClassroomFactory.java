@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Classlevel;
 import model.Classroom;
 
 /**
@@ -61,8 +62,15 @@ public class ClassroomFactory {
                 c.setGroup(rs.getString("groupe"));
                 c.setContribution(rs.getString("contribution")!=null?Double.parseDouble(rs.getString("contribution")):null);
                 c.setClasslevelId(rs.getString("classlevelId")!=null?Integer.parseInt(rs.getString("classlevelId")):null);
+//                if(c.getClasslevelId()!=null){
+//                    c.setClasslevel((new ClasslevelFactory()).getClasslevel(c.getClasslevelId()));
+//                }
                 list.add(c);
             }
+            for(Classroom c:list)
+                 if(c.getClasslevelId()!=null){
+                    c.setClasslevel((new ClasslevelFactory()).getClasslevel(c.getClasslevelId()));
+                }
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,6 +89,8 @@ public class ClassroomFactory {
                 c.setGroup(rs.getString("groupe"));
                 c.setContribution(rs.getString("contribution")!=null?Double.parseDouble(rs.getString("contribution")):null);
                 c.setClasslevelId(rs.getString("classlevelId")!=null?Integer.parseInt(rs.getString("classlevelId")):null);
+                if(c.getClasslevelId()!=null)
+                    c.setClasslevel((new ClasslevelFactory()).getClasslevel(c.getClasslevelId()));
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,12 +101,9 @@ public class ClassroomFactory {
     
     public static void main(String[] args) {
         ClassroomFactory sf=new ClassroomFactory();
-        sf.setClassroom(new Classroom());
         Classroom c= new Classroom();
-        c.setGroup("C");
+        c.setClasslevel(Classlevel.TROISIEME_MC);
         sf.setClassroom(c);
         System.out.println(sf.getClassrooms());
-        System.out.println(sf.getClassroom(3));
-        System.out.println(new Classroom());
     }
 }

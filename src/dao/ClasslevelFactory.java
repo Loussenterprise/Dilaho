@@ -29,12 +29,16 @@ public class ClasslevelFactory {
         statement = Database.getStatement();
     }
     
-    public void setClasslevel(Classlevel c){
+    public int setClasslevel(Classlevel c){
+        int id=-1;
         try {
             prepst=connection.prepareStatement(""
                     + "INSERT INTO 'classlevel'('id','name','n',"
                     + "'niveau','option','op','contribution')"
-                    + " VALUES (NULL,?,?,?,?,?,?);");
+                    + " VALUES ("+c.getId()+",?,?,?,?,?,?)"
+                    + "ON CONFLICT(id) DO UPDATE SET "
+                    + "'name'=?,'n'=?,"
+                    + "'niveau'=?,'option'=?,'op'=?,'contribution'=? ");
             
             prepst.setString(1, c.getName());
             prepst.setString(2, c.getN());
@@ -43,10 +47,18 @@ public class ClasslevelFactory {
             prepst.setString(5, c.getOp());
             prepst.setString(6, c.getContribution()!=null?c.getContribution().toString():null);
             
+            prepst.setString(7, c.getName());
+            prepst.setString(8, c.getN());
+            prepst.setString(9, c.getNiveau());
+            prepst.setString(10, c.getOption());
+            prepst.setString(11, c.getOp());
+            prepst.setString(12, c.getContribution()!=null?c.getContribution().toString():null);
+            
             prepst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return id;
     }
     
     public ArrayList<Classlevel> getClasslevels(){
@@ -93,7 +105,10 @@ public class ClasslevelFactory {
     
     public static void main(String[] args) {
         ClasslevelFactory sf=new ClasslevelFactory();
-        sf.setClasslevel(Classlevel.CE1);
+        ArrayList<Classlevel> cls = Classlevel.getClasses();
+        for (Classlevel c : cls){
+            sf.setClasslevel(c);
+        }
         System.out.println(sf.getClasslevels());
         System.out.println(sf.getClasslevel(3));
     }
