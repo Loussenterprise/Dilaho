@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import model.Classroom;
 
 /**
  *
@@ -18,22 +17,15 @@ import model.Classroom;
 public class ClShowG extends AnchorPane {
     
     AnchorPane root;
-    Classroom classroom;
 
     public ClShowG() {
         super();
         init();
     }
-
-    public ClShowG(Classroom classroom) {
-        super();
-        init();
-        this.classroom = classroom;
-    }
     
     
     
-    void init(){
+    private void init(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/main/classes/cl/clshow/clshow.fxml"));
             getChildren().add(loader.load());

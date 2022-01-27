@@ -39,9 +39,11 @@ public class Database {
                     System.exit(1);
                 }
                 statement=connection.createStatement();
-                System.out.println("DB connected");
-            }else
-                System.out.println("DB already connected");
+                //System.out.println("DB connected");
+            }else{
+                //System.out.println("DB already connected");
+            }
+                
         }catch(Exception e){
             e.printStackTrace();
         }  
@@ -83,12 +85,12 @@ public class Database {
             try {
                 targetFile.createNewFile();
                 seed();
-                System.out.println("DB created");
+                //System.out.println("DB created");
             } catch (IOException ex) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
-            System.out.println("DB exists");
+            //System.out.println("DB exists");
         }
     }
     
@@ -243,7 +245,8 @@ public class Database {
                 "	FOREIGN KEY('courseId') REFERENCES 'course'('id') ON DELETE SET NULL,\n" +
                 "	FOREIGN KEY('studentId') REFERENCES 'student'('id') ON DELETE SET NULL,\n" +
                 "	FOREIGN KEY('classroomId') REFERENCES 'classroom'('id') ON DELETE SET NULL,\n" +
-                "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
+                "	PRIMARY KEY('id' AUTOINCREMENT)\n" + 
+                "       UNIQUE(studentId,classroomId,courseId) " +
                 ");"
         );
     }
@@ -285,6 +288,7 @@ public class Database {
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
                 "	'profappreciation'	TEXT,\n" +
                 "	'dgappreciation'	TEXT,\n" +
+                "	'interromoyenne'	REAL,\n" +
                 "	'hightmoyenne'	REAL,\n" +
                 "	'lowmoyenne'	REAL,\n" +
                 "	'moyenne'	REAL,\n" +
@@ -335,10 +339,28 @@ public class Database {
     public static ArrayList<String> getGroups(){
         ArrayList<String> l = new ArrayList<>();
         try {
-            ResultSet rs= getStatement().executeQuery("SELECT groupe FROM classroom DISTINCTS");
+            ResultSet rs= getStatement().executeQuery("SELECT groupe FROM classroom  ORDER BY id DESC");
             while (rs.next()) {
-                if(rs.getString("groupe")!=null && !ctn(l, rs.getString("groupe")))
+                if(rs.getString("groupe")!=null && !rs.getString("groupe").isEmpty() && !ctn(l, rs.getString("groupe")))
                     l.add(rs.getString("groupe"));                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(String s:l){
+            if(s==null)
+                l.remove(s);
+        }
+        return l;
+    }
+    
+    public static ArrayList<String> getScoolyears(){
+        ArrayList<String> l = new ArrayList<>();
+        try {
+            ResultSet rs= getStatement().executeQuery("SELECT scoolyear FROM classroom ORDER BY id DESC");
+            while (rs.next()) {
+                if(rs.getString("scoolyear")!=null && !ctn(l, rs.getString("scoolyear")))
+                    l.add(rs.getString("scoolyear"));                
             }
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -353,7 +375,7 @@ public class Database {
     
     public static void main(String[] args) {
             try {
-                getStatement().executeUpdate("drop table if exists classroom");
+                getStatement().executeUpdate("drop table if exists notebook");
                 seed();
                 
             } catch (Exception ex) {

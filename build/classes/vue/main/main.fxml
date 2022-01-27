@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="552.0" prefWidth="742.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.MainController">
+<AnchorPane id="AnchorPane" fx:id="pan" prefHeight="552.0" prefWidth="742.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.MainController">
     <stylesheets>
         <URL value="@main.css" />
     </stylesheets>
@@ -36,6 +37,7 @@
                               <Font name="DejaVu Sans Condensed Bold" size="28.0" />
                            </font>
                         </Label>
+                        <ImageView fx:id="load" fitHeight="50.0" fitWidth="50.0" layoutX="-76.0" layoutY="-50.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <VBox fx:id="opts" prefHeight="530.0" prefWidth="50.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">

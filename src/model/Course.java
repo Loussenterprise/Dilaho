@@ -15,8 +15,19 @@ public class Course {
     private Classlevel classlevel;
     private Integer classlevelId;
     private Integer coeff;
+    
+    
 
     public Course() {
+    }
+
+    public Course(String name) {
+        this.name=name;
+    }
+
+    public Course(Integer id, String name) {
+        this.id=id;
+        this.name=name;
     }
 
     public Integer getId() {
@@ -48,7 +59,11 @@ public class Course {
     }
 
     public void setClasslevel(Classlevel classlevel) {
-        this.classlevel = classlevel;
+        if(classlevel!=null){
+            this.classlevel = classlevel;
+            classlevelId=classlevel.getId();
+        }
+        
     }
 
     public Integer getClasslevelId() {
@@ -69,8 +84,14 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" + "id=" + id + ", name=" + name + ", profname=" + profname + ", classlevelId=" + classlevelId + ", coeff=" + coeff + '}';
+        return name!=null?name:"(Vide)";
     }
+//
+//    @Override
+//    public String toString() {
+//        return "Course{" + "id=" + id + ", name=" + name + ", profname=" + profname + ", classlevel=" + classlevel + ", classlevelId=" + classlevelId + ", coeff=" + coeff + "}\n";
+//    }
+//    
     
     
 }

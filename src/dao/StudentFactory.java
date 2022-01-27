@@ -12,7 +12,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.NoteBook;
+import model.Session;
 import model.Student;
+import vue.main.notes.NotesController;
 
 /**
  *
@@ -220,5 +223,19 @@ public class StudentFactory {
             
         System.out.println(sf.getStudents());
         System.out.println(sf.getStudent(3));
+    }
+    
+    static void dopperStudents(ArrayList<Student> list){
+        try {
+            for(Student s:list){
+                for(NoteBook nb:s.loadNotebooks()){
+                    for(Session se:nb.loadSessions()){
+                        se.loadNotes();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Logger.getLogger(NotesController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 }

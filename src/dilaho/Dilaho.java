@@ -33,6 +33,7 @@ public class Dilaho extends Application{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("BECALAV12022");
         launch(args);
     }
 }

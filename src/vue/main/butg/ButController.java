@@ -88,7 +88,7 @@ public class ButController implements Initializable {
     public void setImage(String ImaLocation){
         
         File file = new File(ImaLocation);
-        System.out.println(file.exists());
+        //System.out.println(file.exists());
         Image image = new Image(file.toURI().toString());
         imageView.setImage(image);
     }

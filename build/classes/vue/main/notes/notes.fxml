@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="pane" prefHeight="347.0" prefWidth="516.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.notes.NotesController">
+   <children>
+      <VBox fx:id="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="ap" prefHeight="49.0" prefWidth="542.0">
+               <children>
+                  <Label fx:id="viewing" alignment="CENTER" contentDisplay="RIGHT" layoutX="466.0" layoutY="17.0" prefHeight="35.0" prefWidth="462.0" text="Label" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="17.0" text="Notes classées par :" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="17.0" />
+                  <ComboBox fx:id="classe_par" layoutX="-2.0" layoutY="12.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="matieres" layoutX="352.0" layoutY="12.0" maxWidth="150.0" minWidth="150.0" onAction="#reload" prefWidth="150.0" promptText="Matière" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="Classroom_select" layoutX="407.0" layoutY="12.0" maxWidth="90.0" minWidth="90.0" onAction="#changeClassroom" prefHeight="25.0" prefWidth="90.0" promptText="Classe" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.0" />
+               </children>
+            </AnchorPane>
+            <TableView fx:id="tableview">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <AnchorPane fx:id="dp" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="542.0">
+               <children>
+                  <Button fx:id="save" disable="true" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#save" style="-fx-background-color: green;" text="Sauvegarder" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="5.0" />
+                  <Button fx:id="calculer_moyenne" layoutX="327.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#calculerMoy" text="Calculer les moyennes" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0" />
+                  <Button layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#reload" text="Recharger" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0" />
+               </children></AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

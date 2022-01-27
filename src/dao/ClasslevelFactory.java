@@ -55,6 +55,9 @@ public class ClasslevelFactory {
             prepst.setString(12, c.getContribution()!=null?c.getContribution().toString():null);
             
             prepst.executeUpdate();
+            
+            id=statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
+            c.setId(id);
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

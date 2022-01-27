@@ -4,12 +4,14 @@
  */
 package model;
 
+import dao.SessionFactory;
 import java.util.ArrayList;
 
 /**
  *
  * @author loussin
  */
+
 public class NoteBook {
     
     private Integer id;
@@ -25,6 +27,7 @@ public class NoteBook {
     private ArrayList<Session> sessions;
 
     public NoteBook() {
+        //sessions=new ArrayList<>();
     }
 
     public Integer getId() {
@@ -64,8 +67,68 @@ public class NoteBook {
     }
 
     public void setPreferedSessionNumber(Integer preferedSessionNumber) {
-        this.preferedSessionNumber = preferedSessionNumber;
+        if(preferedSessionNumber!=null){
+            if(sessions==null)
+                sessions=new ArrayList<>();
+            this.preferedSessionNumber = preferedSessionNumber;
+            if(sessions.size() < preferedSessionNumber)
+                for (int i = sessions.size(); i < preferedSessionNumber; i++) {
+                    sessions.add(new Session());
+                }
+        }
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Classroom getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public ArrayList<Session> loadSessions() {
+        if(id!=null){
+            sessions=new SessionFactory().getSessionsByNotebookId(id);
+        }
+        else
+            sessions=new ArrayList<>();
+        if(sessions.isEmpty()){
+            SessionFactory sf= new SessionFactory();
+            setPreferedSessionNumber(3);
+            for(Session s:sessions){
+                sf.setSession(s);
+                s.setModified(true);
+            }
+                
+        }
+        return sessions;
+    }
+    
+    public void setSessions(ArrayList<Session> sessions) {
+        this.sessions = sessions;
+    }
+    
+    
 
     @Override
     public String toString() {

@@ -31,12 +31,16 @@ public class ClassroomFactory {
         statement = Database.getStatement();
     }
     
-    public void setClassroom(Classroom c){
+    public int setClassroom(Classroom c){
+        int id=-1;
         try {
             prepst=connection.prepareStatement(""
                     + "INSERT INTO 'classroom'('id','promotion','scoolyear',"
                     + "'groupe','contribution','classlevelId') "
-                    + "VALUES (NULL,?,?,?,?,?);");
+                    + "VALUES ("+c.getId()+",?,?,?,?,?)"
+                    + "ON CONFLICT(id) DO UPDATE SET "
+                    + "'promotion'=?,'scoolyear'=?,"
+                    + "'groupe'=?,'contribution'=?,'classlevelId'=?");
             
             prepst.setString(1, c.getPromotion());
             prepst.setString(2, c.getScoolYear());
@@ -44,10 +48,20 @@ public class ClassroomFactory {
             prepst.setString(4, c.getContribution()!=null?c.getContribution().toString():null);
             prepst.setString(5, c.getClasslevelId()!=null?c.getClasslevelId().toString():null);
             
+            prepst.setString(6, c.getPromotion());
+            prepst.setString(7, c.getScoolYear());
+            prepst.setString(8, c.getGroup());
+            prepst.setString(9, c.getContribution()!=null?c.getContribution().toString():null);
+            prepst.setString(10, c.getClasslevelId()!=null?c.getClasslevelId().toString():null);
+            
             prepst.executeUpdate();
+            
+            id=statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
+            c.setId(id);
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return id;
     }
     
     public ArrayList<Classroom> getClassrooms(){

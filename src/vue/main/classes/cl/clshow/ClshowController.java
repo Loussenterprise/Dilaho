@@ -66,7 +66,7 @@ public class ClshowController implements Initializable {
     }
     
     public void doNotebook(){
-        System.out.println("vue.main.classes.cl.clshow.ClshowController.doNotebook()");
+        MainController.showNotesG(classroom);
     }
     
     public void doScolarite(){

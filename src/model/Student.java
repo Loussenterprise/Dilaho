@@ -4,6 +4,9 @@
  */
 package model;
 
+import dao.ClassroomFactory;
+import dao.NoteBookFactory;
+import dao.SessionFactory;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -34,9 +37,16 @@ public class Student {
     private Integer classroom;
     private Integer scolarite;
     
+    private Classroom cl;
+    
     private ArrayList<Add> listeAdd;
+    private ArrayList<NoteBook> notebooks;
+    
+    boolean dopped = false;
 
     public Student() {
+        listeAdd=new ArrayList<>();
+        notebooks=new ArrayList<>();
     }
 
     public Integer getId() {
@@ -183,11 +193,11 @@ public class Student {
         this.inscriptionDate = inscriptionDate;
     }
 
-    public ArrayList getListeAdd() {
+    public ArrayList<Add> getListeAdd() {
         return listeAdd;
     }
 
-    public void setListeAdd(ArrayList listeAdd) {
+    public void setListeAdd(ArrayList<Add> listeAdd) {
         this.listeAdd = listeAdd;
     }
 
@@ -196,10 +206,6 @@ public class Student {
         return name + " " + firstnames;
     }
     
-    public static void main(String[] args) {
-        System.out.println((new Student()).toString());
-    }
-
     public String getSexe() {
         return sexe;
     }
@@ -223,9 +229,103 @@ public class Student {
     public void setScolarite(Integer scolarite) {
         this.scolarite = scolarite;
     }
+
+    public Classroom getCl() {
+        return cl;
+    }
+
+    public Classroom loadCl() {
+        Classroom cl = new Classroom();
+        if(classroom!=null){
+            cl=new ClassroomFactory().getClassroom(classroom);
+            setCl(cl);
+        }else
+            System.out.println("cl==null");
+        return cl;
+    }
+
+    public void setCl(Classroom cl) {
+        this.cl = cl;
+        if(cl!=null)
+            classroom=cl.getId();
+        else
+            classroom=null;
+    }
+
+    public ArrayList<NoteBook> getNotebooks() {
+        return notebooks;
+    }
+
+    public ArrayList<NoteBook> loadNotebooks() {
+        if(id!=null){
+            notebooks=new NoteBookFactory().getNoteBooksByStudentId(id);
+        }else
+            notebooks=new ArrayList<>();
+        return notebooks;
+    }
+
+    public NoteBook getNotebook(int courseId) {
+        for(NoteBook n : notebooks){
+            if(n!=null && n.getCourseId()!=null && courseId==n.getCourseId()){
+                return n;
+            }
+        }
+        NoteBook n = new NoteBook();
+        n.setStudentId(id);
+        n.setCourseId(courseId);
+        n.setClassroomId(classroom);
+        n.setPreferedSessionNumber(3);
+        new NoteBookFactory().setNoteBook(n);
+        for(Session s:n.getSessions()){
+            s.setNoteBookId(n.getId());
+            new SessionFactory().setSession(s);
+        }
+        return n;
+    }
+
+    public void setNotebooks(ArrayList<NoteBook> notebooks) {
+        this.notebooks = notebooks;
+    }
+
+    public boolean isDopped() {
+        return dopped;
+    }
+
+    public void setDopped(boolean dopped) {
+        this.dopped = dopped;
+    }
+
     
     
+    public ArrayList<NoteBook> generateNotebooks(){
+        ArrayList<NoteBook> list = new ArrayList();
+        try {
+            for(Course c : cl.getCourses()){
+                NoteBook n = new NoteBook();
+                n.setClassroomId(classroom);
+                n.setCourseId(c.getId());
+                n.setStudentId(id);
+                n.setPreferedSessionNumber(2);
+                System.out.println(n.getSessions().size()+" "+c.getName());
+                list.add(n);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        notebooks=list;
+        return list;
+    }
     
     
+    public static void main(String[] args) {
+        Student s=new Student();
+        s.setId(Integer.SIZE);
+        s.setClassroom(2);
+        System.out.println(s.loadCl());
+        s.getCl().generateNCourses(10);
+        System.out.println(s.generateNotebooks());
+        System.out.println(s.getNotebooks());
+    }
+
     
 }

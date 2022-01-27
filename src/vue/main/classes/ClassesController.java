@@ -17,6 +17,7 @@ import model.Classroom;
 import vue.main.MainController;
 import vue.main.classes.cl.ClController;
 import vue.main.classes.cl.ClG;
+import vue.main.classes.cl.newcl.NewClG;
 
 /**
  * FXML Controller class
@@ -66,6 +67,10 @@ public class ClassesController implements Initializable {
     
     public static void injectClController(ClController c){
         clcs.add(c);
+    }
+    
+    public void newClassroom(){
+        MainController.showNode(new NewClG());
     }
     
 }

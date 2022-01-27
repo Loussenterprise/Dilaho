@@ -4,6 +4,7 @@
  */
 package model;
 
+import dao.NoteFactory;
 import java.util.ArrayList;
 
 /**
@@ -15,10 +16,12 @@ public class Session {
     private String profAppreciation;
     private String dgAppreciation;
     private Double hightMoyenne;
+    private Double interroMoyenne;
     private Double lowMoyenne;
     private Double moyenne;
     private Integer range;
     private Boolean isFinal=false;
+    private Boolean modified;
     
     private Integer noteBookId;
     
@@ -26,6 +29,21 @@ public class Session {
     
     private ArrayList<Note> interros;
     private ArrayList<Note> devoirs;
+
+    public Session() {
+        this.interros = new ArrayList<>();
+        this.devoirs = new ArrayList<>();
+        this.modified = false;
+    }
+    
+
+    public Session(Boolean modified) {
+        this.interros = new ArrayList<>();
+        this.devoirs = new ArrayList<>();
+        this.modified = modified;
+    }
+    
+    
 
     public Integer getId() {
         return id;
@@ -54,6 +72,16 @@ public class Session {
     public Double getHightMoyenne() {
         return hightMoyenne;
     }
+
+    public Double getInterroMoyenne() {
+        return interroMoyenne;
+    }
+
+    public void setInterroMoyenne(Double interroMoyenne) {
+        this.interroMoyenne = interroMoyenne;
+    }
+    
+    
 
     public void setHightMoyenne(Double hightMoyenne) {
         this.hightMoyenne = hightMoyenne;
@@ -123,13 +151,38 @@ public class Session {
         return devoirs;
     }
 
+    public ArrayList<Note> loadNotes() {
+        System.out.println("model.Session.loadNotes() %%%%% "+id);
+        ArrayList<Note> notes=new ArrayList<>();
+        if(id!=null){
+            notes=new NoteFactory().getNotesBySessionId(id);
+        }
+        for(Note n:notes)
+            if(n.isDevoir())
+                devoirs.add(n);
+            else
+                interros.add(n);
+        return notes;
+    }
+
     public void setDevoirs(ArrayList<Note> devoirs) {
         this.devoirs = devoirs;
     }
 
-    public Session() {
+    public Boolean isModified() {
+        return modified;
     }
 
+    public Boolean getModified() {
+        return modified;
+    }
+
+    public void setModified(Boolean modified) {
+        this.modified = modified;
+    }
+
+    
+    
     @Override
     public String toString() {
         return "Session{" + "id=" + id + ", moyenne=" + moyenne + ", range=" + range + ", isFinal=" + isFinal + ", noteBookId=" + noteBookId + '}';

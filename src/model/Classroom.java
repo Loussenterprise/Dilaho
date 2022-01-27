@@ -4,6 +4,7 @@
  */
 package model;
 
+import dao.CourseFactory;
 import java.util.ArrayList;
 
 /**
@@ -100,7 +101,11 @@ public class Classroom {
     }
 
     public void setClasslevel(Classlevel classlevel) {
-        this.classlevel = classlevel;
+        if(classlevel!=null){
+            this.classlevel = classlevel;
+            classlevelId=classlevel.getId();
+        }
+        
     }
 
     public Integer getFilleNbr() {
@@ -127,6 +132,46 @@ public class Classroom {
     public void generateNbr() {
         Integer garconNbr = 0;
         this.garconNbr = garconNbr;
+    }
+
+    public void generateNCourses(int n) {
+        if(courses==null)
+            courses=new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            courses.add(new Course(i,""+i));
+        }
+    }
+
+    public ArrayList<Scolarite> getScolarites() {
+        return scolarites;
+    }
+
+    public void setScolarites(ArrayList<Scolarite> scolarites) {
+        this.scolarites = scolarites;
+    }
+
+    public ArrayList<NoteBook> getNotebooks() {
+        return notebooks;
+    }
+
+    public void setNotebooks(ArrayList<NoteBook> notebooks) {
+        this.notebooks = notebooks;
+    }
+
+    public ArrayList<Course> getCourses() {
+        return courses;
+    }
+
+    public ArrayList<Course> loadCourses() {
+        if(classlevelId!=null)
+            courses=new CourseFactory().getCoursesByClasslevelId(classlevelId);
+        else
+            courses=new ArrayList<>();
+        return courses;
+    }
+
+    public void setCourses(ArrayList<Course> courses) {
+        this.courses = courses;
     }
 
     

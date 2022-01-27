@@ -162,7 +162,7 @@ public class StudentController implements Initializable {
         
         
     public void loadData() {
-        System.out.println(cls_select.getValue());
+        //System.out.println(cls_select.getValue());
         if(cls_select.getValue()!=null){
             Integer searchText = cls_select.getValue().getId();
 
@@ -171,7 +171,7 @@ public class StudentController implements Initializable {
                 @Override
                 protected ObservableList<Student> call() throws Exception {
                     updateMessage("Loading data");
-                    System.out.println(".call()");
+                    //System.out.println(".call()");
                     return FXCollections.observableArrayList(stl
                             .stream()
                             .filter(value -> searchText.equals(value.getClassroom()))
@@ -179,15 +179,15 @@ public class StudentController implements Initializable {
                 }
             };
             task.setOnSucceeded(event -> {
-                System.out.println("succeeded");
+                //System.out.println("succeeded");
                 results = task.getValue();
                 student_list_view.setItems(FXCollections.observableList(results));
             });
             task.setOnRunning((event) -> {
-                System.out.println("running");
+                //System.out.println("running");
             });
             task.setOnFailed((event) -> {
-                System.out.println("failed");
+                //System.out.println("failed");
             });
             Thread th = new Thread(task);
             th.setDaemon(true);
@@ -208,7 +208,7 @@ public class StudentController implements Initializable {
         Student s = new Student();
         s.setClassroom(cls_select.getValue()!=null?cls_select.getValue().getId():null);
         s.setInscriptionDate(new Date(new java.util.Date().getTime()));
-        System.out.println(s.getInscriptionDate());
+        //System.out.println(s.getInscriptionDate());
         stl.add(s);
         loadData();
         student_list_view.requestFocus();
@@ -366,7 +366,7 @@ public class StudentController implements Initializable {
             datePicker = new DatePicker(getDate());
             datePicker.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
             datePicker.setOnAction((e) -> {
-                System.out.println("Committed: " + datePicker.getValue().toString());
+                //System.out.println("Committed: " + datePicker.getValue().toString());
                 Instant t= datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant();
                 ZoneId zoneId = ZoneId.systemDefault();
                 ZonedDateTime zdt = ZonedDateTime.ofInstant ( t , zoneId );

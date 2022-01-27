@@ -34,7 +34,6 @@ public class LoginController implements Initializable {
     
     
     
-    MainStage ms;    
     public UserFactory userfactory = new UserFactory();
     
     @FXML
@@ -84,6 +83,7 @@ public class LoginController implements Initializable {
     }    
     
     public void login(){
+        message.setVisible(true);
         if (emailMatches(email.getText())) {
             User user=userfactory.connect(email.getText(), passwd.getText());
             if(user == null){
@@ -95,16 +95,14 @@ public class LoginController implements Initializable {
                 message.setText(user.toString());
                 message.setTextFill(Color.GREEN);
                 connect.requestFocus();
-                ms=new MainStage();
-                ms.show();
                 ((Stage)pane.getScene().getWindow()).close();
+                new MainStage().show();
             }
         } else {
             message.setText("Email not macthes");
             message.setTextFill(Color.RED);
             email.requestFocus();
         }
-        message.setVisible(true);
     }
     
     private void requestFocusOrDieTrying(Node node) {

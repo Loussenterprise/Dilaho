@@ -23,6 +23,10 @@ public class Note {
     public Note() {
     }
 
+    public Note(Integer sessionId) {
+        this.sessionId = sessionId;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -63,8 +67,9 @@ public class Note {
         return isDevoir;
     }
 
-    public void setIsDevoir(Boolean isDevoir) {
+    public Note setIsDevoir(Boolean isDevoir) {
         this.isDevoir = isDevoir;
+        return this;
     }
     
     
