@@ -5,6 +5,7 @@
 package model;
 
 import dao.ClassroomFactory;
+import dao.CourseFactory;
 import dao.NoteBookFactory;
 import dao.SessionFactory;
 import java.sql.Date;
@@ -43,6 +44,7 @@ public class Student {
     private ArrayList<NoteBook> notebooks;
     
     boolean dopped = false;
+    boolean modified = false;
 
     public Student() {
         listeAdd=new ArrayList<>();
@@ -235,12 +237,10 @@ public class Student {
     }
 
     public Classroom loadCl() {
-        Classroom cl = new Classroom();
-        if(classroom!=null){
+        if(cl==null)
             cl=new ClassroomFactory().getClassroom(classroom);
-            setCl(cl);
-        }else
-            System.out.println("cl==null");
+        if(cl!=null)
+            classroom=cl.getId();
         return cl;
     }
 
@@ -263,6 +263,24 @@ public class Student {
             notebooks=new ArrayList<>();
         return notebooks;
     }
+    
+    public void createNotebooks(){
+        if(notebooks==null)
+            notebooks=new ArrayList<>();
+        if(notebooks.isEmpty()){
+            loadCl();
+            ArrayList<Course> crs = new CourseFactory().getCoursesByClasslevelId(cl.getClasslevelId());
+            for(Course c:crs){
+                NoteBook n = new NoteBook();
+                n.setStudentId(id);
+                n.setCourseId(c.getId());
+                n.setClassroomId(classroom);
+                n.setPreferedSessionNumber(3);
+                new NoteBookFactory().setNoteBook(n);
+                n.loadSessions();
+            }
+        }
+    } 
 
     public NoteBook getNotebook(int courseId) {
         for(NoteBook n : notebooks){
@@ -276,6 +294,7 @@ public class Student {
         n.setClassroomId(classroom);
         n.setPreferedSessionNumber(3);
         new NoteBookFactory().setNoteBook(n);
+        n.createSessions(3);
         for(Session s:n.getSessions()){
             s.setNoteBookId(n.getId());
             new SessionFactory().setSession(s);
@@ -315,6 +334,16 @@ public class Student {
         notebooks=list;
         return list;
     }
+
+    public boolean isModified() {
+        return modified;
+    }
+
+    public void setModified(boolean modified) {
+        this.modified = modified;
+    }
+    
+    
     
     
     public static void main(String[] args) {

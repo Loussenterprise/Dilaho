@@ -4,8 +4,11 @@
  */
 package model;
 
+import dao.ClasslevelFactory;
 import dao.CourseFactory;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -46,11 +49,11 @@ public class Classroom {
 
     @Override
     public String toString() {
-        return classlevel!=null? classlevel.toString()+(group!=null?" ["+group+"]":""):"(---)"+(group!=null?" ["+group+"]":"");
+        return classlevel!=null? classlevel.toString()+(group!=null && !group. isEmpty()?" ["+group+"]":""):"(---)"+(group!=null && !group. isEmpty() ?" ["+group+"]":"");
     }
     
     public String desc() {
-        return classlevel!=null? classlevel.desc()+(group!=null?" groupe "+group+"":""):"(---)"+(group!=null?" groupe "+group+"":"");
+        return classlevel!=null? classlevel.desc()+(group!=null  && !group. isEmpty()?" groupe "+group+"":""):"(---)"+(group!=null && !group. isEmpty() ?" groupe "+group+"":"");
     }
 //
 //    @Override
@@ -173,6 +176,11 @@ public class Classroom {
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
     }
+    
+    public Classlevel loadClasslevel(){
+        classlevel = new ClasslevelFactory().getClasslevel(classlevelId);
+        return classlevel;
+    }
 
     
     public static void main(String[] args) {
@@ -181,4 +189,34 @@ public class Classroom {
         c.setGroup("A");
         System.out.println(c.desc());
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Classroom other = (Classroom) obj;
+        return Objects.equals(this.id, other.id);
+    }
+    
+    public static Classroom get(List<Classroom> cl,Classroom c){
+        for(Classroom cc:cl){
+            if(cc.equals(c))
+                return cc;
+        }
+        return null;
+    }
+    
 }

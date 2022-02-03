@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -55,18 +56,23 @@ public class StudentController implements Initializable {
     Label classroom;
     
     @FXML 
-    TableView<Student> student_list_view;
+    TableView<Student> student_list;
+    static TableView<Student> student_list_view;
     
     @FXML
     Button all;
     
     @FXML
-    Button addstu;
+    Button addstu;   
+    
+    @FXML
+    Button save;
     
     @FXML
     public ComboBox<Classroom> cls_select;
     
-    
+    @FXML
+    CheckBox fast;
     
     @FXML
     ScrollPane general_view;
@@ -81,7 +87,7 @@ public class StudentController implements Initializable {
     ClassroomFactory crf= new ClassroomFactory();
     public ArrayList<Classroom> cl_ls = crf.getClassrooms();
     ObservableList<Classroom> crl = FXCollections.observableList(cl_ls);
-    ObservableList<Student> stl;
+    public static ObservableList<Student> stl;
     ObservableList<Student> results;
     
     
@@ -94,7 +100,7 @@ public class StudentController implements Initializable {
         MainController.injectStudentController(this);
         stl = MainController.getStl();
         results = FXCollections.observableList(stl);
-        
+        setStudent_list_view(student_list);
         classroom.setText("Toutes les clases");
         classroom.setMaxWidth(Double.MAX_VALUE);
         ap.setLeftAnchor(classroom, 0.0);
@@ -105,6 +111,12 @@ public class StudentController implements Initializable {
         
         
     }    
+
+    public static void setStudent_list_view(TableView<Student> student_list_view) {
+        StudentController.student_list_view = student_list_view;
+    }
+    
+    
     
    public void initStudentTable(){
         
@@ -155,9 +167,27 @@ public class StudentController implements Initializable {
                 return p.getValue().getInscriptionDate();
             }
         });
+        
+        TableColumn<Student, Void> action = new TableColumn("Action");
+        action.setCellFactory(col -> new TableCell<Student, Void>() {
+            private final Button container;
+            {
+                container=new Button("Afficher");
+                container.setOnAction(evt->{
+                    MainController.showStudent((Student)getTableRow().getItem());
+                });
+            }
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : container);
+            }
+        });
         student_list_view.getColumns().removeAll(student_list_view.getColumns());
-        student_list_view.getColumns().addAll(mtnoCol,NameCol,firstNameCol,dobCol,insdCol);
+        student_list_view.getColumns().addAll(mtnoCol,NameCol,firstNameCol,dobCol,insdCol,action);
         blic(student_list_view);
+        
+        
     }
         
         
@@ -205,16 +235,21 @@ public class StudentController implements Initializable {
     
     
     public void addStudent(){
-        Student s = new Student();
-        s.setClassroom(cls_select.getValue()!=null?cls_select.getValue().getId():null);
-        s.setInscriptionDate(new Date(new java.util.Date().getTime()));
-        //System.out.println(s.getInscriptionDate());
-        stl.add(s);
-        loadData();
-        student_list_view.requestFocus();
-        student_list_view.getFocusModel().focus(stl.size()-1);
-        student_list_view.getSelectionModel().clearAndSelect(stl.size()-1);
-        student_list_view.scrollTo(s);
+        if(fast.isSelected()){
+            Student s = new Student();
+            s.setClassroom(cls_select.getValue()!=null?cls_select.getValue().getId():null);
+            s.setInscriptionDate(new Date(new java.util.Date().getTime()));
+            //System.out.println(s.getInscriptionDate());
+            stl.add(s);
+            loadData();
+            student_list_view.requestFocus();
+            student_list_view.getFocusModel().focus(stl.size()-1);
+            student_list_view.getSelectionModel().clearAndSelect(stl.size()-1);
+            student_list_view.scrollTo(s);
+        }else{
+            MainController.showNewstuG();
+        }
+            
     }
     
     void blic(TableView<Student> table) {
@@ -233,9 +268,7 @@ public class StudentController implements Initializable {
                         t.getTablePosition().getRow())
                         );
                         s.setMatricule(t.getNewValue().toString());
-                        int id=stf.setStudent(s);
-//                        if(s.getId()==null)
-//                            s.setId(id);
+                        s.setModified(true); save.setVisible(true);
                     
                 }
             }
@@ -249,9 +282,7 @@ public class StudentController implements Initializable {
                         t.getTablePosition().getRow())
                         );
                     s.setName(t.getNewValue());
-                        int id=stf.setStudent(s);
-                        if(s.getId()==null)
-                            s.setId(id);
+                        s.setModified(true); save.setVisible(true);
                 }
             }
         );
@@ -264,9 +295,7 @@ public class StudentController implements Initializable {
                         t.getTablePosition().getRow())
                         );
                     s.setFirstnames(t.getNewValue());
-                        int id=stf.setStudent(s);
-                        if(s.getId()==null)
-                            s.setId(id);
+                        s.setModified(true); save.setVisible(true);
                 }
             }
         );
@@ -282,9 +311,7 @@ public class StudentController implements Initializable {
                         t.getTablePosition().getRow())
                         );
                     s.setBirthday(t.getNewValue());
-                        int id=stf.setStudent(s);
-                        if(s.getId()==null)
-                            s.setId(id);
+                        s.setModified(true); save.setVisible(true);
                 }
             }
         );
@@ -297,12 +324,30 @@ public class StudentController implements Initializable {
                         t.getTablePosition().getRow())
                         );
                     s.setInscriptionDate(t.getNewValue());
-                        int id=stf.setStudent(s);
-                        if(s.getId()==null)
-                            s.setId(id);
+                    s.setModified(true); save.setVisible(true);
                 }
             }
         );
+    }
+    
+    public void saveModifieds(){
+        for(Student s: stl){
+            if(s.isModified())
+                stf.setStudent(s);
+        }
+        save.setVisible(false);
+    }
+    
+    public static void refreshTable(){
+        student_list_view.refresh();
+    }
+    public static void refreshTableAndTim(){
+        student_list_view.refresh();
+//        tim();
+    }
+    
+    public void reload(){
+        MainController.reloadStudentG();
     }
 }
 

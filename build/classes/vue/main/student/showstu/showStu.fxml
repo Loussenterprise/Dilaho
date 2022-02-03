@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="600.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.student.showstu.ShowStuController">
+    <stylesheets>
+        <URL value="@showstu.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="tostring" layoutX="107.0" layoutY="18.0" text="Affichage de " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <AnchorPane maxWidth="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <BorderPane layoutX="-14.0" layoutY="81.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <ImageView fx:id="image" fitHeight="250.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <GridPane prefHeight="583.0" prefWidth="398.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Nom" GridPane.rowIndex="11" />
+                              <Label text="Prénoms" GridPane.rowIndex="1" />
+                              <Label text="Sexe" GridPane.rowIndex="2" />
+                              <Label text="Matricule" GridPane.rowIndex="3" />
+                              <Label text="Date de naissance" GridPane.rowIndex="4" />
+                              <Label text="Date d'inscription" GridPane.rowIndex="5" />
+                              <Label text="École de provenance" GridPane.rowIndex="6" />
+                              <Label text="Adresse" GridPane.rowIndex="7" />
+                              <Label text="Classe actuelle" GridPane.rowIndex="8" />
+                              <Label text="Autre" GridPane.rowIndex="9" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets top="10.0" />
+                                 </GridPane.margin></Label>
+                              <Label text="Père" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Nom" />
+                              <Label text="Travail" GridPane.rowIndex="12" />
+                              <Label text="Adresse" GridPane.rowIndex="13" />
+                              <Label text="Mère" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Travail" GridPane.rowIndex="16" />
+                              <Label text="Nom" GridPane.rowIndex="15" />
+                              <Label text="Adresse" GridPane.rowIndex="17" />
+                              <Label fx:id="name" GridPane.columnIndex="1" />
+                              <Label fx:id="firstnames" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="classe" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <Label fx:id="address" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Label fx:id="commingScool" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label fx:id="inscriptionDate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label fx:id="birthday" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label fx:id="matricule" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="sexe" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="motherAddress" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                              <Label fx:id="motherWork" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                              <Label fx:id="motherName" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                              <Label fx:id="fatherAddress" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                              <Label fx:id="fatherWork" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                              <Label fx:id="fatherName" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                              <TextArea fx:id="extras" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button layoutX="529.0" layoutY="9.0" mnemonicParsing="false" onAction="#edit" text="Éditer" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="5.0" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

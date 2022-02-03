@@ -73,4 +73,8 @@ public class ClassesController implements Initializable {
         MainController.showNode(new NewClG());
     }
     
+    public void reload(){
+        MainController.showClassesG(null);
+    }
+    
 }

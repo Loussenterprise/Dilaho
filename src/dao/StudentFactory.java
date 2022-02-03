@@ -206,7 +206,7 @@ public class StudentFactory {
     public static int getGarconNbr(ArrayList<Student> students){
         int nbr=0;
         for(Student s:students)
-            if("G".equals(s.getSexe()))
+            if("H".equals(s.getSexe()))
                 nbr++;
         return nbr;
     }

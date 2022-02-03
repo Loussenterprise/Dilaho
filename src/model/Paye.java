@@ -16,11 +16,9 @@ public class Paye {
     private Double montantRst;
     private Boolean solded=false;
     
-    private Integer studentId;
-    private Integer classroomId;
+    private Integer scolariteId;
     
-    private Student student;
-    private Classroom classroom;
+    private Scolarite scolarite;
 
     public Paye() {
     }
@@ -73,25 +71,25 @@ public class Paye {
         this.solded = solded;
     }
 
-    public Integer getStudentId() {
-        return studentId;
+    public Integer getScolariteId() {
+        return scolariteId;
     }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
+    public void setScolariteId(Integer scolariteId) {
+        this.scolariteId = scolariteId;
     }
 
-    public Integer getClassroomId() {
-        return classroomId;
+    public Scolarite getScolarite() {
+        return scolarite;
     }
 
-    public void setClassroomId(Integer classroomId) {
-        this.classroomId = classroomId;
+    public void setScolarite(Scolarite scolarite) {
+        this.scolarite = scolarite;
     }
 
     @Override
     public String toString() {
-        return "Paye{" + "id=" + id + ", scoolYear=" + scoolYear + ", montant=" + montant + ", montantRst=" + montantRst + ", montantEnLtr=" + montantEnLtr + ", solded=" + solded + ", studentId=" + studentId + ", classroomId=" + classroomId + '}';
+        return "Paye{" + "id=" + id + ", scoolYear=" + scoolYear + ", montant=" + montant + ", montantRst=" + montantRst + ", montantEnLtr=" + montantEnLtr + ", solded=" + solded + ", scolariteId=" + scolariteId +  '}';
     }
     
 }

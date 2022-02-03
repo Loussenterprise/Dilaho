@@ -10,6 +10,7 @@ import dao.CourseFactory;
 import dao.Database;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -97,11 +99,17 @@ public class NewclController implements Initializable {
     @FXML
     ComboBox<String> scoolyear_select;
     
+    @FXML
+    Label bi;
+    
     static ArrayList<Classlevel> classlevels;
     static ArrayList<String> groupes;
     static ArrayList<String> scoolyears;
     static ArrayList<Course> courseArray;
     static ArrayList<Course> temoin;
+    
+    Classroom c;
+    Classlevel cl;
 
     /**
      * Initializes the controller class.
@@ -109,6 +117,7 @@ public class NewclController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        MainController.injectNewclController(this);
         courseArray=new ArrayList<>();
         temoin=courseArray;
         classlevels=new ClasslevelFactory().getClasslevels();
@@ -116,9 +125,9 @@ public class NewclController implements Initializable {
         scoolyears=Database.getScoolyears();
         classlevel_select.setItems(FXCollections.observableList(classlevels));
         groupe_select.setItems(FXCollections.observableList(groupes));
+        scoolyear_select.setItems(FXCollections.observableList(scoolyears));
         if(!groupes.isEmpty())
             groupe_select.setValue(groupes.get(0));
-        scoolyear_select.setItems(FXCollections.observableList(scoolyears));
         if(!scoolyears.isEmpty())
             scoolyear_select.setValue(scoolyears.get(0));
         castGroupe();
@@ -166,31 +175,68 @@ public class NewclController implements Initializable {
     }
     
     public void addClassroomAble(){
-        if(classlevel.getText().isEmpty() || scoolyear.getText().isEmpty())
+        if(classlevel.getText().isEmpty() || scoolyear.getText().isEmpty() || !ma())
             add_classroom.setDisable(true);
         else
             add_classroom.setDisable(false);
     }
     
+    public void setClassroom(Classroom cc){
+        c=cc;
+        if(cc!=null){
+            try {
+                classlevel.setText(c.loadClasslevel().toString());
+            } catch (Exception e) {
+            }
+            
+            groupe.setText(c.getGroup());
+            scoolyear.setText(c.getScoolYear());
+            promotion.setText(c.getPromotion());
+            contribution.setText(""+c.getContribution());
+            classlevel_select.setItems(FXCollections.observableList(classlevels));
+            groupe_select.setItems(FXCollections.observableList(groupes));
+            scoolyear_select.setItems(FXCollections.observableList(scoolyears));
+            classlevel_select.setValue(Classlevel.get(classlevel_select.getItems(), c.getClasslevel()));
+            groupe_select.setValue(get(groupe_select.getItems(), c.getGroup()));
+            scoolyear_select.setValue(get(scoolyear_select.getItems(), c.getScoolYear()));
+            loadCourses();
+            setClasslevel(cc.getClasslevel());
+        }
+    }
+    public void setClasslevel(Classlevel cc){
+        cl=cc;
+        if(cc!=null){
+            name.setText(cl.getName());
+            n.setText(cl.getN());
+            niveau.setText(cl.getNiveau());
+            option.setText(cl.getOption());
+            op.setText(cl.getOp());
+            ctrb.setText(""+cl.getContribution());
+        }
+        
+    }
+    
     public void addClasslevel(){
-        Classlevel c= new Classlevel();
+        if(cl==null)
+            cl= new Classlevel();
         try {
-            c.setContribution(Double.parseDouble(ctrb.getText()));
+            cl.setContribution(Double.parseDouble(ctrb.getText()));
         } catch (Exception e) {
         }
-        c.setN(n.getText());
-        c.setName(name.getText());
-        c.setNiveau(niveau.getText());
-        c.setOp(op.getText());
-        c.setOption(option.getText());
-        new ClasslevelFactory().setClasslevel(c);
-        classlevel_select.getItems().add(c);
-        classlevel_select.setValue(c);
+        cl.setN(n.getText());
+        cl.setName(name.getText());
+        cl.setNiveau(niveau.getText());
+        cl.setOp(op.getText());
+        cl.setOption(option.getText());
+        new ClasslevelFactory().setClasslevel(cl);
+        classlevel_select.getItems().add(cl);
+        classlevel_select.setValue(cl);
         doAnnuler();
     }
     
     public void addClassroom(){
-        Classroom c= new Classroom();
+        if(c==null)
+            c= new Classroom();
         try {
             c.setContribution(Double.parseDouble(ctrb.getText()));
         } catch (Exception e) {
@@ -334,4 +380,31 @@ public class NewclController implements Initializable {
         addClasslevelAble();
     }
     
+    public void scoolyearMatch(){
+        bi.setVisible(!ma());
+        addClassroomAble();
+    }
+    
+    public boolean ma(){
+        boolean b=false;
+        String s= scoolyear.getText();
+        if(s!=null && !s.isEmpty() )
+            b = s.matches("[0-9]{4}-[0-9]{4}");
+        else
+            b=true;
+        return b;
+    }
+    
+    
+    public static String get(List<String> cl,String c){
+        for(String cc:cl){
+            if(cc.equals(c))
+                return cc;
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("2001".matches("[0-9]{4}"));
+    }
 }

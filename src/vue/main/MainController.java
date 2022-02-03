@@ -38,10 +38,18 @@ import vue.main.classes.ClassesG;
 import vue.main.classes.cl.ClController;
 import vue.main.classes.cl.clshow.ClShowG;
 import vue.main.classes.cl.clshow.ClshowController;
+import vue.main.classes.cl.newcl.NewClG;
+import vue.main.classes.cl.newcl.NewclController;
 import vue.main.notes.NotesController;
 import vue.main.notes.NotesG;
+import vue.main.scolarite.ScolariteController;
+import vue.main.scolarite.ScolariteG;
 import vue.main.student.StudentController;
 import vue.main.student.StudentG;
+import vue.main.student.newstudent.NewstudentController;
+import vue.main.student.newstudent.NewstudentG;
+import vue.main.student.showstu.ShowStuController;
+import vue.main.student.showstu.ShowStuG;
 
 /**
  * FXML Controller class
@@ -56,7 +64,9 @@ public class MainController implements Initializable {
 
     static ClassesController clc; 
     static NotesController nctl; 
-
+    static ShowStuController showstuctl; 
+    static ScolariteController scolariteCtl; 
+    public static NewstudentController nstuctl;
     public static void setLoading(ImageView aLoading) {
         loading = aLoading;
     }
@@ -92,6 +102,9 @@ public class MainController implements Initializable {
     static StudentG studentg ;    
     public static ClassesG classesg ;
     static NotesG notesG ;
+    static ScolariteG scolariteG ;
+    public static NewstudentG newstuG;
+    public static NewclController cctl;
     Timeline timelinemin;
     Timeline timelinewipe;
     
@@ -116,25 +129,31 @@ public class MainController implements Initializable {
         stl.addListener(new ListChangeListener<Student>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Student> arg0) {
-                clc.initialize(url, rb);
+                try {
+                    clc.initialize(url, rb);
+                } catch (Exception e) {
+                }
+                
             }
         });
         //System.out.println("vue.main.MainController.initialize()  ##### %%%%% "+butcs.size());
-        if(butcs.size()>4){
+        if(butcs.size()>3){
             butcs.get(0).setText("Eleves");
-            butcs.get(0).setImage("./img/Student_2.png");
+            butcs.get(0).setImage("img/Student_2.png");
             butcs.get(0).getPane().setOnMouseClicked(event -> showStudentG());
             
             butcs.get(1).setText("Classes");
             butcs.get(1).setImage("img/Student.png");
             butcs.get(1).getPane().setOnMouseClicked(event -> showClassesG());
             
-            butcs.get(2).setText("Salles");
-            butcs.get(3).setText("Scolarite");
+            //butcs.get(2).setText("Salles");
+            butcs.get(2).setText("Scolarité");
+            butcs.get(2).setImage("img/scolarite.png");
+            butcs.get(2).getPane().setOnMouseClicked(event -> showScolariteG());
             
-            butcs.get(4).setText("Notes");
-            butcs.get(4).setImage("img/notes.png");
-            butcs.get(4).getPane().setOnMouseClicked(event -> showNotesG());
+            butcs.get(3).setText("Notes");
+            butcs.get(3).setImage("img/notes.png");
+            butcs.get(3).getPane().setOnMouseClicked(event -> showNotesG());
         }
         setVisible(visibl);
         
@@ -217,6 +236,22 @@ public class MainController implements Initializable {
         if(ctl!=null)
             nctl = ctl;
     }
+    public static void injectNewStuController(NewstudentController ctl){
+        if(ctl!=null)
+            nstuctl = ctl;
+    }
+    public static void injectShowStuController(ShowStuController ctl){
+        if(ctl!=null)
+            showstuctl = ctl;
+    }
+    public static void injectNewclController(NewclController ctl){
+        if(ctl!=null)
+            cctl = ctl;
+    }
+    public static void injectScolariteController(ScolariteController ctl){
+        if(ctl!=null)
+            scolariteCtl = ctl;
+    }
     
     
     public void minOptions(){
@@ -229,19 +264,37 @@ public class MainController implements Initializable {
         //leftzone.setPrefWidth(200);
     }
     
-    public void showStudentG(){
+    public static void showStudentG(){
         //loading.setVisible(true);
         if(studentg==null)
             studentg=new StudentG();
         visible.getChildren().removeAll(visible.getChildren());
         visible.getChildren().add(studentg);
         studentg.requestFocus();
-        if(butcs.size()>4){
-            butcs.get(0).grisec();
-            butcs.get(1).degrisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).degrisec();
+        if(butcs.size()>3){
+            butcs.get(0).grise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
+        }
+        //loading.setVisible(false);
+    } 
+    
+    public static void reloadStudentG(){
+        //loading.setVisible(true);
+        studentg=null;
+        if(studentg==null)
+            studentg=new StudentG();
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(studentg);
+        studentg.requestFocus();
+        if(butcs.size()>3){
+            butcs.get(0).grise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
         }
         //loading.setVisible(false);
     }  
@@ -251,12 +304,12 @@ public class MainController implements Initializable {
         //loading.setVisible(true);
         if(studentg==null)
             studentg=new StudentG();
-        if(butcs.size()>4){
-            butcs.get(0).grisec();
-            butcs.get(1).degrisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).degrisec();
+        if(butcs.size()>3){
+            butcs.get(0).grise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
         }
         visible.getChildren().removeAll(visible.getChildren());
         visible.getChildren().add(studentg);
@@ -277,12 +330,30 @@ public class MainController implements Initializable {
         
         if(classesg==null)
             classesg=new ClassesG();
-        if(butcs.size()>4){
-            butcs.get(0).degrisec();
-            butcs.get(1).grisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).degrisec();
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).grise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
+        }
+        visible.getChildren().removeAll(visible.getChildren());
+        visible.getChildren().add(classesg);
+        classesg.requestFocus();
+        //loading.setVisible(false);
+    }
+    
+    public static void showClassesG(ClassesG g){
+        //loading.setVisible(true);
+        classesg=g;
+        if(classesg==null)
+            classesg=new ClassesG();
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).grise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
         }
         visible.getChildren().removeAll(visible.getChildren());
         visible.getChildren().add(classesg);
@@ -306,12 +377,12 @@ public class MainController implements Initializable {
                 showingClassroom.doReturn();
             }
         });
-        if(butcs.size()>4){
-            butcs.get(0).degrisec();
-            butcs.get(1).degrisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).degrisec();
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
         }
     }
     
@@ -327,12 +398,12 @@ public class MainController implements Initializable {
             }
         });
         
-        if(butcs.size()>4){
-            butcs.get(0).degrisec();
-            butcs.get(1).degrisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).degrisec();
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).degrise();
         }
     }
     
@@ -340,12 +411,12 @@ public class MainController implements Initializable {
         //loading.setVisible(true);
         if(notesG==null)
             notesG=new NotesG();
-        if(butcs.size()>4){
-            butcs.get(0).degrisec();
-            butcs.get(1).degrisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).grisec();
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).grise();
         }
         visible.getChildren().removeAll(visible.getChildren());
         visible.getChildren().add(notesG);
@@ -357,12 +428,12 @@ public class MainController implements Initializable {
         //loading.setVisible(true);
         if(notesG==null)
             notesG=new NotesG();
-        if(butcs.size()>4){
-            butcs.get(0).degrisec();
-            butcs.get(1).degrisec();
-            butcs.get(2).degrisec();
-            butcs.get(3).degrisec();
-            butcs.get(4).grisec();
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).degrise();
+            butcs.get(3).grise();
         }
         visible.getChildren().removeAll(visible.getChildren());
         nctl.setClassroom(classroom);
@@ -376,6 +447,44 @@ public class MainController implements Initializable {
         visible.getChildren().add(node);
         node.requestFocus();
         //loading.setVisible(false);
+    }
+    
+    public static void showNewstuG(){
+        if(newstuG==null)
+            newstuG=new NewstudentG();
+        showNode(newstuG);
+    }
+    
+    public static void showStudent(Student s){
+        ShowStuG csg=new ShowStuG();
+        showstuctl.setStudent(s);
+        showNode(csg);
+    }
+    
+    public static void editStudent(Student stu){
+        newstuG=new NewstudentG();
+        nstuctl.setStudent(stu);
+        showNode(newstuG);
+    }
+    
+    public static void editClassroomt(Classroom cl){
+        NewClG c = new NewClG();
+        cctl.setClassroom(cl);
+        showNode(c);
+    }
+    
+    public static void showScolariteG(){
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).grise();
+            butcs.get(3).degrise();
+        }
+        if (scolariteG==null) {
+            scolariteG=new ScolariteG();
+        }
+        showNode(scolariteG);
     }
 }
 

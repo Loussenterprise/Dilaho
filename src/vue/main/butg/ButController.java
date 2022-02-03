@@ -37,8 +37,6 @@ public class ButController implements Initializable {
     public ButController() {
     }
     
-    
-    boolean gr=false;
 
     /**
      * Initializes the controller class.
@@ -58,39 +56,34 @@ public class ButController implements Initializable {
     }
     
     public void grise(){
-        if(gr){
-            pane.setStyle("-fx-background-color:gray");
-            label.setTextFill(Color.WHITE);
-        }
+        pane.setStyle("-fx-background-color:gray");
+        label.setTextFill(Color.WHITE);
             
     }
     
     public void degrise(){
-        if(!gr){
-            pane.setStyle("-fx-background-color:white");
-            label.setTextFill(Color.rgb(35, 90, 90, 0.9));
-        }
+        pane.setStyle("-fx-background-color:white");
+        label.setTextFill(Color.rgb(35, 90, 90, 0.9));
             
     }
     
     public void grisec(){
         pane.setStyle("-fx-background-color:gray");
         label.setTextFill(Color.WHITE);
-        gr=true;
     }
     
     public void degrisec(){
         pane.setStyle("-fx-background-color:white");
         label.setTextFill(Color.rgb(35, 90, 90, 0.9));
-        gr=false;
     }
     
     public void setImage(String ImaLocation){
-        
-        File file = new File(ImaLocation);
-        //System.out.println(file.exists());
-        Image image = new Image(file.toURI().toString());
+        Image image = new Image(ImaLocation);
         imageView.setImage(image);
+    }
+    
+    public Image getImage(){
+        return imageView.getImage();
     }
 
     public AnchorPane getPane() {

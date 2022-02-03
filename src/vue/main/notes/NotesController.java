@@ -76,11 +76,11 @@ public class NotesController implements Initializable {
     @FXML
     Button calculer_moyenne;
     
-    Classroom classroom;
     ArrayList<Student> students;
     ArrayList<Course> courses;
     ArrayList<Classroom> classrooms;
     Student student;
+    Classroom classroom;
     int course;
     int session;
 
@@ -95,7 +95,7 @@ public class NotesController implements Initializable {
         classe_par_list.add("Matière");
         classe_par_list.add("Élève");
         classe_par.setItems(FXCollections.observableList(classe_par_list));
-        viewing.setText("Nullars");
+        viewing.setText("Notes ");
         classrooms=new ClassroomFactory().getClassrooms();
         Classroom_select.setItems(FXCollections.observableList(classrooms));
         if(students==null)
@@ -109,43 +109,122 @@ public class NotesController implements Initializable {
 
     public void setClassroom(Classroom classroom) {
         
-        
         Classroom ccc = classroom;
-        for(Classroom c:classrooms){
-            if(Objects.equals(c.getId(), classroom.getId())){
-                ccc=c;
-                break;
+        try {
+            for(Classroom c:classrooms){
+                if(Objects.equals(c.getId(), classroom.getId())){
+                    ccc=c;
+                    break;
+                }
             }
+        } catch (Exception e) {
         }
+            
         Classroom_select.setValue(ccc);
         
         this.classroom = classroom;
         students=new StudentFactory().getStudentsByClassroom(classroom.getId());
-        System.out.println("vue.main.notes.NotesController.setClassroom() ********** " + students);
         courses=classroom.loadCourses();
-        matieres.getItems().removeAll(matieres.getItems());
+        System.out.println("vue.main.notes.NotesController.setClassroom() ********** " + students);
+        //matieres.getItems().removeAll(matieres.getItems());
         matieres.setItems(FXCollections.observableList(courses));
-        viewing.setText(classroom.toString());
+        matieres.setOnAction(event -> reload());
         classe_par.setValue(classe_par_list.get(0));
-        reload();
+        swich();
     }
     
+    public void setStudent(Student s){
+        classe_par.setValue(classe_par_list.get(1));
+        student = s;
+        classroom=s.loadCl();
+        if(classroom==null)
+            classroom=Classroom_select.getValue();
+        System.out.println(classroom);
+        try {
+            for(Classroom c:classrooms){
+                if(Objects.equals(c.getId(), classroom.getId())){
+                    classroom=c;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+        }
+        Classroom_select.setValue(classroom);
+        students=new StudentFactory().getStudentsByClassroom(classroom.getId());
+        courses=classroom.loadCourses();
+        //matieres.getItems().removeAll(matieres.getItems());
+        System.out.println(students);
+        matieres.setItems(FXCollections.observableList(students));
+        matieres.setOnAction(event -> liLoad());
+        liLoad();
+    }
+    
+    public void liLoad(){
+        
+//        int i=0;
+//        try {
+//            i=((Course) matieres.getValue()).getId();
+//        } catch (Exception e) {}
+        matieres.setPromptText("Élèves");
+        try {
+            viewing.setText(matieres.getValue().toString());
+        } catch (Exception e) {
+        }
+        
+        initNoteTable(student , 0);
+        System.out.println(students);
+    }
+    
+    public void swich(){
+        viewing.setText("");
+        if(classe_par.getValue().equals(classe_par_list.get(0))){
+            System.out.println("if");
+            //matieres.getItems().removeAll(matieres.getItems());
+            
+            try {
+                matieres.setItems(FXCollections.observableList(courses));
+            } catch (Exception e) {
+            }
+            
+            matieres.setOnAction(event -> reload());
+            reload();
+        }else{
+            System.out.println("else");
+            //matieres.getItems().removeAll(matieres.getItems());
+            try {
+                matieres.setItems(FXCollections.observableList(students));
+            } catch (Exception e) {
+            }
+            
+            matieres.setOnAction(event -> liLoad());
+            liLoad();
+        }
+    }
+        
+    
     public void changeClassroom(){
-        System.out.println("vue.main.notes.NotesController.changeClassroom() &&&&&&& "+Classroom_select.getValue());
         if(Classroom_select.getValue() != null)
             setClassroom(Classroom_select.getValue());
+        students=new StudentFactory().getStudentsByClassroom(classroom.getId());
+        courses=classroom.loadCourses();
     }
     
     public void reload(){
+        matieres.setPromptText("Matières");
         System.out.println("vue.main.notes.NotesController.reload()");
 //        if(!courses.isEmpty())
 //            matieres.setValue(courses.get(0));
+        try {
+            viewing.setText(matieres.getValue().toString());
+        } catch (Exception e) {
+        }
 //        
         int i=0;
         try {
             i=((Course) matieres.getValue()).getId();
         } catch (Exception e) {}
         initStudentNoteTable(students,i , 0);
+        System.out.println(students);
     }
     
     
@@ -330,10 +409,15 @@ public class NotesController implements Initializable {
 
     
     public void initNoteTable(Student stu,Integer sess){
-        if(student_notes==null)
+        if(student_buletin==null)
             student_buletin=new TableView<>();
-        dopperStudent(stu);
-        ArrayList<NoteBook> nblist= stu.getNotebooks();
+        ArrayList<NoteBook> nblist;
+        if(stu!=null){
+            dopperStudent(stu);
+            nblist= stu.getNotebooks();
+        }else
+            nblist=new ArrayList<>();
+            
         
         student_buletin.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         //student_buletin.getItems().removeAll(student_buletin.getItems());
@@ -591,7 +675,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<1)
                                     se.getInterros().add(new Note(se.getId()));
@@ -619,7 +703,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<2)
                                     se.getInterros().add(new Note(se.getId()));
@@ -645,7 +729,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<3)
                                     se.getInterros().add(new Note(se.getId()));
@@ -671,7 +755,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<4)
                                     se.getInterros().add(new Note(se.getId()));
@@ -697,7 +781,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<5)
                                     se.getInterros().add(new Note(se.getId()));
@@ -723,7 +807,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getDevoirs().size()<1)
                                     se.getDevoirs().add(new Note(se.getId()).setIsDevoir(true));
@@ -749,7 +833,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getNotebook(course).getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
                                 }
                                 while(se.getDevoirs().size()<2)
                                     se.getDevoirs().add(new Note(se.getId()).setIsDevoir(true));
@@ -818,7 +902,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<1)
                                     se.getInterros().add(new Note(se.getId()));
@@ -846,7 +930,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<2)
                                     se.getInterros().add(new Note(se.getId()));
@@ -872,7 +956,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<3)
                                     se.getInterros().add(new Note(se.getId()));
@@ -898,7 +982,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<4)
                                     se.getInterros().add(new Note(se.getId()));
@@ -924,7 +1008,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getInterros().size()<5)
                                     se.getInterros().add(new Note(se.getId()));
@@ -950,7 +1034,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getDevoirs().size()<1)
                                     se.getDevoirs().add(new Note(se.getId()).setIsDevoir(true));
@@ -976,7 +1060,7 @@ public class NotesController implements Initializable {
                                 if(se==null){
                                     se=new Session(true);
                                     se.setNoteBookId(s.getId());
-                                    new SessionFactory().setSession(se);
+                                    new SessionFactory().setSession(se); s.getSessions().add(se);
                                 }
                                 while(se.getDevoirs().size()<2)
                                     se.getDevoirs().add(new Note(se.getId()).setIsDevoir(true));
@@ -1072,5 +1156,20 @@ public class NotesController implements Initializable {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public static void main(String[] args) {
+        ArrayList<String> st = new ArrayList<>();
+        st.add("a");
+        st.add("b");
+        st.add("c");
+        System.out.println(st);
+        ObservableList obl= FXCollections.observableList(st);
+        System.out.println(obl);
+        obl.add("d");
+        ObservableList obl2= FXCollections.observableList(st);
+        obl2.add("e");
+        System.out.println(obl2);
+        System.out.println(obl);
     }
 }

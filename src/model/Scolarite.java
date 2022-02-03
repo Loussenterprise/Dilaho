@@ -4,6 +4,8 @@
  */
 package model;
 
+import dao.ClassroomFactory;
+import dao.PayeFactory;
 import java.util.ArrayList;
 
 /**
@@ -115,6 +117,17 @@ public class Scolarite {
         return "Scolarite{" + "id=" + id + ", contribution=" + contribution + ", mtpaye=" + mtpaye + ", studentId=" + studentId + ", classroomId=" + classroomId + '}';
     }
     
+    public Double loadContribution(){
+        if(classroom==null)
+            classroom=new ClassroomFactory().getClassroom(classroomId);
+        contribution=classroom.getContribution();
+        return contribution;
+    }
     
+    public Double loadMtPaye(){
+        if(Payes==null || Payes.isEmpty())
+            Payes = new PayeFactory().getPayes();
+        return null;
+    }
     
 }

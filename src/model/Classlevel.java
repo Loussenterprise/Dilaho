@@ -5,6 +5,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -208,7 +210,29 @@ public class Classlevel {
         return list;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Classlevel other = (Classlevel) obj;
+        return Objects.equals(this.id, other.id);
+    }
     
+    
+    public static Classlevel get(List<Classlevel> cl,Classlevel c){
+        for(Classlevel cc:cl){
+            if(cc.equals(c))
+                return cc;
+        }
+        return null;
+    }
     public static void main(String[] args) {
         System.out.println(TERMINALE_C.desc());
     }

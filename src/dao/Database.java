@@ -24,7 +24,7 @@ import org.sqlite.mc.SQLiteMCConfig;
  * @author loussin
  */
 public class Database {
-    private static final String DBNAME="meta/data.sqlite";
+    private static final String DBNAME="/home/loussin/Bureau/db.db";
     private static Connection connection;
     private static Statement statement;
     
@@ -33,8 +33,8 @@ public class Database {
             createDB();
             if( connection == null || connection.isClosed() ){
                 Class.forName("org.sqlite.JDBC");
-                connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME, new  SQLiteMCConfig () . withKey( "A11e2 v0u5 f@174 v8!^" ) . toProperties());
-                //connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME);
+                //connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME, new  SQLiteMCConfig () . withKey( "A11e2 v0u5 f@174 v8!^" ) . toProperties());
+                connection = DriverManager.getConnection("jdbc:sqlite:"+DBNAME);
                 if ( connection == null) {
                     System.exit(1);
                 }
@@ -375,7 +375,7 @@ public class Database {
     
     public static void main(String[] args) {
             try {
-                getStatement().executeUpdate("drop table if exists notebook");
+                getStatement().executeUpdate("drop table if exists paye");
                 seed();
                 
             } catch (Exception ex) {

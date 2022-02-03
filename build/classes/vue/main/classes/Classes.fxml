@@ -13,7 +13,14 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="542.0" />
+            <AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="542.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="65.0" layoutY="18.0" text="Liste des salles de classe" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
             <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="398.0" prefWidth="435.0" style="-fx-background-color: gray;" VBox.vgrow="ALWAYS">
                <content>
                   <FlowPane fx:id="flowPane" alignment="TOP_CENTER" columnHalignment="CENTER" prefHeight="200.0" prefWidth="200.0">
@@ -27,6 +34,7 @@
             </ScrollPane>
             <AnchorPane maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="542.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#reload" text="Recharger" AnchorPane.leftAnchor="14.0" />
                   <Button layoutX="24.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#newClassroom" text=" une nouvelle classe" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="2.0" />
                </children></AnchorPane>
          </children>

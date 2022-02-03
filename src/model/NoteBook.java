@@ -67,15 +67,7 @@ public class NoteBook {
     }
 
     public void setPreferedSessionNumber(Integer preferedSessionNumber) {
-        if(preferedSessionNumber!=null){
-            if(sessions==null)
-                sessions=new ArrayList<>();
-            this.preferedSessionNumber = preferedSessionNumber;
-            if(sessions.size() < preferedSessionNumber)
-                for (int i = sessions.size(); i < preferedSessionNumber; i++) {
-                    sessions.add(new Session());
-                }
-        }
+        this.preferedSessionNumber = preferedSessionNumber;
     }
 
     public Student getStudent() {
@@ -107,25 +99,38 @@ public class NoteBook {
     }
 
     public ArrayList<Session> loadSessions() {
-        if(id!=null){
-            sessions=new SessionFactory().getSessionsByNotebookId(id);
-        }
-        else
-            sessions=new ArrayList<>();
-        if(sessions.isEmpty()){
-            SessionFactory sf= new SessionFactory();
-            setPreferedSessionNumber(3);
-            for(Session s:sessions){
-                sf.setSession(s);
-                s.setModified(true);
+        if(sessions==null || sessions.isEmpty()){
+            if(id!=null){
+                sessions=new SessionFactory().getSessionsByNotebookId(id);
             }
-                
+            else
+                sessions=new ArrayList<>();
+            if(sessions.isEmpty()){
+                SessionFactory sf= new SessionFactory();
+                createSessions(3);
+                for(Session s:sessions){
+                    s.setNoteBookId(id);
+                    sf.setSession(s);
+                    s.setModified(true);
+                }
+
+            }
         }
         return sessions;
     }
     
     public void setSessions(ArrayList<Session> sessions) {
         this.sessions = sessions;
+    }
+    
+    public void createSessions(int n) {
+        preferedSessionNumber=n;
+        if(sessions==null)
+            sessions=new ArrayList<>();
+        if(sessions.size() < preferedSessionNumber)
+            for (int i = sessions.size(); i < preferedSessionNumber; i++) {
+                sessions.add(new Session());
+            }
     }
     
     

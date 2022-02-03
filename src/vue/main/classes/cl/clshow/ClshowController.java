@@ -74,7 +74,7 @@ public class ClshowController implements Initializable {
     }
     
     public void doNothing(){
-        System.out.println("vue.main.classes.cl.clshow.ClshowController.doNothing()");
+        MainController.editClassroomt(classroom);
     }
 
     public Classroom getClassroom() {

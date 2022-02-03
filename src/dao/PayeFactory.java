@@ -36,7 +36,7 @@ public class PayeFactory {
                     + "INSERT INTO 'paye'('id','scoolyear',"
                     + "'montant','montantrst',"
                     + "'montantenltr','solded',"
-                    + "'studentId','classroomId') "
+                    + "'scolariteId') "
                     + "VALUES (NULL,?,?,?,?,?,?,?);");
             
             prepst.setString(1, c.getScoolYear());
@@ -44,8 +44,7 @@ public class PayeFactory {
             prepst.setString(3, c.getMontantRst()!=null?c.getMontantRst().toString():null);
             prepst.setString(4, c.getMontantEnLtr());
             prepst.setInt(5, c.getSolded()?1:0);
-            prepst.setString(6, c.getStudentId()!=null?c.getStudentId().toString():null);
-            prepst.setString(7, c.getClassroomId()!=null?c.getClassroomId().toString():null);
+            prepst.setString(6, c.getScolariteId()!=null?c.getScolariteId().toString():null);
             
             prepst.executeUpdate();
         } catch (SQLException ex) {
@@ -65,8 +64,29 @@ public class PayeFactory {
                 c.setMontantRst(rs.getString("montantrst")!=null?Double.parseDouble(rs.getString("montantrst")):null);
                 c.setMontantEnLtr(rs.getString("montantEnLtr"));
                 c.setSolded(rs.getInt("solded")==1);
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
-                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
+                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
+                list.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    
+    public ArrayList<Paye> getPayesByScolariteId(Integer scolariteId){
+        ArrayList<Paye> list = new ArrayList();
+        try {
+            rs=statement.executeQuery("SELECT * FROM paye where scolariteId="+scolariteId);
+            while(rs.next()){
+                Paye c= new Paye();
+                c.setId(rs.getInt("id"));
+                c.setScoolYear(rs.getString("scoolyear"));
+                c.setMontant(rs.getString("montant")!=null?Double.parseDouble(rs.getString("montant")):null);
+                c.setMontantRst(rs.getString("montantrst")!=null?Double.parseDouble(rs.getString("montantrst")):null);
+                c.setMontantEnLtr(rs.getString("montantEnLtr"));
+                c.setSolded(rs.getInt("solded")==1);
+                c.setScolariteId(scolariteId);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -87,8 +107,7 @@ public class PayeFactory {
                 c.setMontantRst(rs.getString("montantrst")!=null?Double.parseDouble(rs.getString("montantrst")):null);
                 c.setMontantEnLtr(rs.getString("montantEnLtr"));
                 c.setSolded(rs.getInt("solded")==1);
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
-                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
+                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);

@@ -21,8 +21,8 @@
                      </font>
                   </Label>
                   <Label layoutX="14.0" layoutY="17.0" text="Notes classées par :" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="17.0" />
-                  <ComboBox fx:id="classe_par" layoutX="-2.0" layoutY="12.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="12.0" />
-                  <ComboBox fx:id="matieres" layoutX="352.0" layoutY="12.0" maxWidth="150.0" minWidth="150.0" onAction="#reload" prefWidth="150.0" promptText="Matière" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="classe_par" layoutX="-2.0" layoutY="12.0" onAction="#swich" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="matieres" layoutX="352.0" layoutY="12.0" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" promptText="Matière" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="12.0" />
                   <ComboBox fx:id="Classroom_select" layoutX="407.0" layoutY="12.0" maxWidth="90.0" minWidth="90.0" onAction="#changeClassroom" prefHeight="25.0" prefWidth="90.0" promptText="Classe" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.0" />
                </children>
             </AnchorPane>

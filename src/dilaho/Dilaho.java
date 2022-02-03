@@ -4,7 +4,10 @@
  */
 package dilaho;
 
+import java.io.File;
+import java.util.Scanner;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +29,20 @@ public class Dilaho extends Application{
         stage = new MainStage();
         //stage.setScene(new Scene(new StudentG()));
         stage.show();
-        
+//        
+//        String e= new Scanner(System.in).nextLine();
+//        
+//        File f=new File(e);
+//        System.out.println(f.exists());
+//        System.out.println(f.getAbsolutePath());
+//        System.out.println(f.getPath());
+//        System.out.println(f.getParent());
+//        String[] s=f.list();
+//        for (int i = 0; i < s.length; i++) {
+//            System.out.println(s[i]);
+//        }
+//        System.out.println(f.list());
+//        Platform.exit();
     }
     
     /**
@@ -35,5 +51,6 @@ public class Dilaho extends Application{
     public static void main(String[] args) {
         System.out.println("BECALAV12022");
         launch(args);
+        
     }
 }

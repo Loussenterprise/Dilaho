@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="1000.0" prefWidth="600.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.student.newstudent.NewstudentController">
+    <stylesheets>
+        <URL value="@newstudent.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane layoutX="146.0" layoutY="-54.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" layoutX="282.0" layoutY="18.0" text="Inscription d'un(e) nouvel(le) élève" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <content>
+            <AnchorPane>
+               <children>
+                  <StackPane layoutX="55.0" layoutY="25.0" prefHeight="150.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+                     <children>
+                        <AnchorPane maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="image">
+                           <children>
+                              <ImageView fx:id="imageview" fitHeight="140.0" fitWidth="140.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <StackPane layoutY="157.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0">
+                     <children>
+                        <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
+                           <children>
+                              <Button fx:id="select_image" layoutX="238.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#doSelectImg" text=".." AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
+                              <TextField fx:id="image" layoutX="44.0" layoutY="4.0" onAction="#doLoadImg" prefHeight="26.0" prefWidth="267.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="2.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <GridPane layoutX="175.0" layoutY="205.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="215.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <AnchorPane GridPane.columnIndex="1">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Prénoms" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="firstnames" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Date d'inscription" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <DatePicker fx:id="inscriptionDate" layoutX="14.0" layoutY="34.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="309.0" layoutY="10.0" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Date de naissance" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <DatePicker fx:id="birthday" layoutX="14.0" layoutY="34.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="80.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Sexe" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <ComboBox fx:id="sexe" layoutX="14.0" layoutY="34.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="70.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Matricule" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="matricule" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="309.0" layoutY="10.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Nom" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="name" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="École de provenance" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="commingScool" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Adresse" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="address" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="3">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Autre" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextArea fx:id="extras" layoutX="26.0" layoutY="-58.0" prefHeight="76.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Classe" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <ComboBox fx:id="classroom" layoutX="14.0" layoutY="24.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+                  <Label alignment="CENTER" layoutY="594.0" text="Parents" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutY="618.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="84.0" minHeight="8.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="163.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="147.0" minHeight="0.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="150.0" layoutY="9.0" text="Père" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label alignment="CENTER" layoutX="150.0" layoutY="9.0" text="Mère" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Travail" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="fatherWork" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Nom" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="motherName" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="309.0" layoutY="46.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Nom" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="fatherName" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="46.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Travail" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="motherWork" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="309.0" layoutY="91.0" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Adresse" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="fatherAddress" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="129.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="14.0" layoutY="9.0" text="Adresse" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                              <TextField fx:id="motherAddress" layoutX="13.0" prefHeight="25.0" prefWidth="276.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+                  <AnchorPane layoutY="818.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <AnchorPane layoutX="141.0" layoutY="116.0" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button layoutX="518.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#createStudent" text="Sauvegarder" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="5.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

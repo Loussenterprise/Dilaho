@@ -34,7 +34,7 @@
                <children>
                   <Button fx:id="studentListBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#doStudentList" text="Liste des élèves" textAlignment="RIGHT" />
                   <Button fx:id="notebookBtn" mnemonicParsing="false" onMouseClicked="#doNotebook" text="Cahier de notes" GridPane.columnIndex="1" />
-                  <Button fx:id="nothingBtn" mnemonicParsing="false" onMouseClicked="#doNothing" text="#######" GridPane.rowIndex="1" />
+                  <Button fx:id="nothingBtn" mnemonicParsing="false" onAction="#doNothing" onMouseClicked="#doNothing" text="Éditer" GridPane.rowIndex="1" />
                   <Button fx:id="scolariteBtn" mnemonicParsing="false" onMouseClicked="#doScolarite" text="Scolarités" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>

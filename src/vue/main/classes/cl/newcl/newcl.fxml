@@ -36,7 +36,7 @@
                <children>
                   <TextField fx:id="classlevel" editable="false" layoutY="2.0" onKeyReleased="#addClassroomAble" promptText="Exemple : CM1" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0" />
                   <TextField fx:id="groupe" layoutY="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0" />
-                  <TextField fx:id="scoolyear" layoutY="64.0" onKeyReleased="#addClassroomAble" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0" />
+                  <TextField fx:id="scoolyear" layoutY="64.0" onAction="#scoolyearMatch" onKeyReleased="#scoolyearMatch" promptText="2000-2001" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0" />
                   <TextField fx:id="promotion" layoutY="95.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="95.0" />
                   <TextField fx:id="contribution" layoutY="126.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="126.0" />
                   <ComboBox fx:id="classlevel_select" layoutX="171.0" layoutY="2.0" onAction="#loadCourses" prefWidth="150.0" AnchorPane.leftAnchor="171.0" AnchorPane.topAnchor="2.0" />
@@ -44,6 +44,7 @@
                   <ComboBox fx:id="scoolyear_select" layoutX="171.0" layoutY="64.0" onAction="#castScoolyear" prefWidth="150.0" AnchorPane.leftAnchor="171.0" AnchorPane.topAnchor="64.0" />
                   <Button fx:id="new_classlevel" layoutX="339.0" layoutY="2.0" mnemonicParsing="false" onAction="#doNewClasslevel" text="New" />
                   <CheckBox fx:id="is_new_classlevel" layoutX="171.0" layoutY="99.0" mnemonicParsing="false" text="New classlevel" visible="false" />
+                  <Label fx:id="bi" layoutX="339.0" layoutY="73.0" text="Format : XXXX-XXXX" textFill="#eb2700" visible="false" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="ne_classlevel_pane" maxHeight="140.0" minHeight="140.0" prefHeight="140.0" prefWidth="600.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="220.0">
