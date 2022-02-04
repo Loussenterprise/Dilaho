@@ -6,6 +6,7 @@ package model;
 
 import dao.ClassroomFactory;
 import dao.PayeFactory;
+import dao.StudentFactory;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,7 @@ public class Scolarite {
     private ArrayList<Paye> Payes;
 
     public Scolarite() {
+        mtpaye=0.0;
     }
 
     public Student getStudent() {
@@ -75,7 +77,8 @@ public class Scolarite {
     }
 
     public void setMtpaye(Double mtpaye) {
-        this.mtpaye = mtpaye;
+        if(mtpaye!=null)
+            this.mtpaye = mtpaye;
     }
 
     public Integer getStudentId() {
@@ -118,16 +121,34 @@ public class Scolarite {
     }
     
     public Double loadContribution(){
-        if(classroom==null)
-            classroom=new ClassroomFactory().getClassroom(classroomId);
-        contribution=classroom.getContribution();
+        if(classroom!=null)
+            contribution=loadClassroom().getContribution();
         return contribution;
+    }
+    
+    public Classroom loadClassroom(){
+        if(classroom==null && classroomId!=null){
+            classroom=new ClassroomFactory().getClassroom(classroomId);
+        }
+            
+        return classroom;
+    }
+    public Student loadStudent(){
+        if(student==null && studentId!=null){
+            student=new StudentFactory().getStudent(studentId);
+            classroomId=student.getClassroom();
+        }
+        return student;
     }
     
     public Double loadMtPaye(){
         if(Payes==null || Payes.isEmpty())
             Payes = new PayeFactory().getPayes();
-        return null;
+        for(Paye p : Payes){
+            if(p.getMontant()!=null)
+                mtpaye+=p.getMontant();
+        }
+        return mtpaye;
     }
     
 }

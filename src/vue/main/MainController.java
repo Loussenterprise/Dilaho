@@ -102,7 +102,7 @@ public class MainController implements Initializable {
     static StudentG studentg ;    
     public static ClassesG classesg ;
     static NotesG notesG ;
-    static ScolariteG scolariteG ;
+    public static ScolariteG scolariteG ;
     public static NewstudentG newstuG;
     public static NewclController cctl;
     Timeline timelinemin;

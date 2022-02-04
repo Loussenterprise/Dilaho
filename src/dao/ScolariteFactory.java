@@ -94,6 +94,9 @@ public class ScolariteFactory {
     public static void main(String[] args) {
         ScolariteFactory sf=new ScolariteFactory();
         sf.setScolarite(new Scolarite());
+        Scolarite s = new Scolarite();
+        s.setStudentId(1);
+        sf.setScolarite(s);
         System.out.println(sf.getScolarites());
         System.out.println(sf.getScolarite(3));
         System.out.println(new Scolarite());

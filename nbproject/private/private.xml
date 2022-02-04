@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/student/newstudent/NewstudentController.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/classes/ClassesController.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Student.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Classlevel.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/MainController.java</file>
             <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/student/StudentController.java</file>
+            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/MainController.java</file>
             <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/classes/cl/newcl/NewclController.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/classes/cl/clshow/ClshowController.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/model/Classroom.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/butg/ButController.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/classes/cl/ClController.java</file>
-            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/dao/StudentFactory.java</file>
+            <file>file:/home/loussin/NetBeansProjects/Dilaho/src/vue/main/scolarite/ScolariteController.java</file>
         </group>
     </open-files>
 </project-private>

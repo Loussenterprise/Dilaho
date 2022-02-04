@@ -154,6 +154,11 @@ public class NewclController implements Initializable {
     }
     public void castClasslevel(){
         classlevel.setText(((Classlevel)classlevel_select.getValue()).toString());
+        try {
+            contribution.setText(((Classlevel)classlevel_select.getValue()).getContribution().toString());
+        } catch (Exception e) {
+        }
+        
         addClassroomAble();
     }
     public void castGroupe(){
@@ -182,8 +187,9 @@ public class NewclController implements Initializable {
     }
     
     public void setClassroom(Classroom cc){
+        System.out.println("vue.main.classes.cl.newcl.NewclController.setClassroom()  =====  "+cc);
         c=cc;
-        if(cc!=null){
+        if(c!=null){
             try {
                 classlevel.setText(c.loadClasslevel().toString());
             } catch (Exception e) {
@@ -192,7 +198,12 @@ public class NewclController implements Initializable {
             groupe.setText(c.getGroup());
             scoolyear.setText(c.getScoolYear());
             promotion.setText(c.getPromotion());
-            contribution.setText(""+c.getContribution());
+            System.out.println("vue.main.classes.cl.newcl.NewclController.setClassroom()   "+c.getContribution());
+            try {
+                contribution.setText(c.getContribution().toString());
+            } catch (Exception e) {
+            }
+            
             classlevel_select.setItems(FXCollections.observableList(classlevels));
             groupe_select.setItems(FXCollections.observableList(groupes));
             scoolyear_select.setItems(FXCollections.observableList(scoolyears));
@@ -205,13 +216,17 @@ public class NewclController implements Initializable {
     }
     public void setClasslevel(Classlevel cc){
         cl=cc;
-        if(cc!=null){
+        if(c!=null){
             name.setText(cl.getName());
             n.setText(cl.getN());
             niveau.setText(cl.getNiveau());
             option.setText(cl.getOption());
             op.setText(cl.getOp());
-            ctrb.setText(""+cl.getContribution());
+            try {
+                ctrb.setText(cl.getContribution().toString());
+            } catch (Exception e) {
+            }
+            
         }
         
     }
@@ -228,6 +243,11 @@ public class NewclController implements Initializable {
         cl.setNiveau(niveau.getText());
         cl.setOp(op.getText());
         cl.setOption(option.getText());
+        try {
+            cl.setContribution(Double.valueOf(ctrb.getText()));
+        } catch (Exception e) {
+        }
+        
         new ClasslevelFactory().setClasslevel(cl);
         classlevel_select.getItems().add(cl);
         classlevel_select.setValue(cl);
@@ -238,8 +258,13 @@ public class NewclController implements Initializable {
         if(c==null)
             c= new Classroom();
         try {
-            c.setContribution(Double.parseDouble(ctrb.getText()));
+            c.setContribution(Double.parseDouble(contribution.getText()));
+            System.out.println("vue.main.classes.cl.newcl.NewclController.addClassroom() @@@@@@@@@@222 "+contribution.getText());
         } catch (Exception e) {
+            try {
+                c.setContribution(Double.parseDouble(ctrb.getText()));
+            System.out.println("vue.main.classes.cl.newcl.NewclController.addClassroom() @@@@@@@@@@222 "+ctrb.getText());
+            } catch (Exception ex) {}
         }
         c.setPromotion(promotion.getText());
         c.setScoolYear(scoolyear.getText());
@@ -405,6 +430,6 @@ public class NewclController implements Initializable {
     }
     
     public static void main(String[] args) {
-        System.out.println("2001".matches("[0-9]{4}"));
+        System.out.println(Double.valueOf(null));
     }
 }

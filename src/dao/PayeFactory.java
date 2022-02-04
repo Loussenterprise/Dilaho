@@ -36,8 +36,8 @@ public class PayeFactory {
                     + "INSERT INTO 'paye'('id','scoolyear',"
                     + "'montant','montantrst',"
                     + "'montantenltr','solded',"
-                    + "'scolariteId') "
-                    + "VALUES (NULL,?,?,?,?,?,?,?);");
+                    + "'scolariteId',dateDeCreation) "
+                    + "VALUES (NULL,?,?,?,?,?,?,?,?);");
             
             prepst.setString(1, c.getScoolYear());
             prepst.setString(2, c.getMontant()!=null?c.getMontant().toString():null);
@@ -45,6 +45,7 @@ public class PayeFactory {
             prepst.setString(4, c.getMontantEnLtr());
             prepst.setInt(5, c.getSolded()?1:0);
             prepst.setString(6, c.getScolariteId()!=null?c.getScolariteId().toString():null);
+            prepst.setDate(7, c.getDateDeCreation());
             
             prepst.executeUpdate();
         } catch (SQLException ex) {
@@ -64,6 +65,7 @@ public class PayeFactory {
                 c.setMontantRst(rs.getString("montantrst")!=null?Double.parseDouble(rs.getString("montantrst")):null);
                 c.setMontantEnLtr(rs.getString("montantEnLtr"));
                 c.setSolded(rs.getInt("solded")==1);
+                c.setDateDeCreation(rs.getDate("dateDeCreation"));
                 c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
                 list.add(c);
             }
@@ -86,6 +88,7 @@ public class PayeFactory {
                 c.setMontantRst(rs.getString("montantrst")!=null?Double.parseDouble(rs.getString("montantrst")):null);
                 c.setMontantEnLtr(rs.getString("montantEnLtr"));
                 c.setSolded(rs.getInt("solded")==1);
+                c.setDateDeCreation(rs.getDate("dateDeCreation"));
                 c.setScolariteId(scolariteId);
                 list.add(c);
             }
@@ -107,6 +110,7 @@ public class PayeFactory {
                 c.setMontantRst(rs.getString("montantrst")!=null?Double.parseDouble(rs.getString("montantrst")):null);
                 c.setMontantEnLtr(rs.getString("montantEnLtr"));
                 c.setSolded(rs.getInt("solded")==1);
+                c.setDateDeCreation(rs.getDate("dateDeCreation"));
                 c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
             }
         } catch (SQLException ex) {

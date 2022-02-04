@@ -275,6 +275,7 @@ public class Database {
                 "	'solded'	INTEGER,\n" +
                 "	'studentId'	INTEGER,\n" +
                 "	'classroomId'	INTEGER,\n" +
+                "	'dateDeCreation'    DATE,\n" +
                 "	FOREIGN KEY('studentId') REFERENCES 'student'('id') on delete set null,\n" +
                 "	FOREIGN KEY('classroomId') REFERENCES 'classroom'('id') on delete set null,\n" +
                 "	PRIMARY KEY('id' AUTOINCREMENT)\n" +

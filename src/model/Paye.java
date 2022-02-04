@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author loussin
@@ -15,6 +17,7 @@ public class Paye {
     private Double montant;
     private Double montantRst;
     private Boolean solded=false;
+    private Date dateDeCreation;
     
     private Integer scolariteId;
     
@@ -86,6 +89,16 @@ public class Paye {
     public void setScolarite(Scolarite scolarite) {
         this.scolarite = scolarite;
     }
+
+    public Date getDateDeCreation() {
+        return dateDeCreation;
+    }
+
+    public void setDateDeCreation(Date dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+    }
+    
+    
 
     @Override
     public String toString() {
