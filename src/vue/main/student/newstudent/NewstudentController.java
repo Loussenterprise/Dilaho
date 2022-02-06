@@ -146,8 +146,10 @@ public class NewstudentController implements Initializable {
     }
     
     public void createStudent(){
-        if(s==null)
+        if(s==null){
             s=new Student();
+        }
+        
         s.setAddress(address.getText());
         try {
             s.setBirthday(Date.valueOf(birthday.getValue()));
@@ -180,9 +182,9 @@ public class NewstudentController implements Initializable {
         new StudentFactory().setStudent(s);
         if(!StudentController.stl.contains(s))
             StudentController.stl.add(s);
+        MainController.nstuctl=null;
         StudentController.refreshTable();
         MainController.showStudentG();
-        MainController.nstuctl=null;
         
     }
     
@@ -191,11 +193,6 @@ public class NewstudentController implements Initializable {
         this.s=stu;
         if(s!=null)
         {
-            try {
-                image.setText(s.getImage());
-            } catch (Exception e) {
-            }
-            
             try {
                 matricule.setText(s.getMatricule().toString());
             } catch (Exception e) {
@@ -229,8 +226,6 @@ public class NewstudentController implements Initializable {
         }
         
     }
-    
-    
     public void tr(String... s){
         
     }

@@ -54,8 +54,12 @@ public class CourseFactory {
             
             prepst.executeUpdate();
             
-            id=statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
-            c.setId(id);
+            
+            if(c.getId()==null){
+                id=statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
+                c.setId(id);
+            }
+                
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

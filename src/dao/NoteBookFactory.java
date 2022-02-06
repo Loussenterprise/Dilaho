@@ -50,7 +50,9 @@ public class NoteBookFactory {
             prepst.setString(8, c.getPreferedSessionNumber()!=null?c.getPreferedSessionNumber().toString():null);
             
             prepst.executeUpdate();
-            c.setId(statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id"));
+            int id = statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
+            if(c.getId()==null)
+                c.setId(id);
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

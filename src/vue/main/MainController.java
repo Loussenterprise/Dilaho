@@ -30,6 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Classroom;
+import model.Scolarite;
 import model.Student;
 import vue.LoginStage;
 import vue.main.butg.ButController;
@@ -483,6 +484,23 @@ public class MainController implements Initializable {
         }
         if (scolariteG==null) {
             scolariteG=new ScolariteG();
+        }
+        showNode(scolariteG);
+    }
+    
+    public static void showScolariteG(Scolarite s){
+        if(butcs.size()>3){
+            butcs.get(0).degrise();
+            butcs.get(1).degrise();
+             
+            butcs.get(2).grise();
+            butcs.get(3).degrise();
+        }
+        if (scolariteG==null) {
+            scolariteG=new ScolariteG();
+        }
+        if(s!=null){
+            scolariteCtl.show(s);
         }
         showNode(scolariteG);
     }

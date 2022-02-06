@@ -47,7 +47,8 @@ public class NoteFactory {
             prepst.setString(6, c.getSessionId()!=null?c.getSessionId().toString():null);
             
             prepst.executeUpdate();
-            c.setId(statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id"));
+            if(c.getId()==null)
+                c.setId(statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id"));
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

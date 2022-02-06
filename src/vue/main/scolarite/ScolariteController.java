@@ -8,7 +8,10 @@ import dao.PayeFactory;
 import dao.ScolariteFactory;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,6 +91,7 @@ public class ScolariteController implements Initializable {
     Scolarite scolarite_en_vue;
     ObservableList<Scolarite> list ;
     ObservableList<Scolarite> results;
+    ArrayList<Scolarite> l= new ScolariteFactory().getScolarites();
 
     /**
      * Initializes the controller class.
@@ -101,9 +105,22 @@ public class ScolariteController implements Initializable {
         scolpr.setVisible(false);
         fp.setVisible(false);
         addpaye.setOnAction(event->startAddPaye());
-        list = FXCollections.observableList(new ScolariteFactory().getScolarites());
+        for(Scolarite scol:l){
+            scol.dopper();
+        }
+        list = FXCollections.observableList(l);
+        
         initTable();
         student_list.setItems(list);
+        new_montant.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    new_montant.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
         initPayesTable();
     }   
     
@@ -153,21 +170,21 @@ public class ScolariteController implements Initializable {
         stu.setCellValueFactory((TableColumn.CellDataFeatures<Scolarite, String> p) -> new ObservableValueBase<String>() {
             @Override
             public String getValue() {
-                return p.getValue().loadStudent()!=null?p.getValue().loadStudent().toString():null;
+                return p.getValue().getStudent()!=null?p.getValue().getStudent().toString():null;
             }
         });
         TableColumn<Scolarite,String> cl = new TableColumn("Classe");
         cl.setCellValueFactory((TableColumn.CellDataFeatures<Scolarite, String> p) -> new ObservableValueBase<String>() {
             @Override
             public String getValue() {
-                return p.getValue().loadClassroom()!=null?p.getValue().loadClassroom().toString():null;
+                return p.getValue().getClassroom()!=null?p.getValue().getClassroom().toString():null;
             }
         });
         TableColumn<Scolarite,String> contrib = new TableColumn("À payer");
         contrib.setCellValueFactory((TableColumn.CellDataFeatures<Scolarite, String> p) -> new ObservableValueBase<String>() {
             @Override
             public String getValue() {
-                return p.getValue().loadContribution()!=null?p.getValue().loadContribution().toString():null;
+                return p.getValue().getContribution()!=null?p.getValue().getContribution().toString():null;
             }
         });
         TableColumn<Scolarite,String> mtpay = new TableColumn("Payé");
@@ -222,15 +239,18 @@ public class ScolariteController implements Initializable {
     public void startAddPaye(){
         
         fp.setVisible(true);
-        addpaye.setOnAction(event->startAddPaye());
+        addpaye.setOnAction(event->endAddPaye());
         addpaye.setText("Valider");
         giveup.setVisible(true);
     }
     
     public void gvp(){
-        
         new_montant.setText("");
         new_montant_en_ltr.setText("");
+        fp.setVisible(false);
+        addpaye.setOnAction(event->startAddPaye());
+        addpaye.setText("Effectuer un payement");
+        giveup.setVisible(false);
     }
     
     public void endAddPaye(){
@@ -245,6 +265,18 @@ public class ScolariteController implements Initializable {
         p.setScoolYear(scolarite_en_vue.getClassroom().getScoolYear());
         new PayeFactory().setPaye(p);
         paye_list.getItems().add(p);
+        
+        scolarite_en_vue.setMtpaye(scolarite_en_vue.getMtpaye()+p.getMontant());
+        try {
+            mp.setText("Payé : ");
+            mp.setText(mp.getText()+scolarite_en_vue.getMtpaye().toString());
+        } catch (Exception e) {
+        }
+        try {
+            rt.setText("Restant : ");
+            rt.setText(rt.getText()+String.valueOf(scolarite_en_vue.getContribution()-scolarite_en_vue.getMtpaye()));
+        } catch (Exception e) {
+        }
         
         new_montant.setText("");
         new_montant_en_ltr.setText("");

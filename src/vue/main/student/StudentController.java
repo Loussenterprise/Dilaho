@@ -142,16 +142,6 @@ public class StudentController implements Initializable {
                 return p.getValue().getFirstnames();
             }
         });
-        //        firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Student, String>, ObservableValue<String>>() {
-        //            public ObservableValue<String> call(CellDataFeatures<Student, String> p) {
-        //                return new ObservableValueBase<String>() {
-        //                    @Override
-        //                    public String getValue() {
-        //                        return p.getValue().getFirstnames();
-        //                    }
-        //                };
-        //            }
-        //         });
         
         TableColumn<Student,Date> dobCol = new TableColumn("Date de naissance");
         dobCol.setCellValueFactory((TableColumn.CellDataFeatures<Student, Date> p) -> new ObservableValueBase<Date>() {
@@ -332,8 +322,11 @@ public class StudentController implements Initializable {
     
     public void saveModifieds(){
         for(Student s: stl){
-            if(s.isModified())
+            if(s.isModified()){
                 stf.setStudent(s);
+                s.setModified(false);
+            }
+                
         }
         save.setVisible(false);
     }

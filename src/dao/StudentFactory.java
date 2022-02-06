@@ -90,9 +90,12 @@ public class StudentFactory {
             prepst.setString(37, s.getClassroom()!=null?s.getClassroom().toString():null);
             prepst.setString(38, s.getScolarite()!=null?s.getScolarite().toString():null);
             prepst.executeUpdate();
-            id=statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
-            s.setId(id);
-            System.out.println(s.getId()+" "+s);
+            
+            if(s.getId()==null){
+                id=statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
+                s.setId(id);
+            }
+                
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

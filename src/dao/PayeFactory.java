@@ -36,8 +36,8 @@ public class PayeFactory {
                     + "INSERT INTO 'paye'('id','scoolyear',"
                     + "'montant','montantrst',"
                     + "'montantenltr','solded',"
-                    + "'scolariteId',dateDeCreation) "
-                    + "VALUES (NULL,?,?,?,?,?,?,?,?);");
+                    + "'scolariteId','dateDeCreation') "
+                    + "VALUES (NULL,?,?,?,?,?,?,?);");
             
             prepst.setString(1, c.getScoolYear());
             prepst.setString(2, c.getMontant()!=null?c.getMontant().toString():null);
@@ -124,7 +124,5 @@ public class PayeFactory {
         PayeFactory sf=new PayeFactory();
         sf.setPaye(new Paye());
         System.out.println(sf.getPayes());
-        System.out.println(sf.getPaye(3));
-        System.out.println(new Paye());
     }
 }

@@ -29,7 +29,6 @@ public class ScolariteG extends AnchorPane{
     void init(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/main/scolarite/scolarite.fxml"));
-            System.out.println(loader);
             getChildren().add(loader.load());
             AnchorPane.setTopAnchor(this, 0.0);
             AnchorPane.setRightAnchor(this, 0.0);

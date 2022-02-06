@@ -46,9 +46,13 @@ public class ScolariteFactory {
             prepst.setString(5, c.getNotebookId()!=null?c.getNotebookId().toString():null);
             
             prepst.executeUpdate();
+            if(c.getId()==null){
+                c.setId(statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println(c);
     }
     
     public ArrayList<Scolarite> getScolarites(){
@@ -62,7 +66,27 @@ public class ScolariteFactory {
                 c.setMtpaye(rs.getString("mtpaye")!=null?Double.parseDouble(rs.getString("mtpaye")):null);
                 c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
                 c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
-                c.setClassroomId(rs.getString("notebookId")!=null?Integer.parseInt(rs.getString("notebookId")):null);
+                c.setNotebookId(rs.getString("notebookId")!=null?Integer.parseInt(rs.getString("notebookId")):null);
+                list.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<Scolarite> getScolaritesByStudentId(int studentId){
+        ArrayList<Scolarite> list = new ArrayList();
+        try {
+            rs=statement.executeQuery("SELECT * FROM scolarite where studentId="+studentId+" order by id desc");
+            while(rs.next()){
+                Scolarite c= new Scolarite();
+                c.setId(rs.getInt("id"));
+                c.setContribution(rs.getString("contribution")!=null?Double.parseDouble(rs.getString("contribution")):null);
+                c.setMtpaye(rs.getString("mtpaye")!=null?Double.parseDouble(rs.getString("mtpaye")):null);
+                c.setStudentId(studentId);
+                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
+                c.setNotebookId(rs.getString("notebookId")!=null?Integer.parseInt(rs.getString("notebookId")):null);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -82,7 +106,7 @@ public class ScolariteFactory {
                 c.setMtpaye(rs.getString("mtpaye")!=null?Double.parseDouble(rs.getString("mtpaye")):null);
                 c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
                 c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
-                c.setClassroomId(rs.getString("notebookId")!=null?Integer.parseInt(rs.getString("notebookId")):null);
+                c.setNotebookId(rs.getString("notebookId")!=null?Integer.parseInt(rs.getString("notebookId")):null);
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,7 +119,7 @@ public class ScolariteFactory {
         ScolariteFactory sf=new ScolariteFactory();
         sf.setScolarite(new Scolarite());
         Scolarite s = new Scolarite();
-        s.setStudentId(1);
+        s.setStudentId(3);
         sf.setScolarite(s);
         System.out.println(sf.getScolarites());
         System.out.println(sf.getScolarite(3));

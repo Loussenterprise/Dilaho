@@ -273,11 +273,9 @@ public class Database {
                 "	'montantrst'	REAL,\n" +
                 "	'montantenltr'	TEXT,\n" +
                 "	'solded'	INTEGER,\n" +
-                "	'studentId'	INTEGER,\n" +
-                "	'classroomId'	INTEGER,\n" +
+                "	'scolariteId'	INTEGER,\n" +
                 "	'dateDeCreation'    DATE,\n" +
-                "	FOREIGN KEY('studentId') REFERENCES 'student'('id') on delete set null,\n" +
-                "	FOREIGN KEY('classroomId') REFERENCES 'classroom'('id') on delete set null,\n" +
+                "	FOREIGN KEY('scolariteId') REFERENCES 'scolarite'('id') on delete set null,\n" +
                 "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
                 ");"
         );

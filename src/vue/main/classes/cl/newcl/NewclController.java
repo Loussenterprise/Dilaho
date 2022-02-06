@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -134,6 +136,24 @@ public class NewclController implements Initializable {
         castScoolyear();
         addClassroomAble();
         initCourses();
+        contribution.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    contribution.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        ctrb.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    ctrb.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }    
     
     public void doRetour(){

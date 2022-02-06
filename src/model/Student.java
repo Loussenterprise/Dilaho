@@ -8,6 +8,7 @@ import dao.ClassroomFactory;
 import dao.CourseFactory;
 import dao.NoteBookFactory;
 import dao.SessionFactory;
+import dao.StudentFactory;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -234,6 +235,10 @@ public class Student {
 
     public Classroom getCl() {
         return cl;
+    }
+    
+    public void save(){
+        new StudentFactory().setStudent(this);
     }
 
     public Classroom loadCl() {

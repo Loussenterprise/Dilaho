@@ -65,7 +65,8 @@ public class SessionFactory {
             prepst.setString(18, c.getNoteBookId()!=null?c.getNoteBookId().toString():null);
             
             prepst.executeUpdate();
-            c.setId(statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id"));
+            if(c.getId()==null)
+                c.setId(statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id"));
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -118,7 +118,7 @@
                         <AnchorPane GridPane.rowIndex="5">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="Classe" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="9.0" />
-                              <ComboBox fx:id="classroom" layoutX="14.0" layoutY="24.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
+                              <ComboBox fx:id="classroom" disable="true" layoutX="14.0" layoutY="24.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="30.0" />
                            </children>
                         </AnchorPane>
                      </children>

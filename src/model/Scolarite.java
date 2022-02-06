@@ -122,7 +122,13 @@ public class Scolarite {
     
     public Double loadContribution(){
         if(classroom!=null)
-            contribution=loadClassroom().getContribution();
+            contribution=classroom.getContribution();
+        else
+            try {
+                contribution=loadClassroom().getContribution();
+            } catch (Exception e) {
+            }
+            
         return contribution;
     }
     
@@ -136,19 +142,31 @@ public class Scolarite {
     public Student loadStudent(){
         if(student==null && studentId!=null){
             student=new StudentFactory().getStudent(studentId);
-            classroomId=student.getClassroom();
+            if(classroomId==null){
+                System.out.println("setting classroom id from student");
+                
+                classroomId=student.getClassroom();
+            }
         }
         return student;
     }
     
     public Double loadMtPaye(){
+        mtpaye=0.0;
         if(Payes==null || Payes.isEmpty())
-            Payes = new PayeFactory().getPayes();
+            Payes = new PayeFactory().getPayesByScolariteId(id);
+        int i=0;
         for(Paye p : Payes){
             if(p.getMontant()!=null)
                 mtpaye+=p.getMontant();
         }
         return mtpaye;
+    }
+
+    public void dopper() {
+            loadStudent();
+            loadContribution();
+            loadMtPaye();
     }
     
 }

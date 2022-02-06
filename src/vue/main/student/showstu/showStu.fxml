@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="600.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.student.showstu.ShowStuController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.student.showstu.ShowStuController">
     <stylesheets>
         <URL value="@showstu.css" />
     </stylesheets>
@@ -24,7 +24,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
             <AnchorPane maxWidth="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -109,11 +109,64 @@
                               <Label fx:id="fatherAddress" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                               <Label fx:id="fatherWork" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                               <Label fx:id="fatherName" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                              <TextArea fx:id="extras" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                              <TextArea fx:id="extras" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                            </children>
                         </GridPane>
                      </content>
                   </ScrollPane>
+                  <AnchorPane fx:id="scolaritePane" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button layoutX="14.0" layoutY="876.0" mnemonicParsing="false" onAction="#hideScolarites" text="Retour" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                        <Button fx:id="newScol" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#doNewSco" text="Nouvelle inscription" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                        <ScrollPane fitToWidth="true" layoutX="29.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="160.0">
+                           <content>
+                              <Accordion fx:id="scolariteShow" prefHeight="50.0" prefWidth="371.0">
+                                <panes>
+                                  <TitledPane alignment="CENTER" contentDisplay="CENTER" text="untitled 1" textAlignment="CENTER" />
+                                  <TitledPane alignment="CENTER" animated="false" text="untitled 2" />
+                                </panes>
+                              </Accordion>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="14.0" layoutY="-28.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="50.0">
+                           <content>
+                              <VBox fx:id="actual" prefHeight="100.0" prefWidth="100.0">
+                                 <children>
+                                    <Label fx:id="li" alignment="CENTER" text="Derniere inscription">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <FlowPane fx:id="fp" alignment="TOP_CENTER" columnHalignment="CENTER" prefHeight="100.0" prefWidth="372.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="50.0">
+                           <children>
+                              <AnchorPane prefHeight="30.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="9.0" text="Classe" />
+                                    <ComboBox fx:id="ClSelect" layoutX="-25.0" layoutY="3.0" onAction="#onClassChanged" prefWidth="150.0" AnchorPane.leftAnchor="60.0" />
+                                 </children>
+                                 <FlowPane.margin>
+                                    <Insets right="10.0" />
+                                 </FlowPane.margin>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="30.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="9.0" text="Année scolaire" AnchorPane.leftAnchor="14.0" />
+                                    <TextField fx:id="scoolyear" editable="false" layoutX="14.0" layoutY="4.0" AnchorPane.leftAnchor="120.0" />
+                                 </children>
+                              </AnchorPane>
+                              <Button fx:id="valider" mnemonicParsing="false" onAction="#doValider" text="Valider">
+                                 <FlowPane.margin>
+                                    <Insets left="10.0" />
+                                 </FlowPane.margin>
+                              </Button>
+                           </children>
+                        </FlowPane>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
@@ -121,6 +174,7 @@
       <AnchorPane maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button layoutX="529.0" layoutY="9.0" mnemonicParsing="false" onAction="#edit" text="Éditer" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="5.0" />
+            <Button fx:id="scols" layoutX="433.0" layoutY="5.0" mnemonicParsing="false" onAction="#showScolarites" text="Inscription" AnchorPane.rightAnchor="80.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
