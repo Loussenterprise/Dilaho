@@ -4,6 +4,7 @@
  */
 package model;
 
+import dao.ScolariteFactory;
 import dao.SessionFactory;
 import java.util.ArrayList;
 
@@ -15,16 +16,20 @@ import java.util.ArrayList;
 public class NoteBook {
     
     private Integer id;
-    private Integer studentId;
-    private Integer classroomId;
+//    private Integer studentId;
+//    private Integer classroomId;
+    private Integer scolariteId;
     private Integer courseId;
-    private Integer preferedSessionNumber;
+    private Integer preferedSessionNumber=3;
     
     private Student student;
     private Classroom classroom;
     private Course course;
+    private Scolarite scolarite;
     
     private ArrayList<Session> sessions;
+    
+    private Stat stat=Stat.NEW;
 
     public NoteBook() {
         //sessions=new ArrayList<>();
@@ -39,20 +44,20 @@ public class NoteBook {
     }
 
     public Integer getStudentId() {
-        return studentId;
+        return scolarite.getStudentId();
     }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
+//
+//    public void setStudentId(Integer studentId) {
+//        this.scolarite.setStudentId(studentId);
+//    }
 
     public Integer getClassroomId() {
-        return classroomId;
+        return scolarite.getClassroomId();
     }
-
-    public void setClassroomId(Integer classroomId) {
-        this.classroomId = classroomId;
-    }
+//
+//    public void setClassroomId(Integer classroomId) {
+//        this.scolarite.setClassroomId(classroomId);
+//    }
 
     public Integer getCourseId() {
         return courseId;
@@ -107,7 +112,7 @@ public class NoteBook {
                 sessions=new ArrayList<>();
             if(sessions.isEmpty()){
                 SessionFactory sf= new SessionFactory();
-                createSessions(3);
+                createSessions(preferedSessionNumber);
                 for(Session s:sessions){
                     s.setNoteBookId(id);
                     sf.setSession(s);
@@ -132,12 +137,44 @@ public class NoteBook {
                 sessions.add(new Session());
             }
     }
+
+    public Stat getStat() {
+        return stat;
+    }
+
+    public void setStat(Stat stat) {
+        this.stat = stat;
+    }
+    
+    
+
+    public Integer getScolariteId() {
+        return scolariteId;
+    }
+
+    public void setScolariteId(Integer scolariteId) {
+        this.scolariteId = scolariteId;
+    }
+
+    public Scolarite getScolarite() {
+        return scolarite;
+    }
+
+    public void setScolarite(Scolarite scolarite) {
+        this.scolarite = scolarite;
+    }
+    
+    public void loadScolarite(){
+        if(scolariteId!=null){
+            scolarite=new ScolariteFactory().getScolarite(scolariteId);
+        }
+    }
     
     
 
     @Override
     public String toString() {
-        return "NoteBook{" + "id=" + id + ", studentId=" + studentId + ", classroomId=" + classroomId + ", courseId=" + courseId + ", preferedSessionNumber=" + preferedSessionNumber + '}';
+        return "NoteBook{" + "id=" + id + ", studentId=" + getStudentId() + ", classroomId=" + getClassroomId() + ", courseId=" + courseId + ", preferedSessionNumber=" + preferedSessionNumber + '}';
     }
     
     

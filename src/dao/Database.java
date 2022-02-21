@@ -102,6 +102,7 @@ public class Database {
             createUserTable();
             statement.executeUpdate("INSERT INTO 'user' ('id','name','email','passwd','role') VALUES (null,'LOUSSIN Andre','loussin.andre@gmail.com','lopplpop',1);");
             
+            createGeneraleTable();
             createAddTable();
             createClassLevelTable();
             createCourseTable();
@@ -238,15 +239,13 @@ public class Database {
         statement.executeUpdate(""+
                 "CREATE TABLE IF NOT EXISTS 'notebook' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
-                "	'studentId'	INTEGER,\n" +
-                "	'classroomId'	INTEGER,\n" +
+                "	'scolariteId'	INTEGER,\n" +
                 "	'courseId'	INTEGER,\n" +
                 "	'preferedsessionnumber'	INTEGER,\n" +
                 "	FOREIGN KEY('courseId') REFERENCES 'course'('id') ON DELETE SET NULL,\n" +
-                "	FOREIGN KEY('studentId') REFERENCES 'student'('id') ON DELETE SET NULL,\n" +
-                "	FOREIGN KEY('classroomId') REFERENCES 'classroom'('id') ON DELETE SET NULL,\n" +
+                "	FOREIGN KEY('scolariteId') REFERENCES 'scolarite'('id') ON DELETE SET NULL,\n" +
                 "	PRIMARY KEY('id' AUTOINCREMENT)\n" + 
-                "       UNIQUE(studentId,classroomId,courseId) " +
+                "       UNIQUE(scolariteId,courseId) " +
                 ");"
         );
     }
@@ -313,11 +312,25 @@ public class Database {
         );
     }
     
+    public static void createGeneraleTable() throws SQLException{
+        statement.executeUpdate(""+
+                "CREATE TABLE IF NOT EXISTS 'general' (\n" +
+                "	'id'	INTEGER NOT NULL UNIQUE,\n" +
+                "	'savepath'	VARCHAR(250),\n" +
+                "	'scoolyear'	VARCHAR(10),\n" +
+                "	PRIMARY KEY('id'));"
+        );
+        try {
+            statement.executeUpdate("INSERT INTO 'general'('id') VALUES (1) ");
+        } catch (Exception e) {
+        }
+    }
+    
     public static void createScoolYearTable() throws SQLException{
         statement.executeUpdate(""+
                 "CREATE TABLE IF NOT EXISTS 'scoolyear' (\n" +
                 "	'id'	INTEGER NOT NULL UNIQUE,\n" +
-                "	'year'	VARRCHAR(100) UNIQUE ,\n" +
+                "	'year'	VARRCHAR(15) UNIQUE ,\n" +
                 "	PRIMARY KEY('id' AUTOINCREMENT)\n" +
                 ");"
         );
@@ -374,13 +387,17 @@ public class Database {
     
     public static void main(String[] args) {
             try {
-                getStatement().executeUpdate("drop table if exists paye");
+                getStatement().executeUpdate("drop table if exists student");
                 seed();
-                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
             show();
+        try {
+            System.out.println(getStatement().executeQuery("SELECT sql FROM sqlite_schema  WHERE name = 'student';").getString("sql"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         System.out.println(getGroups());
     }    

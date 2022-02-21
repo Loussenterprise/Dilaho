@@ -111,7 +111,7 @@ public class StudentFactory {
                 s.setId(rs.getInt("id"));
                 s.setAddress(rs.getString("address"));
                 s.setBirthday(rs.getDate("birthday"));
-                s.setClassroom(rs.getInt("classroomId"));
+                s.setClassroomf(rs.getInt("classroomId"));
                 s.setCommingScool(rs.getString("commingScool"));
                 s.setExtras(rs.getString("extras"));
                 s.setFatherAddress(rs.getString("fatherAddress"));
@@ -144,7 +144,7 @@ public class StudentFactory {
                 s.setId(rs.getInt("id"));
                 s.setAddress(rs.getString("address"));
                 s.setBirthday(rs.getDate("birthday"));
-                s.setClassroom(rs.getInt("classroomId"));
+                s.setClassroomf(rs.getInt("classroomId"));
                 s.setCommingScool(rs.getString("commingScool"));
                 s.setExtras(rs.getString("extras"));
                 s.setFatherAddress(rs.getString("fatherAddress"));
@@ -176,7 +176,7 @@ public class StudentFactory {
                 s.setId(rs.getInt("id"));
                 s.setAddress(rs.getString("address"));
                 s.setBirthday(rs.getDate("birthday"));
-                s.setClassroom(rs.getInt("classroomId"));
+                s.setClassroomf(rs.getInt("classroomId"));
                 s.setCommingScool(rs.getString("commingScool"));
                 s.setExtras(rs.getString("extras"));
                 s.setFatherAddress(rs.getString("fatherAddress"));
@@ -220,25 +220,25 @@ public class StudentFactory {
             Student s= new Student();
             s.setName("LOUSSIN");
             s.setFirstnames("Andre Ange");
-            s.setClassroom(12);
+            s.setClassroomf(12);
             sf.setStudent(s);
         }
             
         System.out.println(sf.getStudents());
         System.out.println(sf.getStudent(3));
     }
-    
-    static void dopperStudents(ArrayList<Student> list){
-        try {
-            for(Student s:list){
-                for(NoteBook nb:s.loadNotebooks()){
-                    for(Session se:nb.loadSessions()){
-                        se.loadNotes();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Logger.getLogger(NotesController.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
+//    
+//    static void dopperStudents(ArrayList<Student> list){
+//        try {
+//            for(Student s:list){
+//                for(NoteBook nb:s.loadNotebooks()){
+//                    for(Session se:nb.loadSessions()){
+//                        se.loadNotes();
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            Logger.getLogger(NotesController.class.getName()).log(Level.SEVERE, null, e);
+//        }
+//    }
 }

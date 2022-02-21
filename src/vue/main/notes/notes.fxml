@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" prefHeight="347.0" prefWidth="516.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.notes.NotesController">
+<AnchorPane fx:id="pane" prefHeight="347.0" prefWidth="697.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.main.notes.NotesController">
    <children>
       <VBox fx:id="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -26,7 +26,7 @@
                   <ComboBox fx:id="Classroom_select" layoutX="407.0" layoutY="12.0" maxWidth="90.0" minWidth="90.0" onAction="#changeClassroom" prefHeight="25.0" prefWidth="90.0" promptText="Classe" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.0" />
                </children>
             </AnchorPane>
-            <TableView fx:id="tableview">
+            <TableView fx:id="tableview" prefHeight="263.0" prefWidth="621.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
                 <TableColumn prefWidth="75.0" text="C2" />
@@ -37,6 +37,7 @@
                   <Button fx:id="save" disable="true" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#save" style="-fx-background-color: green;" text="Sauvegarder" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="5.0" />
                   <Button fx:id="calculer_moyenne" layoutX="327.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#calculerMoy" text="Calculer les moyennes" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0" />
                   <Button layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#reload" text="Recharger" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0" />
+                  <CheckBox fx:id="ck" layoutX="112.0" layoutY="9.0" mnemonicParsing="false" onAction="#checkShowInterro" prefHeight="18.0" prefWidth="223.0" selected="true" text="Voir les notes d'interrogation" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="365.0" AnchorPane.topAnchor="9.0" />
                </children></AnchorPane>
          </children>
       </VBox>

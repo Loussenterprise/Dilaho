@@ -80,7 +80,9 @@ public class ClasslevelFactory {
                 c.setNiveau(rs.getString("niveau"));
                 c.setOption(rs.getString("option"));
                 c.setOp(rs.getString("op"));
-                c.setContribution(rs.getString("contribution")!=null?Double.parseDouble(rs.getString("contribution")):null);
+
+                c.setContribution(rs.getString("contribution")!=null ? Double.parseDouble(rs.getString("contribution")) : null);
+
                 list.add(c);
             }
         } catch (SQLException ex) {

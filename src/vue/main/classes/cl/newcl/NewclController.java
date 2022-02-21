@@ -193,18 +193,27 @@ public class NewclController implements Initializable {
     }
     
     public void addClasslevelAble(){
-        if(n.getText().isEmpty() || name.getText().isEmpty() || niveau.getText().isEmpty())
-            add_classlevel.setDisable(true);
-        else
-            add_classlevel.setDisable(false);
+        try {
+            if(n.getText().isEmpty() || name.getText().isEmpty() || niveau.getText().isEmpty())
+                add_classlevel.setDisable(true);
+            else
+                add_classlevel.setDisable(false);
+        } catch (Exception e) {
+        }
+            
     }
     
     public void addClassroomAble(){
-        if(classlevel.getText().isEmpty() || scoolyear.getText().isEmpty() || !ma())
-            add_classroom.setDisable(true);
-        else
-            add_classroom.setDisable(false);
+        try {
+            if(classlevel.getText().isEmpty() || scoolyear.getText().isEmpty() || !ma())
+                add_classroom.setDisable(true);
+            else
+                add_classroom.setDisable(false);
+        
+        } catch (Exception e) {
+        }
     }
+            
     
     public void setClassroom(Classroom cc){
         System.out.println("vue.main.classes.cl.newcl.NewclController.setClassroom()  =====  "+cc);

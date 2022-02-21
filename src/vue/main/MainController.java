@@ -41,6 +41,7 @@ import vue.main.classes.cl.clshow.ClShowG;
 import vue.main.classes.cl.clshow.ClshowController;
 import vue.main.classes.cl.newcl.NewClG;
 import vue.main.classes.cl.newcl.NewclController;
+import vue.main.dashboard.DashboardG;
 import vue.main.notes.NotesController;
 import vue.main.notes.NotesG;
 import vue.main.scolarite.ScolariteController;
@@ -126,7 +127,7 @@ public class MainController implements Initializable {
 //        studentg = new StudentG();
 //        classesg = new ClassesG();
 //        notesG = new NotesG();
-        
+        Student.loadClassroomForAll(students);
         stl.addListener(new ListChangeListener<Student>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Student> arg0) {
@@ -138,7 +139,7 @@ public class MainController implements Initializable {
             }
         });
         //System.out.println("vue.main.MainController.initialize()  ##### %%%%% "+butcs.size());
-        if(butcs.size()>3){
+        if(butcs.size()>4){
             butcs.get(0).setText("Eleves");
             butcs.get(0).setImage("img/Student_2.png");
             butcs.get(0).getPane().setOnMouseClicked(event -> showStudentG());
@@ -155,6 +156,10 @@ public class MainController implements Initializable {
             butcs.get(3).setText("Notes");
             butcs.get(3).setImage("img/notes.png");
             butcs.get(3).getPane().setOnMouseClicked(event -> showNotesG());
+            
+            butcs.get(4).setText("Dashboard");
+            butcs.get(4).setImage("img/dashboard.jpeg");
+            butcs.get(4).getPane().setOnMouseClicked(event -> showNode(new DashboardG()));
         }
         setVisible(visibl);
         

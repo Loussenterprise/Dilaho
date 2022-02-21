@@ -46,6 +46,8 @@
                         <fx:include source="butg/but.fxml" />
                         <fx:include source="butg/but.fxml" />
                         <fx:include source="butg/but.fxml" />
+                        <fx:include source="butg/but.fxml" />
+                        <fx:include source="butg/but.fxml" />
                      </children></VBox>
                </children>
             </AnchorPane>

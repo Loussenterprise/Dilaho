@@ -7,10 +7,12 @@ package model;
 import dao.ClassroomFactory;
 import dao.CourseFactory;
 import dao.NoteBookFactory;
+import dao.ScolariteFactory;
 import dao.SessionFactory;
 import dao.StudentFactory;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -39,9 +41,12 @@ public class Student {
     private Integer classroom;
     private Integer scolarite;
     
+    private Scolarite sco;
     private Classroom cl;
     
     private ArrayList<Add> listeAdd;
+    private ArrayList<Scolarite> scols;
+    
     private ArrayList<NoteBook> notebooks;
     
     boolean dopped = false;
@@ -49,7 +54,6 @@ public class Student {
 
     public Student() {
         listeAdd=new ArrayList<>();
-        notebooks=new ArrayList<>();
     }
 
     public Integer getId() {
@@ -60,6 +64,13 @@ public class Student {
         this.id = id;
     }
 
+    
+    public static void loadClassroomForAll(Collection<Student> c){
+        for (Student student : c) {
+            student.loadClassroom();
+        }
+    }
+    
 //    public String getMatricule() {
 //        return matricule;
 //    }
@@ -209,6 +220,11 @@ public class Student {
         return name + " " + firstnames;
     }
     
+    
+    public String tolString() {
+        return "Student{" + "id=" + id + ", matricule=" + matricule + ", name=" + name + ", firstnames=" + firstnames + ", passwd=" + passwd + ", address=" + address + ", sexe=" + sexe + ", extras=" + extras + ", image=" + image + ", commingScool=" + commingScool + ", fatherName=" + fatherName + ", fatherWork=" + fatherWork + ", fatherAddress=" + fatherAddress + ", motherName=" + motherName + ", motherWork=" + motherWork + ", motherAddress=" + motherAddress + ", birthday=" + birthday + ", inscriptionDate=" + inscriptionDate + ", classroom=" + classroom + ", scolarite=" + scolarite + ", sco=" + sco + ", cl=" + cl + ", listeAdd=" + listeAdd + ", scols=" + scols + ", notebooks=" + notebooks + ", dopped=" + dopped + ", modified=" + modified + '}';
+    }
+
     public String getSexe() {
         return sexe;
     }
@@ -221,7 +237,11 @@ public class Student {
         return classroom;
     }
 
-    public void setClassroom(Integer classroom) {
+    private void setClassroom(Integer classroom) {
+        this.classroom = classroom;
+    }
+
+    public void setClassroomf(Integer classroom) {
         this.classroom = classroom;
     }
 
@@ -237,8 +257,13 @@ public class Student {
         return cl;
     }
     
+    public void show(){
+        System.out.println(this.tolString());
+    }
+    
     public void save(){
         new StudentFactory().setStudent(this);
+        
     }
 
     public Classroom loadCl() {
@@ -248,8 +273,16 @@ public class Student {
             classroom=cl.getId();
         return cl;
     }
+    
+    public Classroom loadClassroom(){
+        try {
+            classroom=new ScolariteFactory().getScolarite(scolarite).getClassroomId();
+        } catch (Exception e) {
+        }
+        return cl;
+    }
 
-    public void setCl(Classroom cl) {
+    private void setCl(Classroom cl) {
         this.cl = cl;
         if(cl!=null)
             classroom=cl.getId();
@@ -257,60 +290,53 @@ public class Student {
             classroom=null;
     }
 
+    public void setClf(Classroom cl) {
+        this.cl = cl;
+        if(cl!=null)
+            classroom=cl.getId();
+        else
+            classroom=null;
+    }
+
+    public Scolarite loadSco() {
+        if(scolarite!=null){
+            if(sco==null)
+                sco=new ScolariteFactory().getScolarite(scolarite);
+            return sco;
+        }
+        return null;
+    }
+
+    public void setSco(Scolarite s) {
+        this.sco = s;
+        if(sco!=null){
+            setCl(sco.getClassroom());
+            scolarite=sco.getId();
+            classroom=sco.getClassroomId();          
+        }else{
+            setCl(null);
+            scolarite=null;
+        }
+    }
+
     public ArrayList<NoteBook> getNotebooks() {
-        return notebooks;
+        return notebooks==null?notebooks=new ArrayList<>():notebooks;
     }
 
     public ArrayList<NoteBook> loadNotebooks() {
         if(id!=null){
-            notebooks=new NoteBookFactory().getNoteBooksByStudentId(id);
+            try {
+                notebooks=sco.loadNotebooks();
+            } catch (Exception e) {
+                notebooks=loadSco().loadNotebooks();
+            }
+                
         }else
             notebooks=new ArrayList<>();
         return notebooks;
     }
+
     
-    public void createNotebooks(){
-        if(notebooks==null)
-            notebooks=new ArrayList<>();
-        if(notebooks.isEmpty()){
-            loadCl();
-            ArrayList<Course> crs = new CourseFactory().getCoursesByClasslevelId(cl.getClasslevelId());
-            for(Course c:crs){
-                NoteBook n = new NoteBook();
-                n.setStudentId(id);
-                n.setCourseId(c.getId());
-                n.setClassroomId(classroom);
-                n.setPreferedSessionNumber(3);
-                new NoteBookFactory().setNoteBook(n);
-                n.loadSessions();
-            }
-        }
-    } 
-
-    public NoteBook getNotebook(int courseId) {
-        for(NoteBook n : notebooks){
-            if(n!=null && n.getCourseId()!=null && courseId==n.getCourseId()){
-                return n;
-            }
-        }
-        NoteBook n = new NoteBook();
-        n.setStudentId(id);
-        n.setCourseId(courseId);
-        n.setClassroomId(classroom);
-        n.setPreferedSessionNumber(3);
-        new NoteBookFactory().setNoteBook(n);
-        n.createSessions(3);
-        for(Session s:n.getSessions()){
-            s.setNoteBookId(n.getId());
-            new SessionFactory().setSession(s);
-        }
-        return n;
-    }
-
-    public void setNotebooks(ArrayList<NoteBook> notebooks) {
-        this.notebooks = notebooks;
-    }
-
     public boolean isDopped() {
         return dopped;
     }
@@ -319,26 +345,24 @@ public class Student {
         this.dopped = dopped;
     }
 
-    
-    
-    public ArrayList<NoteBook> generateNotebooks(){
-        ArrayList<NoteBook> list = new ArrayList();
-        try {
-            for(Course c : cl.getCourses()){
-                NoteBook n = new NoteBook();
-                n.setClassroomId(classroom);
-                n.setCourseId(c.getId());
-                n.setStudentId(id);
-                n.setPreferedSessionNumber(2);
-                System.out.println(n.getSessions().size()+" "+c.getName());
-                list.add(n);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        notebooks=list;
-        return list;
+    public Scolarite getSco() {
+        return sco;
     }
+
+    public ArrayList<Scolarite> loadScols() {
+        scols=new ScolariteFactory().getScolaritesByStudentId(id);
+        return scols;
+    }
+
+    public ArrayList<Scolarite> getScols() {
+        return scols;
+    }
+
+    public void setScols(ArrayList<Scolarite> scols) {
+        this.scols = scols;
+    }
+    
+    
 
     public boolean isModified() {
         return modified;
@@ -349,16 +373,34 @@ public class Student {
     }
     
     
+    public void dopper(){
+        try {
+            if(!isDopped()){
+                System.out.println("!s.isDopped() = "+!isDopped());
+                for(NoteBook nb:loadNotebooks()){
+                    for(Session se:nb.loadSessions()){
+                        System.out.println("vue.main.notes.NotesController.dopperStudents() NoteList :  "+se.loadNotes());
+                    }
+                }
+                setDopped(true);
+            }else
+                System.out.println("!s.isDopped() = "+!isDopped());
+        } catch (Exception e) {
+        }
+            
+    }
+    
     
     
     public static void main(String[] args) {
         Student s=new Student();
         s.setId(Integer.SIZE);
-        s.setClassroom(2);
-        System.out.println(s.loadCl());
-        s.getCl().generateNCourses(10);
-        System.out.println(s.generateNotebooks());
-        System.out.println(s.getNotebooks());
+        System.out.println(s.getSco().createNotebooks());
+        System.out.println(s.getSco().getNotebooks());
+    }
+
+    public NoteBook getNotebook(int course) {
+        return loadSco().getNotebook(course);
     }
 
     

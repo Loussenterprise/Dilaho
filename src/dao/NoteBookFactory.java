@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Stat;
 import model.NoteBook;
 
 /**
@@ -33,26 +34,24 @@ public class NoteBookFactory {
     public void setNoteBook(NoteBook c){
         try {
             prepst=connection.prepareStatement(""
-                    + "INSERT INTO 'notebook'('id','studentId',"
-                    + "'classroomId',"
-                    + "'courseId','preferedsessionnumber') VALUES ("+c.getId()+",?,?,?,?) "
+                    + "INSERT INTO 'notebook'('id','scolariteId',"
+                    + "'courseId','preferedsessionnumber') VALUES ("+c.getId()+",?,?,?) "
                     + "ON CONFLICT(id) DO UPDATE SET "
-                    + "'studentId'=?,'classroomId'=?,'courseId'=?,'preferedsessionnumber'=?");
+                    + "'scolariteId'=?,'courseId'=?,'preferedsessionnumber'=?");
             
-            prepst.setString(1, c.getStudentId()!=null?c.getStudentId().toString():null);
-            prepst.setString(2, c.getClassroomId()!=null?c.getClassroomId().toString():null);
-            prepst.setString(3, c.getCourseId()!=null?c.getCourseId().toString():null);
-            prepst.setString(4, c.getPreferedSessionNumber()!=null?c.getPreferedSessionNumber().toString():null);
+            prepst.setString(1, c.getScolariteId()!=null?c.getScolariteId().toString():null);
+            prepst.setString(2, c.getCourseId()!=null?c.getCourseId().toString():null);
+            prepst.setString(3, c.getPreferedSessionNumber()!=null?c.getPreferedSessionNumber().toString():null);
             
-            prepst.setString(5, c.getStudentId()!=null?c.getStudentId().toString():null);
-            prepst.setString(6, c.getClassroomId()!=null?c.getClassroomId().toString():null);
-            prepst.setString(7, c.getCourseId()!=null?c.getCourseId().toString():null);
-            prepst.setString(8, c.getPreferedSessionNumber()!=null?c.getPreferedSessionNumber().toString():null);
+            prepst.setString(4, c.getScolariteId()!=null?c.getScolariteId().toString():null);
+            prepst.setString(5, c.getCourseId()!=null?c.getCourseId().toString():null);
+            prepst.setString(6, c.getPreferedSessionNumber()!=null?c.getPreferedSessionNumber().toString():null);
             
             prepst.executeUpdate();
             int id = statement.executeQuery("SELECT last_insert_rowid() as id").getInt("id");
             if(c.getId()==null)
                 c.setId(id);
+            c.setStat(Stat.NONE);
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,10 +64,11 @@ public class NoteBookFactory {
             while(rs.next()){
                 NoteBook c= new NoteBook();
                 c.setId(rs.getInt("id"));
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
+                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
                 c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
-                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
+                
                 c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+                c.setStat(Stat.NONE);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -84,10 +84,11 @@ public class NoteBookFactory {
             if(rs.next()){
                 c= new NoteBook();
                 c.setId(rs.getInt("id"));
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
+                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
                 c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
-                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
+                
                 c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+                c.setStat(Stat.NONE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,18 +97,18 @@ public class NoteBookFactory {
     }
     
     
-    public ArrayList<NoteBook> getNoteBooksByStudentId(int studentId){
+    public ArrayList<NoteBook> getNoteBooksByScolariteId(int scolariteId){
         ArrayList<NoteBook> list = new ArrayList();
         NoteBook c = null;
         try {
-            rs=statement.executeQuery("SELECT * FROM notebook where studentId="+studentId);
+            rs=statement.executeQuery("SELECT * FROM notebook where scolariteId="+scolariteId);
             while(rs.next()){
                 c= new NoteBook();
                 c.setId(rs.getInt("id"));
-                c.setStudentId(studentId);
+                c.setScolariteId(scolariteId);
                 c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
-                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
                 c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+                c.setStat(Stat.NONE);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -116,26 +117,26 @@ public class NoteBookFactory {
         return list;
     }
     
-    
-    public ArrayList<NoteBook> getNoteBooksByClassroomId(int classroomId){
-        ArrayList<NoteBook> list = new ArrayList();
-        NoteBook c = null;
-        try {
-            rs=statement.executeQuery("SELECT * FROM notebook where classroomId="+classroomId);
-            while(rs.next()){
-                c= new NoteBook();
-                c.setId(rs.getInt("id"));
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
-                c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
-                c.setClassroomId(classroomId);
-                c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
-                list.add(c);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
+//    
+//    public ArrayList<NoteBook> getNoteBooksByClassroomId(int classroomId){
+//        ArrayList<NoteBook> list = new ArrayList();
+//        NoteBook c = null;
+//        try {
+//            rs=statement.executeQuery("SELECT * FROM notebook where classroomId="+classroomId);
+//            while(rs.next()){
+//                c= new NoteBook();
+//                c.setId(rs.getInt("id"));
+//                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
+//                c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
+//                
+//                c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+//                list.add(c);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
     
     
     public ArrayList<NoteBook> getNoteBooksByCourseId(int courseId){
@@ -146,10 +147,11 @@ public class NoteBookFactory {
             while(rs.next()){
                 c= new NoteBook();
                 c.setId(rs.getInt("id"));
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
+                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
                 c.setCourseId(courseId);
-                c.setClassroomId(rs.getString("classroomId")!=null?Integer.parseInt(rs.getString("classroomId")):null);
+                
                 c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+                c.setStat(Stat.NONE);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -159,18 +161,18 @@ public class NoteBookFactory {
     }
     
     
-    public ArrayList<NoteBook> getNoteBooksByClassroomCourseId(int classroomId,int courseId){
+    public ArrayList<NoteBook> getNoteBooksByScolariteCourseId(int scolariteId,int courseId){
         ArrayList<NoteBook> list = new ArrayList();
         NoteBook c = null;
         try {
-            rs=statement.executeQuery("SELECT * FROM notebook where courseId="+courseId+" and classroomId="+classroomId);
+            rs=statement.executeQuery("SELECT * FROM notebook where courseId="+courseId+" and scolariteId="+scolariteId);
             while(rs.next()){
                 c= new NoteBook();
                 c.setId(rs.getInt("id"));
-                c.setStudentId(rs.getString("studentId")!=null?Integer.parseInt(rs.getString("studentId")):null);
+                c.setScolariteId(rs.getString("scolariteId")!=null?Integer.parseInt(rs.getString("scolariteId")):null);
                 c.setCourseId(courseId);
-                c.setClassroomId(classroomId);
                 c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+                c.setStat(Stat.NONE);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -178,27 +180,27 @@ public class NoteBookFactory {
         }
         return list;
     }
-    
-    
-    public ArrayList<NoteBook> getNoteBooksByClassroomStudentId(int classroomId,int studentId){
-        ArrayList<NoteBook> list = new ArrayList();
-        NoteBook c = null;
-        try {
-            rs=statement.executeQuery("SELECT * FROM notebook where studentId="+studentId+" and classroomId="+classroomId);
-            while(rs.next()){
-                c= new NoteBook();
-                c.setId(rs.getInt("id"));
-                c.setStudentId(studentId);
-                c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
-                c.setClassroomId(classroomId);
-                c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
-                list.add(c);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
+//    
+//    
+//    public ArrayList<NoteBook> getNoteBooksByClassroomStudentId(int classroomId,int studentId){
+//        ArrayList<NoteBook> list = new ArrayList();
+//        NoteBook c = null;
+//        try {
+//            rs=statement.executeQuery("SELECT * FROM notebook where studentId="+studentId+" and classroomId="+classroomId);
+//            while(rs.next()){
+//                c= new NoteBook();
+//                c.setId(rs.getInt("id"));
+//                c.setStudentId(studentId);
+//                c.setCourseId(rs.getString("courseId")!=null?Integer.parseInt(rs.getString("courseId")):null);
+//                c.setClassroomId(classroomId);
+//                c.setPreferedSessionNumber(rs.getString("preferedsessionnumber")!=null?Integer.parseInt(rs.getString("preferedsessionnumber")):null);
+//                list.add(c);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(StudentFactory.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
     
     
     public static void main(String[] args) {
@@ -206,8 +208,6 @@ public class NoteBookFactory {
 //        System.out.println(sf.getNoteBooks());
 //        System.out.println(sf.getNoteBook(3));
         NoteBook b= new NoteBook();
-        b.setClassroomId(1000);
-        b.setStudentId(1001);
         b.setCourseId(1002);
         System.out.println(b);
         sf.setNoteBook(b);

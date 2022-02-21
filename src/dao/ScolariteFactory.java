@@ -37,13 +37,22 @@ public class ScolariteFactory {
                     + "INSERT INTO 'main'.'scolarite'('id',"
                     + "'contribution','mtpaye','studentId',"
                     + "'classroomId','notebookId') VALUES "
-                    + "(NULL,?,?,?,?,?);");
+                    + "("+c.getId()+",?,?,?,?,?)"
+                    + "ON CONFLICT(id) DO UPDATE SET "
+                    + "'contribution'= ?,'mtpaye'= ?,'studentId'= ?,"
+                    + "'classroomId'= ?,'notebookId'= ? " );
             
             prepst.setString(1, c.getContribution()!=null?c.getContribution().toString():null);
             prepst.setString(2, c.getMtpaye()!=null?c.getMtpaye().toString():null);
             prepst.setString(3, c.getStudentId()!=null?c.getStudentId().toString():null);
             prepst.setString(4, c.getClassroomId()!=null?c.getClassroomId().toString():null);
             prepst.setString(5, c.getNotebookId()!=null?c.getNotebookId().toString():null);
+            
+            prepst.setString(6, c.getContribution()!=null?c.getContribution().toString():null);
+            prepst.setString(7, c.getMtpaye()!=null?c.getMtpaye().toString():null);
+            prepst.setString(8, c.getStudentId()!=null?c.getStudentId().toString():null);
+            prepst.setString(9, c.getClassroomId()!=null?c.getClassroomId().toString():null);
+            prepst.setString(10, c.getNotebookId()!=null?c.getNotebookId().toString():null);
             
             prepst.executeUpdate();
             if(c.getId()==null){

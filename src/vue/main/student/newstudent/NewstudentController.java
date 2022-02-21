@@ -160,11 +160,12 @@ public class NewstudentController implements Initializable {
         } catch (Exception e) {
         }
         try {
-            s.setMatricule(""+Integer.parseInt(matricule.getText()));
+            s.setMatricule(""+Long.parseLong(matricule.getText()));
         } catch (Exception e) {
+            e.printStackTrace();
         }
         
-        s.setCl(classroom.getValue());
+        s.setClf(classroom.getValue());
         s.setCommingScool(commingScool.getText());
         s.setExtras(extras.getText());
         s.setFatherAddress(fatherAddress.getText());

@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -75,6 +76,9 @@ public class NotesController implements Initializable {
     Button save;
     @FXML
     Button calculer_moyenne;
+    
+    @FXML
+    CheckBox ck;
     
     ArrayList<Student> students;
     ArrayList<Course> courses;
@@ -200,6 +204,11 @@ public class NotesController implements Initializable {
             liLoad();
         }
     }
+    
+    public void checkShowInterro(){
+        student_notes.getColumns().get(1).setVisible(ck.isSelected());
+        ((TableColumn) student_notes.getColumns().get(2)).setEditable(!ck.isSelected());
+    }
         
     
     public void changeClassroom(){
@@ -243,6 +252,8 @@ public class NotesController implements Initializable {
         student_notes.setPrefHeight(Region.USE_COMPUTED_SIZE);
         student_notes.setMaxHeight(Double.MAX_VALUE);
         
+        
+        
         session = sess;
         course = courseid;
         
@@ -254,6 +265,7 @@ public class NotesController implements Initializable {
             }
         });
         TableColumn<Student,TableColumn> interros = new TableColumn("Interrogations");
+        
         
         TableColumn<Student,Double> I1 = new TableColumn("1");
         I1.setCellValueFactory((TableColumn.CellDataFeatures<Student, Double> p) -> new ObservableValueBase<Double>() {
@@ -405,6 +417,7 @@ public class NotesController implements Initializable {
         }
         vbox.getChildren().addAll(ap,student_notes,dp);
         vbox.setVgrow(student_notes, Priority.ALWAYS);
+        checkShowInterro();
     }
 
     
@@ -604,20 +617,7 @@ public class NotesController implements Initializable {
     }
     
     static void dopperStudent(Student s){
-        try {
-            if(!s.isDopped()){
-                System.out.println("!s.isDopped() = "+!s.isDopped());
-                for(NoteBook nb:s.loadNotebooks()){
-                    for(Session se:nb.loadSessions()){
-                        System.out.println("vue.main.notes.NotesController.dopperStudents() NoteList :  "+se.loadNotes());
-                    }
-                }
-                s.setDopped(true);
-            }else
-                System.out.println("!s.isDopped() = "+!s.isDopped());
-        } catch (Exception e) {
-            Logger.getLogger(NotesController.class.getName()).log(Level.SEVERE, null, e);
-        }
+        s.dopper();
     }
     
     void blic(TableView<Student> table){
@@ -649,7 +649,7 @@ public class NotesController implements Initializable {
                         return "";
                     }
                     try {
-                        return Double.toString(value.doubleValue());
+                        return Double.toString(value);
                     } catch (Exception e) {
                         return null;
                     }                    
@@ -680,6 +680,34 @@ public class NotesController implements Initializable {
                                 while(se.getInterros().size()<1)
                                     se.getInterros().add(new Note(se.getId()));
                                 se.getInterros().get(0).setValeur(t.getNewValue());   
+                                save.setDisable(false);                                 
+                            } catch (Exception e) {
+                            }
+                            NoteBook me=s.getNotebook(course);
+                            Session de=me.getSessions().get(session);
+                            de.setModified(true);
+                        }
+                    }
+                );        
+        ((TableColumn) table.getColumns().get(2)).setCellFactory(numberCellFactory);
+        ((TableColumn) table.getColumns().get(2))
+                .setOnEditCommit(
+                    new EventHandler<TableColumn.CellEditEvent<Student, Double>>() {
+                        @Override
+                        public void handle(TableColumn.CellEditEvent<Student, Double> t) {
+                            Student s = ((Student) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                                );
+                            try {
+                                Session se=s.getNotebook(course).getSessions().size()>0?s.getNotebook(course).getSessions().get(session):null;
+                                if(se==null){
+                                    se=new Session(true);
+                                    se.setNoteBookId(s.getNotebook(course).getId());
+                                    new SessionFactory().setSession(se); s.getNotebook(course).getSessions().add(se);
+                                }
+                                while(se.getInterros().size()<1)
+                                    se.getInterros().add(new Note(se.getId()));
+                                se.setInterroMoyenne(t.getNewValue());   
                                 save.setDisable(false);                                 
                             } catch (Exception e) {
                             }

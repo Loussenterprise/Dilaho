@@ -287,7 +287,11 @@ public class ScolariteController implements Initializable {
     }
     
     public void show(Scolarite sco){
+        System.out.println("showing "+sco);
         scolarite_en_vue=sco;
+        if (!sco.isDopped()) {
+            sco.dopper();
+        }
         scolpr.setVisible(true);
         {
             try {

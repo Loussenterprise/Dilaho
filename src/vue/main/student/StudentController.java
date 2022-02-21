@@ -227,7 +227,7 @@ public class StudentController implements Initializable {
     public void addStudent(){
         if(fast.isSelected()){
             Student s = new Student();
-            s.setClassroom(cls_select.getValue()!=null?cls_select.getValue().getId():null);
+//            s.setClassroom(cls_select.getValue()!=null?cls_select.getValue().getId():null);
             s.setInscriptionDate(new Date(new java.util.Date().getTime()));
             //System.out.println(s.getInscriptionDate());
             stl.add(s);
@@ -245,7 +245,16 @@ public class StudentController implements Initializable {
     void blic(TableView<Student> table) {
         
         
-        Callback<TableColumn<Student, Integer>, TableCell<Student, Integer>> numberCellFactory = (TableColumn<Student, Integer> param) -> new TextFieldTableCell(new IntegerStringConverter());
+        Callback<TableColumn<Student, Integer>, TableCell<Student, Integer>> numberCellFactory = new Callback<TableColumn<Student, Integer>, TableCell<Student, Integer>>() {
+            @Override
+            public TableCell<Student, Integer> call(TableColumn<Student, Integer> param) {
+                TextFieldTableCell t =  new TextFieldTableCell(new IntegerStringConverter());
+                t.setOnTouchReleased(evt->{
+                    
+                });
+                return t;
+            }
+        };
         
         table.setEditable(true);
         

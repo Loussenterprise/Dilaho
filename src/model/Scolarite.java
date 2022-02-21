@@ -5,6 +5,8 @@
 package model;
 
 import dao.ClassroomFactory;
+import dao.CourseFactory;
+import dao.NoteBookFactory;
 import dao.PayeFactory;
 import dao.StudentFactory;
 import java.util.ArrayList;
@@ -24,13 +26,53 @@ public class Scolarite {
     
     private Student student;
     private Classroom classroom;
-    private NoteBook notebook;
+    private ArrayList<NoteBook> notebooks;
     
     private ArrayList<Paye> Payes;
+    private boolean dopped = false;
 
     public Scolarite() {
         mtpaye=0.0;
+        notebooks=new ArrayList<>();
+    }  
+    public ArrayList<NoteBook> createNotebooks(){
+        if(notebooks==null)
+            notebooks=new ArrayList<>();
+        if(notebooks.isEmpty()){
+            loadClassroom();
+            ArrayList<Course> crs = new CourseFactory().getCoursesByClasslevelId(classroom.getClasslevelId());
+            for(Course c:crs){
+                NoteBook n = new NoteBook();
+                n.setScolariteId(id);
+                n.setCourseId(c.getId());
+                n.setPreferedSessionNumber(3);
+                new NoteBookFactory().setNoteBook(n);
+                n.loadSessions();
+            }
+        }
+        return notebooks;
+    } 
+    
+    
+    
+    public NoteBook getNotebook(int courseId) {
+        for(NoteBook n : notebooks){
+            if(n!=null && n.getCourseId()!=null && courseId==n.getCourseId()){
+                return n;
+            }
+        }
+        return null;
     }
+
+    public boolean isDopped() {
+        return dopped;
+    }
+
+    public void setDopped(boolean dopped) {
+        this.dopped = dopped;
+    }
+
+    
 
     public Student getStudent() {
         return student;
@@ -38,15 +80,26 @@ public class Scolarite {
 
     public void setStudent(Student student) {
         this.student = student;
+        if(student!=null)
+            studentId=student.getId();
+        else
+            studentId=null;
     }
 
-    public NoteBook getNotebook() {
-        return notebook;
+    public ArrayList<NoteBook> getNotebooks() {
+        return notebooks;
+    }
+    public ArrayList<NoteBook> loadNotebooks() {
+        if(notebooks==null || notebooks.isEmpty())
+            notebooks=new NoteBookFactory().getNoteBooksByScolariteId(id);
+        return notebooks;
     }
 
-    public void setNotebook(NoteBook notebook) {
-        this.notebook = notebook;
+    public void setNotebooks(ArrayList<NoteBook> notebooks) {
+        this.notebooks = notebooks;
     }
+
+    
 
     public ArrayList<Paye> getPayes() {
         return Payes;
@@ -103,6 +156,14 @@ public class Scolarite {
 
     public void setClassroom(Classroom classroom) {
         this.classroom = classroom;
+        if(classroom!=null){
+            contribution=classroom.getContribution();
+            classroomId=classroom.getId();
+        }
+        else{
+            contribution=null;
+            classroomId=null;
+        }
     }
 
     public Integer getNotebookId() {
@@ -121,17 +182,22 @@ public class Scolarite {
     }
     
     public Double loadContribution(){
-        if(classroom!=null)
-            contribution=classroom.getContribution();
-        else
-            try {
-                contribution=loadClassroom().getContribution();
-            } catch (Exception e) {
+        if(classroom!=null){
+            if(contribution==null){
+                contribution=classroom.getContribution();
             }
+        }else{
+            try {
+                loadClassroom();
+                if(classroom!=null && contribution==null)
+                    contribution=classroom.getContribution();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
             
         return contribution;
     }
-    
     public Classroom loadClassroom(){
         if(classroom==null && classroomId!=null){
             classroom=new ClassroomFactory().getClassroom(classroomId);
@@ -142,11 +208,6 @@ public class Scolarite {
     public Student loadStudent(){
         if(student==null && studentId!=null){
             student=new StudentFactory().getStudent(studentId);
-            if(classroomId==null){
-                System.out.println("setting classroom id from student");
-                
-                classroomId=student.getClassroom();
-            }
         }
         return student;
     }
@@ -155,7 +216,6 @@ public class Scolarite {
         mtpaye=0.0;
         if(Payes==null || Payes.isEmpty())
             Payes = new PayeFactory().getPayesByScolariteId(id);
-        int i=0;
         for(Paye p : Payes){
             if(p.getMontant()!=null)
                 mtpaye+=p.getMontant();
@@ -164,9 +224,25 @@ public class Scolarite {
     }
 
     public void dopper() {
-            loadStudent();
-            loadContribution();
-            loadMtPaye();
+        loadStudent();
+        loadContribution();
+        loadMtPaye();
+        setDopped(true);
+    }
+
+    public void dopper(Student s) {
+        setStudent(s);
+        loadContribution();
+        loadMtPaye();
+        setDopped(dopped);
+    }
+
+    public void dopper(Classroom c) {
+        loadStudent();
+        setClassroom(c);
+        loadContribution();
+        loadMtPaye();
+        setDopped(dopped);
     }
     
 }

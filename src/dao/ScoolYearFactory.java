@@ -33,9 +33,9 @@ public class ScoolYearFactory {
         if(year!=null && year.matches("[0-9]{4}-[0-9]{4}"))
             try {
                 prepst=connection.prepareStatement(""
-                        + "INSERT INTO 'scoolyear'('id','year') VALUES (NULL,?);");
+                        + "INSERT INTO 'scoolyear'('id','year') VALUES (NULL,?) ");
                 prepst.setString(1,year);
-                System.out.println(prepst.executeUpdate());
+                prepst.executeUpdate();
             } catch (SQLException ex) {
                 Logger.getLogger(AddFactory.class.getName()).log(Level.SEVERE, null, ex);
             }

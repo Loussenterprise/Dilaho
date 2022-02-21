@@ -105,7 +105,7 @@ public class ShowStuController implements Initializable {
         scols.setDisable(true);
         scolariteShow.getPanes().removeAll(scolariteShow.getPanes());
         scolariteList=new ScolariteFactory().getScolaritesByStudentId(s.getId());
-        for(Scolarite s:scolariteList){
+        for(Scolarite s : scolariteList){
             s.dopper();
             VBox vb=new VBox();
             try {
@@ -157,17 +157,14 @@ public class ShowStuController implements Initializable {
         newScol.setDisable(true);
     }
     public void doValider(){
-        
+        s.save();
         Scolarite sco=new Scolarite();
         sco.setClassroom(ClSelect.getValue());
-        s.setCl(ClSelect.getValue());
-        s.loadCl();
-        s.save();
-        System.out.println(ClSelect.getValue());
         sco.setClassroomId(ClSelect.getValue().getId());
         sco.setStudent(s);
-        sco.setStudentId(s.getId());
         new ScolariteFactory().setScolarite(sco);
+        s.setSco(sco);
+        s.save();
         
             sco.dopper();
             VBox vb=new VBox();
